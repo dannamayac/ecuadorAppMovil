@@ -6,6 +6,7 @@ import ManagementButton from '../../components/ManagementButton';
 
 const HomeScreen = ({ navigation }) => {
   return (
+    
     <ScrollView style={{ flex: 1 }}>
       <ManagementButton 
         title="Ingresos" 
