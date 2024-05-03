@@ -6,6 +6,7 @@ import Login from '../screens/Login/Login';
 import Authentication from '../screens/Login/Aunthentication';
 import Home from '../screens/Home/Home';
 import SideBar from '../components/SideBar';
+import Income from '../screens/Income/Income';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -14,7 +15,7 @@ function DrawerNavigator() {
   return (
     <Drawer.Navigator drawerContent={props => <SideBar {...props} />}>
       <Drawer.Screen name="Home" component={Home} />
-      // Agrega aquí más pantallas si necesitas
+      <Drawer.Screen name="Income" component={Income} />
     </Drawer.Navigator>
   );
 }

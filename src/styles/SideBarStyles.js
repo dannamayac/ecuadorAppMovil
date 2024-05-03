@@ -1,45 +1,30 @@
 import { StyleSheet, Dimensions } from 'react-native';
-
-const drawerWidth = 250;
-const contractedPosition = -(drawerWidth - 30);  // 30px visible del sidebar cuando está contraído
+import { colors } from './GlobalStyles'
 
 const SideBarStyles = StyleSheet.create({
   sidebar: {
-    backgroundColor: '#ADD8E6',
+    backgroundColor: colors.nonBlue,
     padding: 20,
-    height: '100%',   // Altura total
-    width: drawerWidth,  // Ancho del drawer
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    zIndex: 10,
-    overflow: 'hidden',
+    height: '100%',
+    width: 280,
   },
-  expanded: {
-    transform: [{ translateX: 0 }],  // Usar array para transformaciones
-  },
-  contracted: {
-    transform: [{ translateX: contractedPosition }],  // Posición contraída
-  },
-  toggleButton: {
-    position: 'absolute',
-    top: 30,
-    right: 10,  // Ajustado para estar a la derecha dentro del sidebar
-    zIndex: 30,
-    backgroundColor: '#B0C4DE',
+  closeButton: {
+    marginBottom: 20,
+    marginTop: 20,
+    alignSelf: 'flex-end',
+    backgroundColor: 'white',
     padding: 10,
     borderRadius: 5,
   },
-  closeButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    zIndex: 15,
-    padding: 10,
+  optionsText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: colors.bluePrimary,
+    marginBottom: 20,
   },
-  icon: {
-    color: 'white',
-    fontSize: 24,
+  closeIcon:{
+    color: colors.bluePrimary,
+    fontSize:20,
   }
 });
 

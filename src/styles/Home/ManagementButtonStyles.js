@@ -1,13 +1,15 @@
 import { StyleSheet } from 'react-native'
-import { colors } from './GlobalStyles'
+import { colors } from './../GlobalStyles'
 
 const ManagementButtonStyles = StyleSheet.create({
-    button: {
+    managementbuttons: {
         flex: 1,
         padding: 20,
         borderRadius: 10,
         backgroundColor: 'white',
-        margin: 2,
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 10,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
@@ -44,7 +46,7 @@ const ManagementButtonStyles = StyleSheet.create({
     },
     manageText: {
         fontWeight: 'bold',
-        color: '#1b2f8e',
+        color: colors.bluePrimary,
         paddingTop: 11,
         textAlign: 'left',
     }

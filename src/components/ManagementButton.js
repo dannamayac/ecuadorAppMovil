@@ -5,7 +5,7 @@ import ManagementButtonStyles from '../styles/Home/ManagementButtonStyles';
 
 const ManagementButton = ({ title, summary, ChartComponent, onPress }) => {
   return (
-    <TouchableOpacity style={ManagementButtonStyles.button} onPress={onPress}>
+    <TouchableOpacity style={ManagementButtonStyles.managementbuttons} onPress={onPress}>
       <Text style={ManagementButtonStyles.buttonTitle}>{title}</Text>
       <View style={ManagementButtonStyles.contentContainer}>
         {summary && (

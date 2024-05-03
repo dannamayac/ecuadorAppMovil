@@ -9,8 +9,7 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleLoginPress = () => {
-    // Aquí puedes añadir cualquier lógica de validación o autenticación
-    navigation.navigate('Authentication'); // Asegúrate de que el nombre de la ruta coincida
+    navigation.navigate('Authentication');
   };
 
   return (
