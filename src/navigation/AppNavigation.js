@@ -7,6 +7,8 @@ import Authentication from '../screens/Login/Aunthentication';
 import Home from '../screens/Home/Home';
 import SideBar from '../components/SideBar';
 import Income from '../screens/Income/Income';
+import Expenses from '../screens/Expenses/Expenses';
+import WithDrawls from '../screens/Withdrawls/Withdrawls';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -16,6 +18,8 @@ function DrawerNavigator() {
     <Drawer.Navigator drawerContent={props => <SideBar {...props} />}>
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Income" component={Income} />
+      <Drawer.Screen name="Expenses" component={Expenses}/>
+      <Drawer.Screen name="WithDrawls" component={WithDrawls}/>
     </Drawer.Navigator>
   );
 }

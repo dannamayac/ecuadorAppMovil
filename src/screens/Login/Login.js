@@ -36,7 +36,7 @@ const Login = ({ navigation }) => {
         secureTextEntry
         placeholder="Contraseña"
       />
-      <TouchableOpacity style={GlobalStyles.blueButton} onPress={handleLoginPress}>
+      <TouchableOpacity style={LoginStyles.loginButton} onPress={handleLoginPress}>
         <Text style={GlobalStyles.buttonText}>Ingresar</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => {/* Navegar a registro */}}>

@@ -41,6 +41,14 @@ const LoginStyles = StyleSheet.create({
       borderWidth: 1,
       borderColor: 'white',
     },
+    loginButton: {
+      width: '80%',
+      backgroundColor: colors.bluePrimary,
+      padding: 15,
+      borderRadius: 10,
+      alignItems: 'center',
+      marginBottom: 10,
+    },
     registerText: {
       marginTop: 10,
       color: '#8f98c0',

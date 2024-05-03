@@ -11,19 +11,19 @@ const Home = ({ navigation }) => {
         title="Ingresos" 
         summary="39,786 USD" 
         ChartComponent={LineChartGreen} 
-        onPress={() => navigation.navigate('Income')} 
+        onPress={() => navigation.navigate('Income')}
       />
       <ManagementButton 
         title="Gastos" 
         summary="39,786 USD" 
         ChartComponent={LineChartRed} 
-        onPress={() => console.log('Gastos')} 
+        onPress={() => navigation.navigate('Expenses')} 
       />
       <ManagementButton 
         title="Retiros" 
         summary="39,786 USD" 
         ChartComponent={LineChartAquamarine}
-        onPress={() => console.log('Retiros')} 
+        onPress={() => navigation.navigate('WithDrawls')} 
        />
       <ManagementButton 
         title="Ventas" 

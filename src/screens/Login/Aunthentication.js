@@ -72,7 +72,7 @@ const Authentication = ({ navigation }) => {
           returnKeyType="done"
         />
       </View>
-      <TouchableOpacity style={GlobalStyles.blueButton} onPress={handleVerifyCode}>
+      <TouchableOpacity style={LoginStyles.loginButton} onPress={handleVerifyCode}>
         <Text style={GlobalStyles.buttonText}>Continuar</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => {/* Cambiar a recepción por correo electrónico */ }}>
