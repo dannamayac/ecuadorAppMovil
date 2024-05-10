@@ -29,13 +29,13 @@ const Home = ({ navigation }) => {
         title="Ventas" 
         summary="39,786 USD" 
         ChartComponent={LineChartYellow} 
-        onPress={() => console.log('Ventas')} 
+        onPress={() => navigation.navigate('Sales')} 
       />
       <ManagementButton 
         title="Recaudos" 
         summary="39,786 USD" 
         ChartComponent={LineChartGreen} 
-        onPress={() => console.log('Recaudos')} 
+        onPress={() => navigation.navigate('Collect')} 
       />
     </ScrollView>
   );

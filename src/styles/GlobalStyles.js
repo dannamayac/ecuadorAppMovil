@@ -12,13 +12,16 @@ export const colors = {
 }
 
 export const GlobalStyles = StyleSheet.create({
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
   blueButton: {
     width: '100%',
     backgroundColor: colors.bluePrimary,
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
-    marginBottom: 10,
   },
   lightBlueButton: {
     width: '100%',
@@ -26,7 +29,25 @@ export const GlobalStyles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
+    marginTop: 10,
     marginBottom: 10,
+  },
+  redButton:{
+    width: '100%',
+    backgroundColor: colors.red,
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  greenButton: {
+    width: '100%',
+    backgroundColor: colors.green,
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginBottom: 20,
+    marginTop: 10,
   },
   buttonText: {
     color: 'white',
@@ -57,6 +78,11 @@ export const GlobalStyles = StyleSheet.create({
     height: 50,
     width: '100%',
     backgroundColor: colors.input,
+  },
+  whitePicker: {
+    height: 50,
+    width: '100%',
+    backgroundColor: 'white',
   },
   bigInput: {
     backgroundColor: colors.input,

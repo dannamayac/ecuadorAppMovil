@@ -20,8 +20,8 @@ const SideBar = () => {
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         <Text style={SideBarStyles.optionsText}>Home</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('UnitsDisplay')}>
-        <Text style={SideBarStyles.optionsText}>Visualizador de Unidades</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+        <Text style={SideBarStyles.optionsText}>Configuración</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Dashboard')}>
         <Text style={SideBarStyles.optionsText}>Dashboard</Text>

@@ -1,76 +1,68 @@
 import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, ScrollView, View, Image } from 'react-native';
-import { GlobalStyles } from '../../styles/GlobalStyles';
-import IncomeStyles from '../../styles/income/IncomeStyles';
-import { Picker } from '@react-native-picker/picker';
-import * as ImagePicker from 'expo-image-picker';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { View, Keyboard } from 'react-native';
+import WithDrawalsForm from '../../components/WithDrawlsForms/WithDrawlsForm';
+import WithDrawalsList from '../../components/WithDrawlsForms/WithDrawlsList';
 
-const WithDrawls = ({ navigation }) => {
-  const [withDrawlsType, setWithDrawlsType] = useState("");
+const WithDrawals = ({ navigation }) => {
+  const [withdrawalType, setWithdrawalType] = useState("");
   const [description, setDescription] = useState("");
   const [value, setValue] = useState("");
   const [image, setImage] = useState(null);
+  const [withdrawals, setWithdrawals] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
+  const handleSaveWithdrawal = () => {
+    const newWithdrawal = {
+      id: withdrawals.length + 1,
+      type: withdrawalType,
+      description: description,
+      value: value,
+      image: image
+    };
+    setWithdrawals([...withdrawals, newWithdrawal]); // Nombre de función corregido
+    clearForm();
+  };
+
+  const updateWithdrawal = () => {
+    const updatedWithdrawals = withdrawals.map(withdrawal => { // Nombre de variable corregido
+      if (withdrawal.id === selectedItem.id) {
+        return { ...withdrawal, type: withdrawalType, description: description, value: value, image: image };
+      }
+      return withdrawal;
     });
+    setWithdrawals(updatedWithdrawals);
+    setSelectedItem(null);
+    clearForm();
+  };
 
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
+  const clearForm = () => {
+    setWithdrawalType("");
+    setDescription("");
+    setValue("");
+    setImage(null);
+    setSelectedItem(null);
+    Keyboard.dismiss();
   };
 
   return (
-    <ScrollView style={IncomeStyles.container}>
-      {!withDrawlsType && <Text style={GlobalStyles.placeholder}>Seleccione un tipo</Text>}
-      <View style={GlobalStyles.smallPickerContainer}>
-      <Picker
-        selectedValue={withDrawlsType}
-        onValueChange={setWithDrawlsType}
-        style={GlobalStyles.smallPicker}
-      >
-        <Picker.Item label="Retiros" value="retiro" />
-        <Picker.Item label="Gasto" value="gasto" />
-      </Picker>
-      </View>
-      {!description && <Text style={GlobalStyles.placeholder}>Descripción</Text>}
-      <View style={GlobalStyles.bigPickerContainer}>
-      <Picker
-        selectedValue={withDrawlsType}
-        onValueChange={setWithDrawlsType}
-        style={GlobalStyles.bigPicker}
-      >
-        <Picker.Item label="Varios" value="varios" />
-      </Picker>
-      </View>
-      <TextInput
-        style={GlobalStyles.bigInput}
-        onChangeText={setDescription}
-        value={description}
-        placeholder="Ingrese algún comentario sobre el movimiento..."
-        multiline
-      />
-      <TextInput
-        style={GlobalStyles.smallInput}
-        onChangeText={setValue}
+    <View style={{ flex: 1 }}>
+      <WithDrawalsForm
+        withdrawalType={withdrawalType}
+        setWithdrawalType={setWithdrawalType}
+        description={description}
+        setDescription={setDescription}
         value={value}
-        placeholder="Valor"
-        keyboardType="numeric"
+        setValue={setValue}
+        image={image}
+        setImage={setImage}
+        handleSaveWithdrawal={handleSaveWithdrawal}
+        selectedItem={selectedItem}
+        updateWithdrawal={updateWithdrawal}
+        clearForm={clearForm}
       />
-      <TouchableOpacity style={IncomeStyles.imageButton} onPress={pickImage}>
-        <FontAwesome5 name="camera" size={20} color="white" />
-      </TouchableOpacity>
-      {image && <Image source={{ uri: image }} style={IncomeStyles.image} />}
-      <TouchableOpacity style={GlobalStyles.blueButton} onPress={() => console.log('Guardar Movimiento')}>
-        <Text style={GlobalStyles.buttonText}>Guardar movimiento</Text>
-      </TouchableOpacity>
-    </ScrollView>
+      <WithDrawalsList withdrawals={withdrawals} setSelectedItem={setSelectedItem} />
+    </View>
   );
 };
 
-export default WithDrawls;
+export default WithDrawals;

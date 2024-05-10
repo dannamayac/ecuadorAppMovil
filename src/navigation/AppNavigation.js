@@ -9,6 +9,19 @@ import SideBar from '../components/SideBar';
 import Income from '../screens/Income/Income';
 import Expenses from '../screens/Expenses/Expenses';
 import WithDrawls from '../screens/Withdrawls/Withdrawls';
+import Sales from '../screens/Sales/Sales';
+import NewSale from '../screens/Sales/NewSale';
+import NewClient from '../screens/Sales/NewClient';
+import ClientInfo from '../screens/Sales/ClientInfo';
+import Settings from '../screens/Settings/Settings';
+import DownloadData from '../screens/Settings/DownloadData';
+import SyncUpApp from '../screens/Settings/SyncUpApp';
+import GenerateNewKeys from '../screens/Settings/GenerateNewKeys';
+import GenerateBackUp from '../screens/Settings/GenerateBackUp';
+import RestartData from '../screens/Settings/RestartData';
+import AboutHelp from '../screens/Settings/AboutHelp';
+import Collect from '../screens/Collect/Collect';
+
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -17,9 +30,25 @@ function DrawerNavigator() {
   return (
     <Drawer.Navigator drawerContent={props => <SideBar {...props} />}>
       <Drawer.Screen name="Home" component={Home} />
+      {/* Vistas de Settings */}
+      <Drawer.Screen name="Settings" component={Settings} />
+      <Drawer.Screen name="Download" component={DownloadData} />
+      <Drawer.Screen name="SyncUp" component={SyncUpApp} />
+      <Drawer.Screen name="GenerateNewKeys" component={GenerateNewKeys} />
+      <Drawer.Screen name="GenerateBackUp" component={GenerateBackUp} />
+      <Drawer.Screen name="Restart" component={RestartData} />
+      <Drawer.Screen name="AboutHelp" component={AboutHelp} />
+      {/* Vistas de home */}
       <Drawer.Screen name="Income" component={Income} />
-      <Drawer.Screen name="Expenses" component={Expenses}/>
-      <Drawer.Screen name="WithDrawls" component={WithDrawls}/>
+      <Drawer.Screen name="Expenses" component={Expenses} />
+      <Drawer.Screen name="WithDrawls" component={WithDrawls} />
+      {/* Vistas de Sales */}
+      <Drawer.Screen name="Sales" component={Sales} />
+      <Drawer.Screen name="NewSale" component={NewSale} />
+      <Drawer.Screen name="NewClient" component={NewClient} />
+      <Drawer.Screen name="ClientInfo" component={ClientInfo} />
+      {/* Vistas de collect */}
+      <Drawer.Screen name="Collect" component={Collect} />
     </Drawer.Navigator>
   );
 }
