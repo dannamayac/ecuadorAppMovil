@@ -86,7 +86,25 @@ const CollectStyles = StyleSheet.create({
     cobroHour: {
         color: '#FFD700',
         fontWeight: 'bold',
-    }
+    },
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    menuContainer: {
+        backgroundColor: '#fff',
+        width: 250,
+        borderRadius: 8,
+        padding: 10,
+    },
+    menuItem: {
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderBottomColor: '#ddd',
+        borderBottomWidth: 1
+    },
 });
 
 export default CollectStyles;
