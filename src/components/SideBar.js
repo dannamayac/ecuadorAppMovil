@@ -23,8 +23,8 @@ const SideBar = () => {
       <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
         <Text style={SideBarStyles.optionsText}>Configuración</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Dashboard')}>
-        <Text style={SideBarStyles.optionsText}>Dashboard</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('UnitManagement')}>
+        <Text style={SideBarStyles.optionsText}>Gestión de unidades</Text>
       </TouchableOpacity>
     </View>
   );

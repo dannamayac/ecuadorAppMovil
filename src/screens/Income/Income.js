@@ -47,6 +47,7 @@ const Income = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <IncomeForm
+        navigation={navigation}
         incomeType={incomeType}
         setIncomeType={setIncomeType}
         description={description}

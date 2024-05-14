@@ -40,8 +40,11 @@ const CollectStyles = StyleSheet.create({
         marginTop: 10,
     },
     statusButton: {
-        padding: 8,
-        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        padding: 10,
+        width: '49%',
     },
     statusText: {
         fontSize: 16,
@@ -79,6 +82,10 @@ const CollectStyles = StyleSheet.create({
         color: '#007BFF',
         fontWeight: 'bold',
         fontSize: 16,
+    },
+    cobroHour: {
+        color: '#FFD700',
+        fontWeight: 'bold',
     }
 });
 

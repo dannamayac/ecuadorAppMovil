@@ -21,6 +21,9 @@ import GenerateBackUp from '../screens/Settings/GenerateBackUp';
 import RestartData from '../screens/Settings/RestartData';
 import AboutHelp from '../screens/Settings/AboutHelp';
 import Collect from '../screens/Collect/Collect';
+import Payment from '../screens/Collect/Payment';
+import UnitManagement from '../screens/UnitManagement/UnitManagement';
+import Receipt from '../styles/Collect/Receipt';
 
 
 const Stack = createNativeStackNavigator();
@@ -49,6 +52,10 @@ function DrawerNavigator() {
       <Drawer.Screen name="ClientInfo" component={ClientInfo} />
       {/* Vistas de collect */}
       <Drawer.Screen name="Collect" component={Collect} />
+      <Drawer.Screen name="Payment" component={Payment} />
+      <Drawer.Screen name="Receipt" component={Receipt} />
+      {/* Vistas de Recorrido */}
+      <Drawer.Screen name="UnitManagement" component={UnitManagement} />
     </Drawer.Navigator>
   );
 }
