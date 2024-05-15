@@ -23,7 +23,9 @@ import AboutHelp from '../screens/Settings/AboutHelp';
 import Collect from '../screens/Collect/Collect';
 import Payment from '../screens/Collect/Payment';
 import UnitManagement from '../screens/UnitManagement/UnitManagement';
-import Receipt from '../styles/Collect/Receipt';
+import Receipt from '../screens/Collect/Receipt';
+import InfoClientCollect from '../screens/Collect/InfoClientCollect';
+import ClientLevelHistory from '../screens/Collect/ClientLevelHistory';
 
 
 const Stack = createNativeStackNavigator();
@@ -54,6 +56,8 @@ function DrawerNavigator() {
       <Drawer.Screen name="Collect" component={Collect} />
       <Drawer.Screen name="Payment" component={Payment} />
       <Drawer.Screen name="Receipt" component={Receipt} />
+      <Drawer.Screen name="InfoClientCollect" component={InfoClientCollect} />
+      <Drawer.Screen name="ClientLevelHistory" component={ClientLevelHistory} />
       {/* Vistas de Recorrido */}
       <Drawer.Screen name="UnitManagement" component={UnitManagement} />
     </Drawer.Navigator>

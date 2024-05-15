@@ -114,7 +114,19 @@ const Collect = ({ navigation }) => {
                 <TouchableOpacity style={CollectStyles.modalOverlay} onPress={handleMenuClose}>
                     <View style={CollectStyles.menuContainer}>
                         <TouchableOpacity style={CollectStyles.menuItem}><Text>Editar / Renovar</Text></TouchableOpacity>
-                        <TouchableOpacity style={CollectStyles.menuItem}><Text>Ver info del cliente</Text></TouchableOpacity>
+                        <TouchableOpacity 
+                            style={CollectStyles.menuItem} 
+                            onPress={() => {
+                                navigation.navigate('InfoClientCollect', {
+                                    title: selectedItem.title,
+                                    quotaValue: selectedItem.quotaValue,
+                                    amountPending: selectedItem.amountPending,
+                                    lastPaymentAmount: selectedItem.lastPaymentAmount
+                                });
+                                handleMenuClose();
+                            }}>
+                            <Text>Ver info del cliente</Text>
+                        </TouchableOpacity>
                         <TouchableOpacity style={CollectStyles.menuItem}><Text>Ver detalle</Text></TouchableOpacity>
                         <TouchableOpacity style={CollectStyles.menuItem}><Text>Info de cliente</Text></TouchableOpacity>
                         <TouchableOpacity style={CollectStyles.menuItem}><Text>Histórico de ventas</Text></TouchableOpacity>

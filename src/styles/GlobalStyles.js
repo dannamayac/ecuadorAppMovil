@@ -16,6 +16,10 @@ export const GlobalStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  normalFont: {
+    fontSize: 16,
+    fontWeight: 'regular',
+  },
   blueButton: {
     width: '100%',
     backgroundColor: colors.bluePrimary,

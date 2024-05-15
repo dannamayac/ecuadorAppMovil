@@ -26,8 +26,11 @@ const PaymentStyles = StyleSheet.create({
         justifyContent: 'flex-start'
     },
     section: {
-        marginBottom: 20,
         flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        paddingBottom: 20,
+        marginBottom: 20
     },
     sectionText: {
         marginRight: 10,

@@ -16,7 +16,7 @@ const Login = ({ navigation }) => {
     <View style={LoginStyles.container}>
       <View style={LoginStyles.logoContainer}>
       <Image
-          source={require('../../assets/Extracted_Third_Logo (1).png')}
+          source={require('../../assets/Group 239046.png')}
           style={LoginStyles.logo}
       />
       </View>
