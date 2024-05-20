@@ -71,7 +71,21 @@ container: {
         height: 50,
         width: '100%',
         backgroundColor: 'white',
-    }
+    },
+    statusContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: '#FFD700',
+        borderRadius: 10,
+        width: '31%',
+    },
+    statusText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginLeft: 10,
+    },
 });
 
 export default SalesStyles;

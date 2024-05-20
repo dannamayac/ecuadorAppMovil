@@ -2,17 +2,35 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
-import { FontAwesome5 } from '@expo/vector-icons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import IncomeStyles from '../../styles/income/IncomeStyles';
 
-const ExpensesForm = ({ expenseType, setExpenseType, description, setDescription, value, setValue, image, setImage, handleSaveExpense, selectedItem, clearForm }) => {
+const ExpensesForm = ({
+  navigation,
+  transactionType,
+  setTransactionType,
+  description,
+  setDescription,
+  comment,
+  setComment,
+  value,
+  setValue,
+  image,
+  setImage,
+  handleSaveTransaction,
+  selectedItem,
+  clearForm,
+  updateTransaction,
+  handleDeleteTransaction
+}) => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
     if (selectedItem) {
-      setExpenseType(selectedItem.type);
+      setTransactionType(selectedItem.type);
       setDescription(selectedItem.description);
+      setComment(selectedItem.comment);
       setValue(selectedItem.value);
       setImage(selectedItem.image);
     }
@@ -38,32 +56,34 @@ const ExpensesForm = ({ expenseType, setExpenseType, description, setDescription
       <Text style={GlobalStyles.header}>Seleccione un tipo</Text>
       <View style={GlobalStyles.smallPickerContainer}>
         <Picker
-          selectedValue={expenseType}
-          onValueChange={setExpenseType}
+          selectedValue={transactionType}
+          onValueChange={setTransactionType}
           style={GlobalStyles.smallPicker}
         >
-          <Picker.Item label="Retiros" value="retiro" />
           <Picker.Item label="Alimentación" value="alimentación" />
           <Picker.Item label="Aportes seguro" value="aportesSeguro" />
           <Picker.Item label="Arriendo" value="arriendo" />
           <Picker.Item label="Descuadre" value="descuadre" />
           <Picker.Item label="Gasolina" value="gasolina" />
+          <Picker.Item label="Hospedaje" value="hospedaje" />
+          <Picker.Item label="Médico" value="medico" />
+          <Picker.Item label="Viajes/peaje" value="viajes" />
         </Picker>
       </View>
+      <Text style={GlobalStyles.header}>Descripción</Text>
       <View style={GlobalStyles.bigPickerContainer}>
         <Picker
-          selectedValue={expenseType}
-          onValueChange={setExpenseType}
+          selectedValue={description}
+          onValueChange={setDescription}
           style={GlobalStyles.smallPicker}
         >
-          <Picker.Item label="Inversión" value="inversion" />
-          <Picker.Item label="Gasto" value="gasto" />
+          <Picker.Item label="Varios" value="inversion" />
         </Picker>
       </View>
       <TextInput
         style={GlobalStyles.bigInput}
-        onChangeText={setDescription}
-        value={description}
+        onChangeText={setComment}
+        value={comment}
         placeholder="Ingrese algún comentario sobre el movimiento..."
         multiline
       />
@@ -74,19 +94,22 @@ const ExpensesForm = ({ expenseType, setExpenseType, description, setDescription
         placeholder="Valor"
         keyboardType="numeric"
       />
-      <TouchableOpacity style={IncomeStyles.imageContainer} onPress={pickImage}>
-        <Image source={{ uri: image }} style={IncomeStyles.image} />
-        {!image && (
-          <View style={IncomeStyles.imageButtonOverlay}>
-            <FontAwesome5 name="camera" size={20} color="white" />
-          </View>
+      <View style={IncomeStyles.imageContainer}>
+        {isLoading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <>
+            {image ? (
+              <Image source={{ uri: image }} style={IncomeStyles.image} />
+            ) : (
+              <TouchableOpacity style={IncomeStyles.imageButtonOverlay} onPress={pickImage}>
+                <FontAwesome5 name="camera" size={20} color="white" />
+              </TouchableOpacity>
+            )}
+          </>
         )}
-        {isLoading && (
-          <ActivityIndicator size="large" color="#0000ff" style={IncomeStyles.imageButtonOverlay} />
-        )}
-      </TouchableOpacity>
-      {image && <Image source={{ uri: image }} style={IncomeStyles.image} />}
-      <TouchableOpacity style={GlobalStyles.blueButton} onPress={selectedItem ? updateExpense : handleSaveExpense}>
+      </View>
+      <TouchableOpacity style={GlobalStyles.blueButton} onPress={selectedItem ? updateTransaction : handleSaveTransaction}>
         <Text style={GlobalStyles.buttonText}>{selectedItem ? 'Actualizar movimiento' : 'Guardar movimiento'}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={GlobalStyles.lightBlueButton} onPress={() => console.log('Actualizar Movimiento')}>
@@ -94,7 +117,7 @@ const ExpensesForm = ({ expenseType, setExpenseType, description, setDescription
       </TouchableOpacity>
       {selectedItem && (
         <>
-          <TouchableOpacity style={GlobalStyles.lightBlueButton} onPress={() => console.log('Actualizar Movimiento')}>
+          <TouchableOpacity style={GlobalStyles.lightBlueButton} onPress={handleDeleteTransaction}>
             <Text style={GlobalStyles.buttonText}>Eliminar</Text>
           </TouchableOpacity>
           <TouchableOpacity style={GlobalStyles.redButton} onPress={clearForm}>

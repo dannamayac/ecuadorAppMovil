@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { View, Keyboard } from 'react-native';
+import { View, Keyboard, FlatList, Text } from 'react-native';
 import WithDrawalsForm from '../../components/WithDrawlsForms/WithDrawlsForm';
 import WithDrawalsList from '../../components/WithDrawlsForms/WithDrawlsList';
+import IncomeStyles from '../../styles/income/IncomeStyles';
 
 const WithDrawals = ({ navigation }) => {
   const [withdrawalType, setWithdrawalType] = useState("");
   const [description, setDescription] = useState("");
+  const [comment, setComment] = useState("");
   const [value, setValue] = useState("");
   const [image, setImage] = useState(null);
   const [withdrawals, setWithdrawals] = useState([]);
@@ -15,18 +17,19 @@ const WithDrawals = ({ navigation }) => {
     const newWithdrawal = {
       id: withdrawals.length + 1,
       type: withdrawalType,
-      description: description,
-      value: value,
-      image: image
+      description,
+      comment,
+      value,
+      image
     };
-    setWithdrawals([...withdrawals, newWithdrawal]); // Nombre de función corregido
+    setWithdrawals([...withdrawals, newWithdrawal]);
     clearForm();
   };
 
   const updateWithdrawal = () => {
-    const updatedWithdrawals = withdrawals.map(withdrawal => { // Nombre de variable corregido
+    const updatedWithdrawals = withdrawals.map(withdrawal => {
       if (withdrawal.id === selectedItem.id) {
-        return { ...withdrawal, type: withdrawalType, description: description, value: value, image: image };
+        return { ...withdrawal, type: withdrawalType, description, comment, value, image };
       }
       return withdrawal;
     });
@@ -35,9 +38,17 @@ const WithDrawals = ({ navigation }) => {
     clearForm();
   };
 
+  const handleDeleteWithdrawal = () => {
+    const filteredWithdrawals = withdrawals.filter(withdrawal => withdrawal.id !== selectedItem.id);
+    setWithdrawals(filteredWithdrawals);
+    clearForm();
+    setSelectedItem(null);
+  };
+
   const clearForm = () => {
     setWithdrawalType("");
     setDescription("");
+    setComment("");
     setValue("");
     setImage(null);
     setSelectedItem(null);
@@ -45,22 +56,39 @@ const WithDrawals = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <WithDrawalsForm
-        withdrawalType={withdrawalType}
-        setWithdrawalType={setWithdrawalType}
-        description={description}
-        setDescription={setDescription}
-        value={value}
-        setValue={setValue}
-        image={image}
-        setImage={setImage}
-        handleSaveWithdrawal={handleSaveWithdrawal}
-        selectedItem={selectedItem}
-        updateWithdrawal={updateWithdrawal}
-        clearForm={clearForm}
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <FlatList
+        style={{ flex: 1 }}
+        ListHeaderComponent={
+          <View>
+            <WithDrawalsForm
+              navigation={navigation}
+              transactionType={withdrawalType}
+              setTransactionType={setWithdrawalType}
+              description={description}
+              setDescription={setDescription}
+              comment={comment}
+              setComment={setComment}
+              value={value}
+              setValue={setValue}
+              image={image}
+              setImage={setImage}
+              handleSaveTransaction={handleSaveWithdrawal}
+              selectedItem={selectedItem}
+              updateTransaction={updateWithdrawal}
+              clearForm={clearForm}
+              handleDeleteTransaction={handleDeleteWithdrawal}
+            />
+            <Text style={IncomeStyles.incomeListTitle}>Historial de Retiros</Text>
+          </View>
+        }
+        data={withdrawals}
+        renderItem={({ item }) => (
+          <WithDrawalsList withdrawals={[item]} setSelectedItem={setSelectedItem} />
+        )}
+        keyExtractor={item => item.id.toString()}
+        contentContainerStyle={{ paddingBottom: 20 }}
       />
-      <WithDrawalsList withdrawals={withdrawals} setSelectedItem={setSelectedItem} />
     </View>
   );
 };

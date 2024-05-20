@@ -2,18 +2,35 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
-import { FontAwesome5 } from '@expo/vector-icons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import IncomeStyles from '../../styles/income/IncomeStyles';
 
-const IncomeForm = ({ navigation, incomeType, setIncomeType, description, setDescription, value, setValue, image,
-  setImage, handleSaveIncome, selectedItem, clearForm }) => {
+const IncomeForm = ({
+  navigation,
+  incomeType,
+  setIncomeType,
+  description,
+  setDescription,
+  comment,
+  setComment,
+  value,
+  setValue,
+  image,
+  setImage,
+  handleSaveIncome,
+  selectedItem,
+  clearForm,
+  updateIncome,
+  handleDeleteIncome,
+}) => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
     if (selectedItem) {
       setIncomeType(selectedItem.type);
       setDescription(selectedItem.description);
+      setComment(selectedItem.comment);
       setValue(selectedItem.value);
       setImage(selectedItem.image);
     }
@@ -46,30 +63,6 @@ const IncomeForm = ({ navigation, incomeType, setIncomeType, description, setDes
     }
   };
 
-  const updateIncome = () => {
-    const updatedIncomes = incomes.map(inc => {
-      if (inc.id === selectedItem.id) {
-        return { ...inc, type: incomeType, description: description, value: value, image: image };
-      }
-      return inc;
-    });
-    setIncomes(updatedIncomes);
-    clearForm();
-    setSelectedItem(null);
-  };
-
-  const handleDeleteIncome = () => {
-    const filteredIncomes = incomes.filter(inc => inc.id !== selectedItem.id);
-    setIncomes(filteredIncomes);
-    clearForm();
-    setSelectedItem(null);
-  };
-
-  const handleCancelEdit = () => {
-    clearForm();
-    setSelectedItem(null);
-  };
-
   return (
     <View style={IncomeStyles.headerContainer}>
       <Text style={GlobalStyles.header}>Seleccione un tipo</Text>
@@ -87,22 +80,19 @@ const IncomeForm = ({ navigation, incomeType, setIncomeType, description, setDes
       <Text style={GlobalStyles.header}>Descripción</Text>
       <View style={GlobalStyles.bigPickerContainer}>
         <Picker
-          selectedValue={incomeType}
-          onValueChange={(itemValue, itemIndex) => {
-            if (itemIndex !== 0) {
-              setIncomeType(itemValue);
-            }
-          }}
+          selectedValue={description}
+          onValueChange={setDescription}
           style={GlobalStyles.smallPicker}
         >
-          <Picker.Item label="Descripción" value="" />
           <Picker.Item label="Inversión" value="inversion" />
+          <Picker.Item label="Venta" value="venta" />
+          <Picker.Item label="Salario" value="salario" />
         </Picker>
       </View>
       <TextInput
         style={GlobalStyles.bigInput}
-        onChangeText={setDescription}
-        value={description}
+        onChangeText={setComment}
+        value={comment}
         placeholder="Ingrese algún comentario sobre el movimiento..."
         multiline
       />
@@ -113,18 +103,21 @@ const IncomeForm = ({ navigation, incomeType, setIncomeType, description, setDes
         placeholder="Valor"
         keyboardType="numeric"
       />
-      <TouchableOpacity style={IncomeStyles.imageContainer} onPress={pickImage}>
-        <Image source={{ uri: image }} style={IncomeStyles.image} />
-        {!image && (
-          <View style={IncomeStyles.imageButtonOverlay}>
-            <FontAwesome5 name="camera" size={20} color="white" />
-          </View>
+      <View style={IncomeStyles.imageContainer}>
+        {isLoading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <>
+            {image ? (
+              <Image source={{ uri: image }} style={IncomeStyles.image} />
+            ) : (
+              <TouchableOpacity style={IncomeStyles.imageButtonOverlay} onPress={pickImage}>
+                <FontAwesome5 name="camera" size={20} color="white" />
+              </TouchableOpacity>
+            )}
+          </>
         )}
-        {isLoading && (
-          <ActivityIndicator size="large" color="#0000ff" style={IncomeStyles.imageButtonOverlay} />
-        )}
-      </TouchableOpacity>
-      {image && <Image source={{ uri: image }} style={IncomeStyles.image} />}
+      </View>
       <TouchableOpacity style={GlobalStyles.blueButton} onPress={selectedItem ? updateIncome : handleSaveIncome}>
         <Text style={GlobalStyles.buttonText}>{selectedItem ? 'Actualizar movimiento' : 'Guardar movimiento'}</Text>
       </TouchableOpacity>
@@ -133,7 +126,7 @@ const IncomeForm = ({ navigation, incomeType, setIncomeType, description, setDes
           <TouchableOpacity style={GlobalStyles.lightBlueButton} onPress={handleDeleteIncome}>
             <Text style={GlobalStyles.buttonText}>Eliminar</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={GlobalStyles.redButton} onPress={handleCancelEdit}>
+          <TouchableOpacity style={GlobalStyles.redButton} onPress={clearForm}>
             <Text style={GlobalStyles.buttonText}>Cancelar</Text>
           </TouchableOpacity>
         </>

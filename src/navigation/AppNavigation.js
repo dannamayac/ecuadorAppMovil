@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { SalesProvider } from '../screens/Sales/SalesContext';
 import Login from '../screens/Login/Login';
 import Authentication from '../screens/Login/Aunthentication';
 import Home from '../screens/Home/Home';
@@ -26,6 +27,10 @@ import UnitManagement from '../screens/UnitManagement/UnitManagement';
 import Receipt from '../screens/Collect/Receipt';
 import InfoClientCollect from '../screens/Collect/InfoClientCollect';
 import ClientLevelHistory from '../screens/Collect/ClientLevelHistory';
+import RecordHistory from '../screens/Collect/RecordHistory';
+import CollectionDetails from '../screens/Collect/CollectionDetails';
+import Ticket from '../screens/Sales/Ticket';
+import NoPayment from '../screens/Collect/NoPayment';
 
 
 const Stack = createNativeStackNavigator();
@@ -52,12 +57,16 @@ function DrawerNavigator() {
       <Drawer.Screen name="NewSale" component={NewSale} />
       <Drawer.Screen name="NewClient" component={NewClient} />
       <Drawer.Screen name="ClientInfo" component={ClientInfo} />
+      <Drawer.Screen name="Ticket" component={Ticket} />
       {/* Vistas de collect */}
       <Drawer.Screen name="Collect" component={Collect} />
       <Drawer.Screen name="Payment" component={Payment} />
       <Drawer.Screen name="Receipt" component={Receipt} />
       <Drawer.Screen name="InfoClientCollect" component={InfoClientCollect} />
       <Drawer.Screen name="ClientLevelHistory" component={ClientLevelHistory} />
+      <Drawer.Screen name="RecordHistory" component={RecordHistory} />
+      <Drawer.Screen name="CollectionDetails" component={CollectionDetails} />
+      <Drawer.Screen name="NoPayment" component={NoPayment} />
       {/* Vistas de Recorrido */}
       <Drawer.Screen name="UnitManagement" component={UnitManagement} />
     </Drawer.Navigator>
@@ -66,12 +75,14 @@ function DrawerNavigator() {
 
 export default function AppNavigation() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Authentication" component={Authentication} />
-        <Stack.Screen name="Main" component={DrawerNavigator} options={{ gestureEnabled: false }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SalesProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Authentication" component={Authentication} />
+          <Stack.Screen name="Main" component={DrawerNavigator} options={{ gestureEnabled: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SalesProvider>
   );
 }

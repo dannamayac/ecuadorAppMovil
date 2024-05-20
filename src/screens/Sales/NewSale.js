@@ -5,6 +5,7 @@ import { PaperProvider } from 'react-native-paper';
 import SalesStyles from '../../styles/sales/SalesStyles';
 import { Picker } from '@react-native-picker/picker';
 import { GlobalStyles } from '../../styles/GlobalStyles';
+import { useSales } from './SalesContext';
 
 const NewSale = ({ navigation }) => {
     const [venta, setVenta] = useState('');
@@ -21,9 +22,26 @@ const NewSale = ({ navigation }) => {
     const [months, setMonths] = useState('');
     const [totalToPay, setTotalToPay] = useState('');
 
+    const { addSale } = useSales();
+
+    const handleNext = () => {
+        const newSale = {
+            id: String(new Date().getTime()),
+            customer: 'Nuevo Cliente',
+            date: new Date().toISOString().split('T')[0],
+            sale: venta,
+            status: 'En espera'
+        };
+        addSale(newSale);
+        navigation.navigate('ClientInfo', { sale: newSale });
+    };
+
     return (
         <PaperProvider>
             <ScrollView style={SalesStyles.container}>
+            <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Sales')}>
+                    <Text style={GlobalStyles.backButtonText}> Volver</Text>
+                </TouchableOpacity>
                 <View style={SalesStyles.salesHeader}>
                     <Text style={GlobalStyles.title}>Nueva venta</Text>
                 </View>
@@ -34,7 +52,7 @@ const NewSale = ({ navigation }) => {
                         onValueChange={setVenta}
                         style={GlobalStyles.whitePicker}
                     >
-                        <Picker.Item label="Nuevo" value="inversion" />
+                        <Picker.Item label="Nuevo" value="nuevo" />
                     </Picker>
                 </View>
                 <Text style={GlobalStyles.header}>Modo</Text>
@@ -44,7 +62,7 @@ const NewSale = ({ navigation }) => {
                         onValueChange={setModo}
                         style={GlobalStyles.whitePicker}
                     >
-                        <Picker.Item label="Nuevo" value="inversion" />
+                        <Picker.Item label="Nuevo" value="nuevo" />
                     </Picker>
                 </View>
                 <Text style={GlobalStyles.header}>Tipo</Text>
@@ -54,7 +72,7 @@ const NewSale = ({ navigation }) => {
                         onValueChange={setTipo}
                         style={GlobalStyles.whitePicker}
                     >
-                        <Picker.Item label="Personal" value="inversion" />
+                        <Picker.Item label="Personal" value="personal" />
                     </Picker>
                 </View>
                 <Text style={GlobalStyles.header}>Documento</Text>
@@ -64,7 +82,7 @@ const NewSale = ({ navigation }) => {
                         onValueChange={setDocumento}
                         style={GlobalStyles.whitePicker}
                     >
-                        <Picker.Item label="Contrato de prestamo" value="inversion" />
+                        <Picker.Item label="Contrato de prestamo" value="prestamo" />
                     </Picker>
                 </View>
                 <Text style={GlobalStyles.header}>Monto emitido</Text>
@@ -124,9 +142,10 @@ const NewSale = ({ navigation }) => {
                         onValueChange={setFrequencyToPay}
                         style={GlobalStyles.bigPicker}
                     >
-                        <Picker.Item label="Frecuencia de pago" value="inversion" />
+                        <Picker.Item label="Frecuencia de pago" value="mensual" />
                     </Picker>
                 </View>
+                <Text style={GlobalStyles.header}>Monto contrato</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
                         label="$0"
@@ -136,6 +155,7 @@ const NewSale = ({ navigation }) => {
                         style={SalesStyles.outlinedInput}
                     />
                 </View>
+                <Text style={GlobalStyles.header}>Meses</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
                         label="0"
@@ -145,6 +165,7 @@ const NewSale = ({ navigation }) => {
                         style={SalesStyles.outlinedInput}
                     />
                 </View>
+                <Text style={GlobalStyles.header}>Total a pagar</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
                         label="$0"
@@ -156,7 +177,7 @@ const NewSale = ({ navigation }) => {
                 </View>
                 <TouchableOpacity
                     style={GlobalStyles.greenButton}
-                    onPress={() => navigation.navigate('ClientInfo')}>
+                    onPress={handleNext}>
                     <Text style={GlobalStyles.buttonText}>Siguiente</Text> 
                 </TouchableOpacity>
             </ScrollView>

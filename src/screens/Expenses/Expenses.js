@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { View, Keyboard } from 'react-native';
+import { View, Keyboard, FlatList, Text } from 'react-native';
 import ExpensesForm from '../../components/ExpensesForms/ExpensesForm';
 import ExpensesList from '../../components/ExpensesForms/ExpensesList';
+import IncomeStyles from '../../styles/income/IncomeStyles';
 
 const Expenses = ({ navigation }) => {
   const [expenseType, setExpenseType] = useState("");
   const [description, setDescription] = useState("");
+  const [comment, setComment] = useState(""); // Añadido para manejar el comentario adicional
   const [value, setValue] = useState("");
   const [image, setImage] = useState(null);
   const [expenses, setExpenses] = useState([]);
@@ -15,9 +17,10 @@ const Expenses = ({ navigation }) => {
     const newExpense = {
       id: expenses.length + 1,
       type: expenseType,
-      description: description,
-      value: value,
-      image: image
+      description,
+      comment,
+      value,
+      image
     };
     setExpenses([...expenses, newExpense]);
     clearForm();
@@ -26,7 +29,7 @@ const Expenses = ({ navigation }) => {
   const updateExpense = () => {
     const updatedExpenses = expenses.map(exp => {
       if (exp.id === selectedItem.id) {
-        return { ...exp, type: expenseType, description: description, value: value, image: image };
+        return { ...exp, type: expenseType, description, comment, value, image };
       }
       return exp;
     });
@@ -35,9 +38,17 @@ const Expenses = ({ navigation }) => {
     clearForm();
   };
 
+  const handleDeleteExpense = () => {
+    const filteredExpenses = expenses.filter(exp => exp.id !== selectedItem.id);
+    setExpenses(filteredExpenses);
+    clearForm();
+    setSelectedItem(null);
+  };
+
   const clearForm = () => {
     setExpenseType("");
     setDescription("");
+    setComment(""); // Aseguramos que también se borre el comentario
     setValue("");
     setImage(null);
     setSelectedItem(null);
@@ -45,22 +56,39 @@ const Expenses = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <ExpensesForm
-        transactionType={expenseType}
-        setTransactionType={setExpenseType}
-        description={description}
-        setDescription={setDescription}
-        value={value}
-        setValue={setValue}
-        image={image}
-        setImage={setImage}
-        handleSaveTransaction={handleSaveExpense}
-        selectedItem={selectedItem}
-        updateTransaction={updateExpense}
-        clearForm={clearForm}
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <FlatList
+        style={{ flex: 1 }}
+        ListHeaderComponent={
+          <View>
+            <ExpensesForm
+              navigation={navigation}
+              transactionType={expenseType}
+              setTransactionType={setExpenseType}
+              description={description}
+              setDescription={setDescription}
+              comment={comment} // Añadido para manejar el comentario
+              setComment={setComment} // Añadido para manejar el comentario
+              value={value}
+              setValue={setValue}
+              image={image}
+              setImage={setImage}
+              handleSaveTransaction={handleSaveExpense}
+              selectedItem={selectedItem}
+              updateTransaction={updateExpense}
+              clearForm={clearForm}
+              handleDeleteTransaction={handleDeleteExpense}
+            />
+            <Text style={IncomeStyles.incomeListTitle}>Historial de Egresos</Text>
+          </View>
+        }
+        data={expenses}
+        renderItem={({ item }) => (
+          <ExpensesList expenses={[item]} setSelectedItem={setSelectedItem} />
+        )}
+        keyExtractor={item => item.id.toString()}
+        contentContainerStyle={{ paddingBottom: 20 }}
       />
-      <ExpensesList expenses={expenses} setSelectedItem={setSelectedItem} />
     </View>
   );
 };

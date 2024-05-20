@@ -12,16 +12,19 @@ const InfoClientCollect = ({ route, navigation }) => {
             <View style={PaymentStyles.sectionContainer}>
                 <View style={InfoClientCollectStyles.headerContainer}>
                     <Text style={GlobalStyles.title}>{title ? title : 'Título no disponible'}</Text>
-                    <View style={InfoClientCollectStyles.medalContainer} onPress={() => navigation.navigate('ClientLevelHistory')}>
+                    <TouchableOpacity 
+                        style={InfoClientCollectStyles.medalContainer} 
+                        onPress={() => navigation.navigate('ClientLevelHistory', { title })}
+                    >
                         <Image
                             source={require('../../assets/Group 239046.png')}
                             style={InfoClientCollectStyles.medalImage}
                         />
                         <Text style={InfoClientCollectStyles.medalText}>Nivel Plata</Text>
-                        <TouchableOpacity style={InfoClientCollectStyles.infoContainer} >
+                        <View style={InfoClientCollectStyles.infoContainer}>
                             <Text style={InfoClientCollectStyles.infoIcon}>i</Text>
-                        </TouchableOpacity>
-                    </View>
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={PaymentStyles.section}>
@@ -34,6 +37,9 @@ const InfoClientCollect = ({ route, navigation }) => {
                     <Text style={GlobalStyles.normalFont}>Cra 4 #28-08 / Chapinero, Bogotá</Text>
                 </View>
             </View>
+            <TouchableOpacity style={GlobalStyles.blueButton} onPress={() => navigation.navigate('Collect')}>
+                <Text style={GlobalStyles.buttonText}>Volver</Text>
+            </TouchableOpacity>
         </ScrollView>
     );
 };

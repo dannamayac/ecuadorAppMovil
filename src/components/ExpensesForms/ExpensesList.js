@@ -1,29 +1,39 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import IncomeStyles from '../../styles/income/IncomeStyles';
 
-const ExpensesList = ({ expenses }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+const ExpensesList = ({ expenses = [], setSelectedItem }) => {
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [photoModalVisible, setPhotoModalVisible] = useState(false);
+  const [selectedItemState, setSelectedItemState] = useState(null);
 
   const openMenu = (item) => {
-    setSelectedItem(item);
-    setModalVisible(true);
+    setSelectedItemState(item);
+    setMenuVisible(true);
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
+  const closeMenu = () => {
+    setMenuVisible(false);
+  };
+
+  const openPhotoModal = () => {
+    setMenuVisible(false);
+    setPhotoModalVisible(true);
+  };
+
+  const closePhotoModal = () => {
+    setPhotoModalVisible(false);
   };
 
   const handleEdit = (item) => {
-    closeModal();
+    closeMenu();
     setSelectedItem(item);
   };
 
-  const renderExpenseItem = ({ item }) => ( // Cambiar el nombre de la función para reflejar su uso
-    <View style={IncomeStyles.incomeItem}>
-      <Text>{item.description} - ${item.value}</Text>
+  const renderExpenseItem = (item) => (
+    <View key={item.id.toString()} style={IncomeStyles.incomeItem}>
+      <Text>Retiro de caja - ${item.value}</Text>
       <TouchableOpacity onPress={() => openMenu(item)}>
         <FontAwesome name="ellipsis-v" size={20} />
       </TouchableOpacity>
@@ -32,30 +42,42 @@ const ExpensesList = ({ expenses }) => {
 
   return (
     <View>
-      <FlatList
-        data={expenses} // Cambiar 'incomes' a 'expenses'
-        renderItem={renderExpenseItem} // Actualizar la referencia a la función de render
-        keyExtractor={item => item.id.toString()}
-        ListHeaderComponent={<Text style={IncomeStyles.incomeListTitle}>Historial de Egresos</Text>}
-        ListHeaderComponentStyle={IncomeStyles.listHeaderStyle}
-        contentContainerStyle={{ backgroundColor: 'white', flexGrow: 1, paddingBottom: 10 }}
-      />
+      {Array.isArray(expenses) && expenses.map(item => renderExpenseItem(item))}
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
-        onRequestClose={closeModal}
+        visible={menuVisible}
+        onRequestClose={closeMenu}
       >
-        <View style={IncomeStyles.centeredView}>
-          <View style={IncomeStyles.modalView}>
-            <TouchableOpacity style={IncomeStyles.menuItem} onPress={() => handleEdit(selectedItem)}>
+        <View style={IncomeStyles.modalOverlay}>
+          <View style={IncomeStyles.menuContainer}>
+            <TouchableOpacity style={IncomeStyles.menuItem} onPress={() => handleEdit(selectedItemState)}>
               <Text>Actualizar movimiento</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={IncomeStyles.menuItem} onPress={closeModal}>
+            <TouchableOpacity style={IncomeStyles.menuItem} onPress={closeMenu}>
               <Text>Cancelar</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={IncomeStyles.menuItem} onPress={() => console.log('Ver foto')}>
+            <TouchableOpacity style={IncomeStyles.menuItem} onPress={openPhotoModal}>
               <Text>Ver foto</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={photoModalVisible}
+        onRequestClose={closePhotoModal}
+      >
+        <View style={IncomeStyles.modalOverlay}>
+          <View style={IncomeStyles.menuContainer}>
+            {selectedItemState && selectedItemState.image ? (
+              <Image source={{ uri: selectedItemState.image }} style={IncomeStyles.imageModal} />
+            ) : (
+              <Text>No hay ninguna foto</Text>
+            )}
+            <TouchableOpacity style={IncomeStyles.menuItem} onPress={closePhotoModal}>
+              <Text>Cerrar</Text>
             </TouchableOpacity>
           </View>
         </View>

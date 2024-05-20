@@ -26,6 +26,7 @@ export const GlobalStyles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
+    marginBottom: 10,
   },
   lightBlueButton: {
     width: '100%',
@@ -33,7 +34,6 @@ export const GlobalStyles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
-    marginTop: 10,
     marginBottom: 10,
   },
   redButton:{
@@ -117,4 +117,16 @@ export const GlobalStyles = StyleSheet.create({
     fontSize: 16,
     width: '50%',
   },
+  backButton: {
+    marginBottom: 20,
+    backgroundColor: colors.input,
+    width: 90,
+    borderRadius: 15,
+},
+backButtonText: {
+    color: colors.bluePrimary,
+    fontSize: 16,
+    fontWeight: '500',
+    marginLeft: 10,
+},
 })

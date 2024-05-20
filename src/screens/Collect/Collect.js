@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, ScrollView, TextInput } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import CollectStyles from '../../styles/Collect/CollectStyles';
@@ -39,8 +39,18 @@ const Collect = ({ navigation }) => {
     ];
 
     const [data, setData] = useState(initialData);
+    const [menuVisible, setMenuVisible] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
+    const [punishModalVisible, setPunishModalVisible] = useState(false); // Nuevo estado para la nueva modal
     const [selectedItem, setSelectedItem] = useState(null);
+
+    const [pendingChecked, setPendingChecked] = useState(true);
+    const [paidChecked, setPaidChecked] = useState(false);
+    const [noPaymentChecked, setNoPaymentChecked] = useState(true);
+    const [dailyChecked, setDailyChecked] = useState(false);
+    const [weeklyChecked, setWeeklyChecked] = useState(true);
+    const [biWeeklyChecked, setBiWeeklyChecked] = useState(false);
+    const [monthlyChecked, setMonthlyChecked] = useState(false);
 
     const handleUpdateCobro = (title, cobroHour) => {
         const updatedData = data.map(item =>
@@ -56,6 +66,15 @@ const Collect = ({ navigation }) => {
 
     const handleMenuClose = () => {
         setModalVisible(false);
+    };
+
+    const handlePunishMenuOpen = (item) => {
+        setSelectedItem(item);
+        setPunishModalVisible(true);
+    };
+
+    const handlePunishMenuClose = () => {
+        setPunishModalVisible(false);
     };
 
     const renderCards = (item) => (
@@ -91,20 +110,99 @@ const Collect = ({ navigation }) => {
                     })}>
                     <Text style={GlobalStyles.buttonText}>✔</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[CollectStyles.statusButton, { backgroundColor: '#cc1515' }]}>
+                <TouchableOpacity 
+                    style={[CollectStyles.statusButton, { backgroundColor: '#cc1515' }]}
+                    onPress={() => navigation.navigate('NoPayment', { 
+                        title: item.title, 
+                        quotaValue: item.quotaValue, 
+                        amountPending: item.amountPending, 
+                        lastPaymentAmount: item.lastPaymentAmount 
+                    })}
+                >
                     <Text style={GlobalStyles.buttonText}>✘</Text>
                 </TouchableOpacity>
             </View>
         </View>
     );
 
-    return (
-        <ScrollView style={CollectStyles.container}>
-            {data.map(renderCards)}
-            <TouchableOpacity style={GlobalStyles.blueButton}>
-                <Text style={GlobalStyles.buttonText}>Resumen</Text>
-            </TouchableOpacity>
+    const handleFilterMenuToggle = () => {
+        setMenuVisible(!menuVisible);
+    };
 
+    return (
+        <View style={CollectStyles.container}>
+            <View style={CollectStyles.headerButtons}>
+                <TextInput style={CollectStyles.searchInput} placeholder="Buscar" />
+                <TouchableOpacity style={CollectStyles.iconButton} onPress={() => navigation.navigate('RecordHistory')}>
+                    <MaterialCommunityIcons name="clock-outline" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity style={CollectStyles.iconButton} onPress={handleFilterMenuToggle}>
+                    <MaterialCommunityIcons name="filter-variant" size={24} color="black" />
+                </TouchableOpacity>
+            </View>
+            <ScrollView>
+                {data.map(renderCards)}
+                <TouchableOpacity style={GlobalStyles.blueButton}>
+                    <Text style={GlobalStyles.buttonText}>Resumen</Text>
+                </TouchableOpacity>
+            </ScrollView>
+            <Modal
+                visible={menuVisible}
+                transparent={true}
+                animationType="slide"
+                onRequestClose={() => setMenuVisible(false)}
+            >
+                <TouchableOpacity style={CollectStyles.modalOverlay} onPress={() => setMenuVisible(false)}>
+                    <View style={CollectStyles.filterMenuContainer}>
+                        <View style={CollectStyles.filterMenu}>
+                            <Text style={CollectStyles.filterTitle}>Estados de pago</Text>
+                            <View style={CollectStyles.filterOption}>
+                                <Text>Pendientes (2)</Text>
+                                <TouchableOpacity onPress={() => setPendingChecked(!pendingChecked)}>
+                                    <MaterialCommunityIcons name={pendingChecked ? "checkbox-marked" : "checkbox-blank-outline"} size={24} color="black" />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={CollectStyles.filterOption}>
+                                <Text>Pago (0)</Text>
+                                <TouchableOpacity onPress={() => setPaidChecked(!paidChecked)}>
+                                    <MaterialCommunityIcons name={paidChecked ? "checkbox-marked" : "checkbox-blank-outline"} size={24} color="black" />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={CollectStyles.filterOption}>
+                                <Text>No pagos (3)</Text>
+                                <TouchableOpacity onPress={() => setNoPaymentChecked(!noPaymentChecked)}>
+                                    <MaterialCommunityIcons name={noPaymentChecked ? "checkbox-marked" : "checkbox-blank-outline"} size={24} color="black" />
+                                </TouchableOpacity>
+                            </View>
+                            <Text style={CollectStyles.filterTitle}>Frecuencia de pago</Text>
+                            <View style={CollectStyles.filterOption}>
+                                <Text>Diario</Text>
+                                <TouchableOpacity onPress={() => setDailyChecked(!dailyChecked)}>
+                                    <MaterialCommunityIcons name={dailyChecked ? "checkbox-marked" : "checkbox-blank-outline"} size={24} color="black" />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={CollectStyles.filterOption}>
+                                <Text>Semanal</Text>
+                                <TouchableOpacity onPress={() => setWeeklyChecked(!weeklyChecked)}>
+                                    <MaterialCommunityIcons name={weeklyChecked ? "checkbox-marked" : "checkbox-blank-outline"} size={24} color="black" />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={CollectStyles.filterOption}>
+                                <Text>Quincenal</Text>
+                                <TouchableOpacity onPress={() => setBiWeeklyChecked(!biWeeklyChecked)}>
+                                    <MaterialCommunityIcons name={biWeeklyChecked ? "checkbox-marked" : "checkbox-blank-outline"} size={24} color="black" />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={CollectStyles.filterOption}>
+                                <Text>Mensual</Text>
+                                <TouchableOpacity onPress={() => setMonthlyChecked(!monthlyChecked)}>
+                                    <MaterialCommunityIcons name={monthlyChecked ? "checkbox-marked" : "checkbox-blank-outline"} size={24} color="black" />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+            </Modal>
             <Modal
                 visible={modalVisible}
                 transparent={true}
@@ -131,14 +229,45 @@ const Collect = ({ navigation }) => {
                         <TouchableOpacity style={CollectStyles.menuItem}><Text>Info de cliente</Text></TouchableOpacity>
                         <TouchableOpacity style={CollectStyles.menuItem}><Text>Histórico de ventas</Text></TouchableOpacity>
                         <TouchableOpacity style={CollectStyles.menuItem}><Text>Histórico de pagos</Text></TouchableOpacity>
-                        <TouchableOpacity style={CollectStyles.menuItem}><Text>Generar castigo</Text></TouchableOpacity>
+                        <TouchableOpacity 
+                            style={CollectStyles.menuItem}
+                            onPress={() => {
+                                handlePunishMenuOpen(selectedItem);
+                                handleMenuClose();
+                            }}
+                        >
+                            <Text>Generar castigo</Text>
+                        </TouchableOpacity>
                         <TouchableOpacity style={CollectStyles.menuItem}><Text>Programar alarma</Text></TouchableOpacity>
                         <TouchableOpacity style={CollectStyles.menuItem}><Text>Ver fotos</Text></TouchableOpacity>
                         <TouchableOpacity style={CollectStyles.menuItem}><Text>Adjuntar fotos</Text></TouchableOpacity>
                     </View>
                 </TouchableOpacity>
             </Modal>
-        </ScrollView>
+            <Modal
+                visible={punishModalVisible}
+                transparent={true}
+                animationType="fade"
+                onRequestClose={handlePunishMenuClose}
+            >
+                <View style={CollectStyles.modalOverlay}>
+                    <View style={CollectStyles.punishContainer}>
+                        <Text style={CollectStyles.punishTitle}>Solicitud de castigo de cartera</Text>
+                        <Text style={CollectStyles.punishText}>
+                            A continuación generará una solicitud de castigo de cartera para el cliente: {selectedItem?.title}.
+                        </Text>
+                        <TextInput
+                            style={CollectStyles.punishInput}
+                            placeholder="Motivo de la solicitud, escriba aquí..."
+                            multiline
+                        />
+                        <TouchableOpacity style={CollectStyles.punishButton} onPress={handlePunishMenuClose}>
+                            <Text style={GlobalStyles.buttonText}>Enviar solicitud</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+        </View>
     );
 };
 
