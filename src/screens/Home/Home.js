@@ -1,12 +1,12 @@
-// Home.js
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { LineChartGreen, LineChartRed, LineChartYellow, LineChartAquamarine } from '../../components/LineChart';
 import ManagementButton from '../../components/ManagementButton';
+import HomeStyles from '../../styles/Home/HomeStyles';
 
 const Home = ({ navigation }) => {
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={HomeStyles.container}>
       <ManagementButton 
         title="Ingresos" 
         summary="39,786 USD" 

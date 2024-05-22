@@ -31,6 +31,7 @@ import RecordHistory from '../screens/Collect/RecordHistory';
 import CollectionDetails from '../screens/Collect/CollectionDetails';
 import Ticket from '../screens/Sales/Ticket';
 import NoPayment from '../screens/Collect/NoPayment';
+import CashSummary from '../screens/Collect/CashSummary';
 
 
 const Stack = createNativeStackNavigator();
@@ -67,6 +68,7 @@ function DrawerNavigator() {
       <Drawer.Screen name="RecordHistory" component={RecordHistory} />
       <Drawer.Screen name="CollectionDetails" component={CollectionDetails} />
       <Drawer.Screen name="NoPayment" component={NoPayment} />
+      <Drawer.Screen name="CashSummary" component={CashSummary} />
       {/* Vistas de Recorrido */}
       <Drawer.Screen name="UnitManagement" component={UnitManagement} />
     </Drawer.Navigator>

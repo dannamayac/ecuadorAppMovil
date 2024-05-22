@@ -6,12 +6,12 @@ const screenWidth = Dimensions.get('window').width;
 
 const createLineChart = (borderColor) => {
   const data = {
-    labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun"],
+    labels: ["", "", "", "", "", ""], // Mantén las etiquetas vacías
     datasets: [
       {
-        data: [12, 19, 3, 5, 2, 3],
-        strokeWidth: 2, // optional
-        color: (opacity = 1) => borderColor, // optional
+        data: [12, 19, 3, 8, 5, 9, 15, 10],
+        strokeWidth: 2,
+        color: (opacity = 1) => borderColor,
       },
     ],
   };
@@ -19,8 +19,8 @@ const createLineChart = (borderColor) => {
   return (
     <LineChart
       data={data}
-      width={160}
-      height={50}
+      width={230}
+      height={70}
       chartConfig={{
         backgroundColor: '#fff',
         backgroundGradientFrom: '#fff',
@@ -32,13 +32,24 @@ const createLineChart = (borderColor) => {
         },
         propsForDots: {
           r: "0",
-          strokeWidth: "2",
+          strokeWidth: "1",
           stroke: borderColor
-        }
+        },
+        propsForBackgroundLines: {
+          strokeWidth: 0,
+        },
+        propsForHorizontalLabels: {
+          strokeWidth: 0,
+        },
       }}
+      withVerticalLabels={false}
+      withHorizontalLabels={false}
+      withDots={false}
+      withInnerLines={false}
+      withOuterLines={false}
       bezier
       style={{
-        marginVertical: 8,
+        marginVertical: 0,
         borderRadius: 16
       }}
     />

@@ -7,7 +7,7 @@ import IncomeStyles from '../../styles/income/IncomeStyles';
 const Expenses = ({ navigation }) => {
   const [expenseType, setExpenseType] = useState("");
   const [description, setDescription] = useState("");
-  const [comment, setComment] = useState(""); // Añadido para manejar el comentario adicional
+  const [comment, setComment] = useState("");
   const [value, setValue] = useState("");
   const [image, setImage] = useState(null);
   const [expenses, setExpenses] = useState([]);
@@ -48,7 +48,7 @@ const Expenses = ({ navigation }) => {
   const clearForm = () => {
     setExpenseType("");
     setDescription("");
-    setComment(""); // Aseguramos que también se borre el comentario
+    setComment("");
     setValue("");
     setImage(null);
     setSelectedItem(null);
@@ -67,8 +67,8 @@ const Expenses = ({ navigation }) => {
               setTransactionType={setExpenseType}
               description={description}
               setDescription={setDescription}
-              comment={comment} // Añadido para manejar el comentario
-              setComment={setComment} // Añadido para manejar el comentario
+              comment={comment}
+              setComment={setComment}
               value={value}
               setValue={setValue}
               image={image}

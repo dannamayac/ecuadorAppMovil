@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { LineChart } from './LineChart';
 import ManagementButtonStyles from '../styles/Home/ManagementButtonStyles';
 
 const ManagementButton = ({ title, summary, ChartComponent, onPress }) => {
@@ -20,10 +19,11 @@ const ManagementButton = ({ title, summary, ChartComponent, onPress }) => {
           </View>
         )}
       </View>
-      <Text style={ManagementButtonStyles.manageText}>Gestionar {'>'}</Text>
+      <View style={ManagementButtonStyles.manageContainer}>
+        <Text style={ManagementButtonStyles.manageText}>Gestionar {'>'}</Text>
+      </View>
     </TouchableOpacity>
   );
 };
-
 
 export default ManagementButton;

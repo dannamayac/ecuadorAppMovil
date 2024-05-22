@@ -15,6 +15,9 @@ const NoPayment = ({ route, navigation }) => {
 
     return (
         <ScrollView style={PaymentStyles.container}>
+            <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
+                <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+            </TouchableOpacity>
             <View style={PaymentStyles.sectionContainer}>
                 <View style={PaymentStyles.headerWithLabel}>
                     <Text style={GlobalStyles.title}>{title}</Text>

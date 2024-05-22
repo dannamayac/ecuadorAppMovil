@@ -2,62 +2,79 @@ import { StyleSheet } from 'react-native';
 import { colors } from './../GlobalStyles';
 
 const SalesStyles = StyleSheet.create({
-container: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: '#fff'
+    container: {
+        flex: 1,
+        padding: 10,
+        backgroundColor: '#fff'
+    },
+    headerRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 10,
     },
     salesHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 10,
+        borderBottomWidth: 1,
+        borderColor: '#ccc',
+        paddingBottom: 8,
     },
     newSaleButton: {
-    backgroundColor: colors.bluePrimary,
-    borderRadius: 10,
-    padding: 10,
-    width: '50%',
+        backgroundColor: colors.bluePrimary,
+        borderRadius: 10,
+        padding: 10,
+        marginBottom: 20,
     },
     newSaleButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+        color: '#fff',
+        fontWeight: 'bold',
     },
     tableHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    paddingBottom: 5
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+        paddingBottom: 5,
+        borderBottomWidth: 1.5,
+        borderColor: 'gray',
+        paddingBottom: 8,
     },
     headerText: {
-    fontWeight: 'bold',
-    color: '#000',
-    flex: 1,
-    textAlign: 'center'
+        fontWeight: 'bold',
+        fontSize: 15,
+        color: '#325cf0',
+        flex: 1,
+        textAlign: 'center'
     },
     saleItemContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc'
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        marginLeft: -15,
     },
     saleItemText: {
-    fontSize: 16,
-    flex: 1,
-    textAlign: 'center'
+        fontSize: 13,
+        flex: 1,
+        textAlign: 'center',
     },
     viewButton: {
-    backgroundColor: colors.bluePrimary,
-    padding: 10,
-    borderRadius: 10,
+        backgroundColor: '#325cf0',
+        padding: 5,
+        borderRadius: 10,
+        marginRight: -10,
+        marginLeft: 5,
     },
     viewButtonText: {
-    color: '#fff'
+        color: '#fff',
+        fontSize: 13,
     },
     status: status => ({
-    color: status === 'Aprobada' ? 'green' : status === 'Rechazada' ? 'red' : 'orange'
+        backgroundColor: status === 'Aprobada' ? '#ccfcbc' : status === 'Rechazada' ? '#ff9c9c' : '#fffa9e'
     }),
     whitePickerContainer: {
         borderRadius: 10,
@@ -74,17 +91,45 @@ container: {
     },
     statusContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#FFD700',
+        padding: 5,
         borderRadius: 10,
-        width: '31%',
+        width: '24%',
     },
     statusText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 18,
-        marginLeft: 10,
+        color: 'black',
+        fontWeight: '500',
+        fontSize: 13,
+    },
+    headerButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+    },
+    searchInput: {
+        flex: 1,
+        padding: 5,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 10,
+        marginRight: 10,
+    },
+    menuContent: {
+        backgroundColor: '#ffffff',
+        borderRadius: 10,
+    },
+    menuItemText1: {
+        color: colors.bluePrimary,
+        fontSize: 16,
+        borderBottomWidth: 1,
+        borderColor: colors.bluePrimary,
+        paddingBottom: 15,
+    },
+    menuItemText: {
+        color: colors.bluePrimary,
+        fontSize: 16,
     },
 });
 

@@ -22,7 +22,7 @@ const ExpensesForm = ({
   selectedItem,
   clearForm,
   updateTransaction,
-  handleDeleteTransaction
+  handleDeleteTransaction,
 }) => {
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -51,13 +51,42 @@ const ExpensesForm = ({
     setIsLoading(false);
   };
 
+  const handlePickerChange = (itemValue) => {
+    setTransactionType(itemValue);
+
+    if (navigation) {
+      if (itemValue === 'income') {
+        navigation.navigate('Income');
+      } else if (itemValue === 'expense') {
+        navigation.navigate('Expenses');
+      } else if (itemValue === 'withdrawl') {
+        navigation.navigate('WithDrawls');
+      }
+    }
+  };
+
   return (
     <View style={IncomeStyles.headerContainer}>
+      <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Home')}>
+        <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+      </TouchableOpacity>
       <Text style={GlobalStyles.header}>Seleccione un tipo</Text>
       <View style={GlobalStyles.smallPickerContainer}>
         <Picker
           selectedValue={transactionType}
-          onValueChange={setTransactionType}
+          onValueChange={handlePickerChange}
+          style={GlobalStyles.smallPicker}
+        >
+          <Picker.Item label="Ingreso" value="income" />
+          <Picker.Item label="Gastos" value="expense" />
+          <Picker.Item label="Retiros" value="withdrawl" />
+        </Picker>
+      </View>
+      <Text style={GlobalStyles.header}>Descripción</Text>
+      <View style={GlobalStyles.bigPickerContainer}>
+        <Picker
+          selectedValue={description}
+          onValueChange={handlePickerChange}
           style={GlobalStyles.smallPicker}
         >
           <Picker.Item label="Alimentación" value="alimentación" />
@@ -68,16 +97,6 @@ const ExpensesForm = ({
           <Picker.Item label="Hospedaje" value="hospedaje" />
           <Picker.Item label="Médico" value="medico" />
           <Picker.Item label="Viajes/peaje" value="viajes" />
-        </Picker>
-      </View>
-      <Text style={GlobalStyles.header}>Descripción</Text>
-      <View style={GlobalStyles.bigPickerContainer}>
-        <Picker
-          selectedValue={description}
-          onValueChange={setDescription}
-          style={GlobalStyles.smallPicker}
-        >
-          <Picker.Item label="Varios" value="inversion" />
         </Picker>
       </View>
       <TextInput

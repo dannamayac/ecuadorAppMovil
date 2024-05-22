@@ -142,7 +142,7 @@ const Collect = ({ navigation }) => {
             </View>
             <ScrollView>
                 {data.map(renderCards)}
-                <TouchableOpacity style={GlobalStyles.blueButton}>
+                <TouchableOpacity style={GlobalStyles.blueButton} onPress={() => navigation.navigate('CashSummary')}>
                     <Text style={GlobalStyles.buttonText}>Resumen</Text>
                 </TouchableOpacity>
             </ScrollView>

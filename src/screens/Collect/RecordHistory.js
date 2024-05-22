@@ -62,7 +62,7 @@ const RecordHistory = ({ navigation }) => {
     return (
         <View style={RecordHistoryStyles.container}>
             <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
-                <Text style={GlobalStyles.backButtonText}> Volver</Text>
+                <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
             </TouchableOpacity>
             <Text style={RecordHistoryStyles.title}>Historial de registros (ventas/Recaudos)</Text>
             <ScrollView>

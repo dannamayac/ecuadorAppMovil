@@ -65,6 +65,9 @@ const IncomeForm = ({
 
   return (
     <View style={IncomeStyles.headerContainer}>
+      <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Home')}>
+        <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+      </TouchableOpacity>
       <Text style={GlobalStyles.header}>Seleccione un tipo</Text>
       <View style={GlobalStyles.smallPickerContainer}>
         <Picker

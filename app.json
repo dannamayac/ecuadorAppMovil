@@ -20,14 +20,14 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff",
-        "permissions": [
-          "CAMERA",
-          "READ_EXTERNAL_STORAGE",
-          "WRITE_EXTERNAL_STORAGE"
-        ]
+        "backgroundColor": "#ffffff"
       },
-      "package": "com.dannamayac.ecuadorAppMovil"
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ],
+      "package": "com.tecnopac.ecuadorAppMovil"
     },
     "web": {
       "favicon": "./assets/favicon.png"

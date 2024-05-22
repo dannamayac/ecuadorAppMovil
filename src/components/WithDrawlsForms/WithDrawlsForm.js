@@ -51,18 +51,35 @@ const WithDrawalsForm = ({
     setIsLoading(false);
   };
 
+  const handlePickerChange = (itemValue) => {
+    setTransactionType(itemValue);
+
+    if (navigation) {
+      if (itemValue === 'income') {
+        navigation.navigate('Income');
+      } else if (itemValue === 'expense') {
+        navigation.navigate('Expenses');
+      } else if (itemValue === 'withdrawl') {
+        navigation.navigate('WithDrawls');
+      }
+    }
+  };
+
   return (
     <View style={IncomeStyles.headerContainer}>
+      <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Home')}>
+        <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+      </TouchableOpacity>
       <Text style={GlobalStyles.header}>Seleccione un tipo de retiro</Text>
       <View style={GlobalStyles.smallPickerContainer}>
         <Picker
           selectedValue={transactionType}
-          onValueChange={setTransactionType}
+          onValueChange={handlePickerChange}
           style={GlobalStyles.smallPicker}
         >
-          <Picker.Item label="Cuenta Bancaria" value="bank" />
-          <Picker.Item label="PayPal" value="paypal" />
-          <Picker.Item label="Criptomonedas" value="crypto" />
+          <Picker.Item label="Ingreso" value="income" />
+          <Picker.Item label="Gastos" value="expense" />
+          <Picker.Item label="Retiros" value="withdrawl" />
         </Picker>
       </View>
       <Text style={GlobalStyles.header}>Descripción</Text>
@@ -72,7 +89,7 @@ const WithDrawalsForm = ({
           onValueChange={setDescription}
           style={GlobalStyles.smallPicker}
         >
-          <Picker.Item label="Inversión" value="inversion" />
+          <Picker.Item label="Varios" value="inversion" />
           <Picker.Item label="Gasto" value="gasto" />
         </Picker>
       </View>

@@ -63,6 +63,9 @@ const Payment = ({ route, navigation }) => {
 
     return (
         <ScrollView style={PaymentStyles.container}>
+            <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
+                <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+            </TouchableOpacity>
             <View style={PaymentStyles.paymentMethods}>
                 <RadioButton.Group onValueChange={value => setSelectedPayment(value)} value={selectedPayment}>
                     <View style={PaymentStyles.radioContainer}>
