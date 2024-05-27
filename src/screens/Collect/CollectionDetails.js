@@ -2,13 +2,15 @@ import React from 'react';
 import { View, Text, TextInput, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import CollectionDetailsStyles from '../../styles/Collect/CollectionDetailsStyles';
+import Header from '../../components/Header';
 
 const CollectionDetails = ({ navigation }) => {
     return (
         <ScrollView style={CollectionDetailsStyles.container}>
+            <Header />
             <View style={CollectionDetailsStyles.header}>
                 <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('RecordHistory')}>
-                    <Text style={GlobalStyles.backButtonText}> Volver</Text>
+                    <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
                 </TouchableOpacity>
                 <View style={CollectionDetailsStyles.userInfo}>
                     <Image source={{ uri: 'https://example.com/user-profile.png' }} style={CollectionDetailsStyles.userImage} />

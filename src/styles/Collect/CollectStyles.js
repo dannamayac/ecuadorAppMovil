@@ -1,3 +1,4 @@
+// src/styles/Collect/CollectStyles.js
 import { StyleSheet } from 'react-native';
 
 const CollectStyles = StyleSheet.create({
@@ -182,6 +183,12 @@ const CollectStyles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },
+    fixedBottomButton: {
+        position: 'absolute',
+        bottom: 10,
+        left: '2.5%',
+        width: '95%',
+    }
 });
 
 export default CollectStyles;

@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import PaymentStyles from '../../styles/Collect/PaymentsStyles';
 import InfoClientCollectStyles from '../../styles/Collect/InfoClientCollectStyles';
+import Header from '../../components/Header';
 
 const getColorForLevel = (level) => {
     switch (level) {
@@ -28,6 +29,7 @@ const ClientLevelHistory = ({ route, navigation }) => {
 
     return (
         <ScrollView style={PaymentStyles.container}>
+        <Header />
             <View style={PaymentStyles.sectionContainer}>
                 <View style={InfoClientCollectStyles.headerContainer}>
                     <Text style={GlobalStyles.title}>{title ? title : 'Título no disponible'}</Text>

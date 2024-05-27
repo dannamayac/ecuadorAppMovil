@@ -36,7 +36,7 @@ export const GlobalStyles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
-  redButton:{
+  redButton: {
     width: '100%',
     backgroundColor: colors.red,
     padding: 15,
@@ -88,7 +88,7 @@ export const GlobalStyles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
   },
- input: {
+  input: {
     backgroundColor: colors.input,
     borderWidth: 1,
     borderColor: colors.input,
@@ -122,11 +122,16 @@ export const GlobalStyles = StyleSheet.create({
     backgroundColor: colors.input,
     width: 90,
     borderRadius: 15,
-},
-backButtonText: {
+  },
+  backButtonText: {
     color: colors.bluePrimary,
     fontSize: 16,
     fontWeight: '500',
     marginLeft: 10,
-},
+  },
+  errorText: {
+    color: 'red',
+    marginTop: -10,
+    marginBottom: 10,
+  },
 })

@@ -6,9 +6,12 @@ import PaymentStyles from '../../styles/Collect/PaymentsStyles';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome5 } from '@expo/vector-icons';
+import Header from '../../components/Header';
+import { useCobro } from './CobroContext';
 
 const Payment = ({ route, navigation }) => {
-    const { title, quotaValue, amountPending, lastPaymentAmount, handleUpdateCobro } = route.params || {};
+    const { title, quotaValue, amountPending, lastPaymentAmount } = route.params || {};
+    const { handleUpdateCobro } = useCobro();
     const [selectedPayment, setSelectedPayment] = useState('immediatePayment');
     const [selectedMethod, setSelectedMethod] = useState('cash');
     const [description, setDescription] = useState('');
@@ -36,15 +39,8 @@ const Payment = ({ route, navigation }) => {
             }
             navigation.navigate('Collect');
         } else {
-            navigation.navigate('Receipt', {
-                title,
-                quotaValue,
-                amountPending,
-                lastPaymentAmount,
-                valorAPagar,
-                numCuotas,
-                description
-            });
+            handleUpdateCobro(title, null, true); // Mark as paid
+            navigation.navigate('Collect');
         }
     };
 
@@ -63,6 +59,7 @@ const Payment = ({ route, navigation }) => {
 
     return (
         <ScrollView style={PaymentStyles.container}>
+            <Header />
             <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
                 <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
             </TouchableOpacity>

@@ -3,45 +3,16 @@ import { View, Text, TouchableOpacity, Modal, ScrollView, TextInput } from 'reac
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import CollectStyles from '../../styles/Collect/CollectStyles';
+import Header from '../../components/Header';
+import CollectCard from '../../components/CollectCards/CollectCard';
+import { useCobro } from './CobroContext';
 
 const Collect = ({ navigation }) => {
-    const initialData = [
-        {
-            id: 1,
-            title: 'Pedro Panaderia',
-            quotaValue: '$50',
-            amountPending: '$10.00 - 3/10',
-            lastPaymentDate: '03/06/2023',
-            lastPaymentAmount: '$50',
-            totalDebt: '$40.00',
-            paymentStatus: 'Semanal',
-            nextPaymentDate: '03/08/2023',
-            nextPaymentTime: '13:00 pm',
-            daysLate: 0,
-            inCobro: false,
-            cobroHour: ''
-        },
-        {
-            id: 2,
-            title: 'Laura Peluqueria',
-            quotaValue: '$50',
-            amountPending: '$70.00 - 2/5',
-            lastPaymentDate: '03/06/2023',
-            lastPaymentAmount: '$10',
-            totalDebt: '$30.00',
-            paymentStatus: 'Pendiente',
-            nextPaymentDate: '03/08/2023',
-            nextPaymentTime: '13:00 pm',
-            daysLate: 2,
-            inCobro: false,
-            cobroHour: ''
-        },
-    ];
+    const { data } = useCobro();
 
-    const [data, setData] = useState(initialData);
     const [menuVisible, setMenuVisible] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    const [punishModalVisible, setPunishModalVisible] = useState(false); // Nuevo estado para la nueva modal
+    const [punishModalVisible, setPunishModalVisible] = useState(false); 
     const [selectedItem, setSelectedItem] = useState(null);
 
     const [pendingChecked, setPendingChecked] = useState(true);
@@ -51,13 +22,6 @@ const Collect = ({ navigation }) => {
     const [weeklyChecked, setWeeklyChecked] = useState(true);
     const [biWeeklyChecked, setBiWeeklyChecked] = useState(false);
     const [monthlyChecked, setMonthlyChecked] = useState(false);
-
-    const handleUpdateCobro = (title, cobroHour) => {
-        const updatedData = data.map(item =>
-            item.title === title ? { ...item, inCobro: true, cobroHour: cobroHour } : item
-        );
-        setData(updatedData);
-    };
 
     const handleMenuOpen = (item) => {
         setSelectedItem(item);
@@ -77,60 +41,13 @@ const Collect = ({ navigation }) => {
         setPunishModalVisible(false);
     };
 
-    const renderCards = (item) => (
-        <View key={item.id} style={CollectStyles.card}>
-            <View style={CollectStyles.header}>
-                <Text style={CollectStyles.title}>{item.title}</Text>
-                {item.inCobro && <MaterialCommunityIcons name="clock-outline" size={24} color="#FFD700" />}
-                <TouchableOpacity onPress={() => handleMenuOpen(item)}>
-                    <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
-                </TouchableOpacity>
-            </View>
-            <View style={CollectStyles.statusContainer}>
-                <Text style={CollectStyles.subtext}>Vr Cuota: {item.quotaValue}</Text>
-                <Text style={CollectStyles.subtext}>Pendiente: {item.amountPending}</Text>
-                <Text style={CollectStyles.subtext}>Pago: {item.lastPaymentAmount}</Text>
-            </View>
-            <View style={CollectStyles.infoContainer}>
-                <Text style={CollectStyles.infoText}>Último recuado: {item.lastPaymentDate}</Text>
-                <Text style={CollectStyles.infoText}>
-                    Fecha de pago: {item.nextPaymentDate} {item.cobroHour && <Text style={CollectStyles.cobroHour}>{item.cobroHour} pm</Text>}
-                </Text>
-                <Text style={CollectStyles.infoText}>Días en mora: {item.daysLate}</Text>
-            </View>
-            <View style={CollectStyles.statusContainer}>
-                <TouchableOpacity 
-                    style={[CollectStyles.statusButton, { backgroundColor: '#1bb546' }]} 
-                    onPress={() => navigation.navigate('Payment', { 
-                        title: item.title, 
-                        quotaValue: item.quotaValue, 
-                        amountPending: item.amountPending, 
-                        lastPaymentAmount: item.lastPaymentAmount, 
-                        handleUpdateCobro 
-                    })}>
-                    <Text style={GlobalStyles.buttonText}>✔</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    style={[CollectStyles.statusButton, { backgroundColor: '#cc1515' }]}
-                    onPress={() => navigation.navigate('NoPayment', { 
-                        title: item.title, 
-                        quotaValue: item.quotaValue, 
-                        amountPending: item.amountPending, 
-                        lastPaymentAmount: item.lastPaymentAmount 
-                    })}
-                >
-                    <Text style={GlobalStyles.buttonText}>✘</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    );
-
     const handleFilterMenuToggle = () => {
         setMenuVisible(!menuVisible);
     };
 
     return (
         <View style={CollectStyles.container}>
+            <Header />
             <View style={CollectStyles.headerButtons}>
                 <TextInput style={CollectStyles.searchInput} placeholder="Buscar" />
                 <TouchableOpacity style={CollectStyles.iconButton} onPress={() => navigation.navigate('RecordHistory')}>
@@ -140,12 +57,19 @@ const Collect = ({ navigation }) => {
                     <MaterialCommunityIcons name="filter-variant" size={24} color="black" />
                 </TouchableOpacity>
             </View>
-            <ScrollView>
-                {data.map(renderCards)}
-                <TouchableOpacity style={GlobalStyles.blueButton} onPress={() => navigation.navigate('CashSummary')}>
-                    <Text style={GlobalStyles.buttonText}>Resumen</Text>
-                </TouchableOpacity>
+            <ScrollView style={{ marginBottom: 60 }}>
+                {data.map(item => (
+                    <CollectCard 
+                        key={item.id} 
+                        item={item} 
+                        handleMenuOpen={handleMenuOpen} 
+                        navigation={navigation} 
+                    />
+                ))}
             </ScrollView>
+            <TouchableOpacity style={[GlobalStyles.blueButton, CollectStyles.fixedBottomButton]} onPress={() => navigation.navigate('CashSummary')}>
+                <Text style={GlobalStyles.buttonText}>Resumen</Text>
+            </TouchableOpacity>
             <Modal
                 visible={menuVisible}
                 transparent={true}

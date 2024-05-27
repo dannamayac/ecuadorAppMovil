@@ -3,18 +3,23 @@ import { View, Text, TextInput, ScrollView, TouchableOpacity } from 'react-nativ
 import { Picker } from '@react-native-picker/picker';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import PaymentStyles from '../../styles/Collect/PaymentsStyles';
+import Header from '../../components/Header';
+import { useCobro } from './CobroContext';
 
 const NoPayment = ({ route, navigation }) => {
     const { title, quotaValue, amountPending, lastPaymentAmount } = route.params || {};
+    const { handleUpdateCobro } = useCobro();
     const [description, setDescription] = useState('');
     const [reason, setReason] = useState('');
 
     const handleConfirm = () => {
-        navigation.navigate('Collect'); // Redirigir a Collect después de confirmar
+        handleUpdateCobro(title, null, false, true);
+        navigation.navigate('Collect');
     };
 
     return (
         <ScrollView style={PaymentStyles.container}>
+            <Header />
             <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
                 <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
             </TouchableOpacity>

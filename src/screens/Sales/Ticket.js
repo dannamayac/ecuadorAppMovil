@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { PaperProvider } from 'react-native-paper';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import TicketStyles from '../../styles/sales/TicketStyles';
+import Header from '../../components/Header';
 
 const Ticket = ({ navigation }) => {
     const [image, setImage] = useState(null);
@@ -49,6 +50,7 @@ const Ticket = ({ navigation }) => {
     return (
         <PaperProvider>
             <View style={TicketStyles.container}>
+            <Header />
                 <Text style={TicketStyles.title}>A continuación, proceda a cargar una foto del registro de la venta</Text>
                 <View style={TicketStyles.imageContainer}>
                     {image ? (

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import RecordHistoryStyles from '../../styles/Collect/RecordHistoryStyles';
+import Header from '../../components/Header';
 
 const RecordHistory = ({ navigation }) => {
     const initialData = [
@@ -28,14 +29,14 @@ const RecordHistory = ({ navigation }) => {
             clientName: 'Pedro Panadería',
             value: '$0',
             paymentMethod: 'Efectivo',
-            transactionType: 'Alarma'
+            transactionType: 'No pagó'
         },
     ];
 
     const [data, setData] = useState(initialData);
 
     const renderCards = (item) => (
-        <View key={item.id} style={RecordHistoryStyles.card}>
+        <View key={item.id} style={RecordHistoryStyles.card} >
             <View style={RecordHistoryStyles.header}>
                 <Text style={RecordHistoryStyles.clientID}>{item.clientID} - {item.clientName}</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('CollectionDetails')}>
@@ -52,6 +53,7 @@ const RecordHistory = ({ navigation }) => {
                         RecordHistoryStyles.statusButton, 
                         { backgroundColor: item.transactionType === 'Desembolso' ? '#1b2f8e' : item.transactionType === 'Recaudo' ? '#1bb546' : '#cc1515' }
                     ]}
+                    onPress={() => navigation.navigate('PaymentHistory', { item })}
                 >
                     <Text style={RecordHistoryStyles.buttonText}>{item.transactionType}</Text>
                 </TouchableOpacity>
@@ -61,6 +63,7 @@ const RecordHistory = ({ navigation }) => {
 
     return (
         <View style={RecordHistoryStyles.container}>
+            <Header />
             <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
                 <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
             </TouchableOpacity>

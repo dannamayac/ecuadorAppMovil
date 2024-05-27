@@ -3,6 +3,7 @@ import { View, Keyboard, FlatList, Text } from 'react-native';
 import WithDrawalsForm from '../../components/WithDrawlsForms/WithDrawlsForm';
 import WithDrawalsList from '../../components/WithDrawlsForms/WithDrawlsList';
 import IncomeStyles from '../../styles/income/IncomeStyles';
+import Header from '../../components/Header';
 
 const WithDrawals = ({ navigation }) => {
   const [withdrawalType, setWithdrawalType] = useState("");
@@ -57,6 +58,7 @@ const WithDrawals = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <Header />
       <FlatList
         style={{ flex: 1 }}
         ListHeaderComponent={

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, FlatList, TextInput } from 'react-native'
 import { Menu, Provider, Button } from 'react-native-paper';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import SalesStyles from '../../styles/sales/SalesStyles';
+import Header from '../../components/Header';
 import { useSales } from './SalesContext';
 
 const Sales = ({ navigation }) => {
@@ -32,6 +33,7 @@ const Sales = ({ navigation }) => {
 
     return (
         <Provider>
+            <Header />
             <View style={SalesStyles.container}>
                 <View style={SalesStyles.headerRow}>
                     <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Home')}>
@@ -51,7 +53,7 @@ const Sales = ({ navigation }) => {
                             titleStyle={SalesStyles.menuItemText1} 
                         />
                         <Menu.Item 
-                            onPress={() => { navigation.navigate('NewClient'); closeMenu(); }} 
+                            onPress={() => { navigation.navigate('ClientInfo'); closeMenu(); }} 
                             title="Nuevo cliente" 
                             titleStyle={SalesStyles.menuItemText} 
                         />

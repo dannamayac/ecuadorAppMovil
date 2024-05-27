@@ -5,7 +5,6 @@ const RecordHistoryStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        padding: 10,
     },
     card: {
         backgroundColor: '#f9f9f9',

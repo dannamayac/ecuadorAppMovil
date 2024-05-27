@@ -3,6 +3,7 @@ import { View, Keyboard, FlatList, Text } from 'react-native';
 import IncomeForm from '../../components/IncomeForms/IncomeForm';
 import IncomeList from '../../components/IncomeForms/IncomeList';
 import IncomeStyles from '../../styles/income/IncomeStyles';
+import Header from '../../components/Header';
 
 const Income = ({ navigation }) => {
   const [incomeType, setIncomeType] = useState("");
@@ -57,6 +58,7 @@ const Income = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <Header />
       <FlatList
         style={{ flex: 1 }}
         ListHeaderComponent={

@@ -5,7 +5,6 @@ const CashSummaryStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        padding: 10,
     },
     statusLabel: {
         alignSelf: 'flex-end',

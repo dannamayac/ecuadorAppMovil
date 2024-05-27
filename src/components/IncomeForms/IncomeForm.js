@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
@@ -24,9 +24,10 @@ const IncomeForm = ({
   updateIncome,
   handleDeleteIncome,
 }) => {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedItem) {
       setIncomeType(selectedItem.type);
       setDescription(selectedItem.description);
@@ -35,6 +36,21 @@ const IncomeForm = ({
       setImage(selectedItem.image);
     }
   }, [selectedItem]);
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!description) newErrors.description = 'Descripción es requerida';
+    if (!comment) newErrors.comment = 'Comentario es requerido';
+    if (!value) newErrors.value = 'Valor es requerido';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (validateForm()) {
+      handleSaveIncome();
+    }
+  };
 
   const pickImage = async () => {
     setIsLoading(true);
@@ -80,6 +96,8 @@ const IncomeForm = ({
           <Picker.Item label="Retiros" value="withdrawl" />
         </Picker>
       </View>
+      {errors.incomeType && <Text style={GlobalStyles.errorText}>{errors.incomeType}</Text>}
+      
       <Text style={GlobalStyles.header}>Descripción</Text>
       <View style={GlobalStyles.bigPickerContainer}>
         <Picker
@@ -92,6 +110,8 @@ const IncomeForm = ({
           <Picker.Item label="Salario" value="salario" />
         </Picker>
       </View>
+      {errors.description && <Text style={GlobalStyles.errorText}>{errors.description}</Text>}
+      <Text style={GlobalStyles.header}>Comentario</Text>
       <TextInput
         style={GlobalStyles.bigInput}
         onChangeText={setComment}
@@ -99,6 +119,8 @@ const IncomeForm = ({
         placeholder="Ingrese algún comentario sobre el movimiento..."
         multiline
       />
+      {errors.comment && <Text style={GlobalStyles.errorText}>{errors.comment}</Text>}
+      <Text style={GlobalStyles.header}>Valor</Text>
       <TextInput
         style={GlobalStyles.smallInput}
         onChangeText={setValue}
@@ -106,6 +128,8 @@ const IncomeForm = ({
         placeholder="Valor"
         keyboardType="numeric"
       />
+      {errors.value && <Text style={GlobalStyles.errorText}>{errors.value}</Text>}
+      
       <View style={IncomeStyles.imageContainer}>
         {isLoading ? (
           <ActivityIndicator size="large" color="#0000ff" />
@@ -121,7 +145,7 @@ const IncomeForm = ({
           </>
         )}
       </View>
-      <TouchableOpacity style={GlobalStyles.blueButton} onPress={selectedItem ? updateIncome : handleSaveIncome}>
+      <TouchableOpacity style={GlobalStyles.blueButton} onPress={selectedItem ? updateIncome : handleSubmit}>
         <Text style={GlobalStyles.buttonText}>{selectedItem ? 'Actualizar movimiento' : 'Guardar movimiento'}</Text>
       </TouchableOpacity>
       {selectedItem && (

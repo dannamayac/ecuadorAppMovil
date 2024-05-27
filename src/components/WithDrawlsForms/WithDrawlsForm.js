@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
@@ -24,9 +24,10 @@ const WithDrawalsForm = ({
   updateTransaction,
   handleDeleteTransaction
 }) => {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedItem) {
       setTransactionType(selectedItem.type);
       setDescription(selectedItem.description);
@@ -49,6 +50,21 @@ const WithDrawalsForm = ({
       setImage(result.uri);
     }
     setIsLoading(false);
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!description) newErrors.description = 'Descripción es requerida';
+    if (!comment) newErrors.comment = 'Comentario es requerido';
+    if (!value) newErrors.value = 'Valor es requerido';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (validateForm()) {
+      handleSaveTransaction();
+    }
   };
 
   const handlePickerChange = (itemValue) => {
@@ -82,6 +98,8 @@ const WithDrawalsForm = ({
           <Picker.Item label="Retiros" value="withdrawl" />
         </Picker>
       </View>
+      {errors.transactionType && <Text style={GlobalStyles.errorText}>{errors.transactionType}</Text>}
+      
       <Text style={GlobalStyles.header}>Descripción</Text>
       <View style={GlobalStyles.bigPickerContainer}>
         <Picker
@@ -93,6 +111,9 @@ const WithDrawalsForm = ({
           <Picker.Item label="Gasto" value="gasto" />
         </Picker>
       </View>
+      {errors.description && <Text style={GlobalStyles.errorText}>{errors.description}</Text>}
+      
+      <Text style={GlobalStyles.header}>Comentario</Text>
       <TextInput
         style={GlobalStyles.bigInput}
         onChangeText={setComment}
@@ -100,6 +121,8 @@ const WithDrawalsForm = ({
         placeholder="Ingrese algún comentario sobre el retiro..."
         multiline
       />
+      {errors.comment && <Text style={GlobalStyles.errorText}>{errors.comment}</Text>}
+      
       <Text style={GlobalStyles.header}>Valor</Text>
       <TextInput
         style={GlobalStyles.smallInput}
@@ -108,6 +131,8 @@ const WithDrawalsForm = ({
         placeholder="Cantidad a retirar"
         keyboardType="numeric"
       />
+      {errors.value && <Text style={GlobalStyles.errorText}>{errors.value}</Text>}
+      
       <View style={IncomeStyles.imageContainer}>
         {isLoading ? (
           <ActivityIndicator size="large" color="#0000ff" />
@@ -123,7 +148,7 @@ const WithDrawalsForm = ({
           </>
         )}
       </View>
-      <TouchableOpacity style={GlobalStyles.blueButton} onPress={selectedItem ? updateTransaction : handleSaveTransaction}>
+      <TouchableOpacity style={GlobalStyles.blueButton} onPress={selectedItem ? updateTransaction : handleSubmit}>
         <Text style={GlobalStyles.buttonText}>{selectedItem ? 'Actualizar movimiento' : 'Guardar movimiento'}</Text>
       </TouchableOpacity>
       {selectedItem && (

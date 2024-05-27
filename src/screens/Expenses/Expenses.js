@@ -3,6 +3,7 @@ import { View, Keyboard, FlatList, Text } from 'react-native';
 import ExpensesForm from '../../components/ExpensesForms/ExpensesForm';
 import ExpensesList from '../../components/ExpensesForms/ExpensesList';
 import IncomeStyles from '../../styles/income/IncomeStyles';
+import Header from '../../components/Header';
 
 const Expenses = ({ navigation }) => {
   const [expenseType, setExpenseType] = useState("");
@@ -57,6 +58,7 @@ const Expenses = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <Header />
       <FlatList
         style={{ flex: 1 }}
         ListHeaderComponent={

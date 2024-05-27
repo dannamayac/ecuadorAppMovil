@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { Provider } from 'react-native-paper';
 import SalesStyles from '../../styles/sales/SalesStyles';
 import { GlobalStyles } from '../../styles/GlobalStyles';
+import Header from '../../components/Header';
 
 const UnitManagement = ({ navigation }) => {
 
@@ -28,6 +29,7 @@ const UnitManagement = ({ navigation }) => {
 
     return (
         <Provider>
+            <Header />
             <View style={SalesStyles.container}>
                 <View style={SalesStyles.salesHeader}>
                     <Text style={GlobalStyles.title}>Gestión de unidades</Text>

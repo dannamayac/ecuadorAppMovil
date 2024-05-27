@@ -4,6 +4,7 @@ import { Checkbox } from 'react-native-paper';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import PaymentStyles from '../../styles/Collect/PaymentsStyles';
 import { FontAwesome5 } from '@expo/vector-icons';
+import Header from '../../components/Header';
 
 const Receipt = ({ route, navigation }) => {
     const { title, quotaValue, amountPending, lastPaymentAmount, valorAPagar: initialValorAPagar, numCuotas: initialNumCuotas, description: initialDescription } = route.params || {};
@@ -24,7 +25,11 @@ const Receipt = ({ route, navigation }) => {
 
     return (
         <ScrollView style={PaymentStyles.container}>
+            <Header />
             <View style={PaymentStyles.sectionContainer}>
+                <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
+                    <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+                </TouchableOpacity>
                 <View style={PaymentStyles.section}>
                     <Text style={GlobalStyles.title}>{title ? title : 'Título no disponible'}</Text>
                 </View>
@@ -37,9 +42,9 @@ const Receipt = ({ route, navigation }) => {
 
                 <View style={PaymentStyles.inputContainer}>
                     <Text>Cantidad de cuotas</Text>
-                    <TextInput 
-                        style={GlobalStyles.input} 
-                        keyboardType="numeric" 
+                    <TextInput
+                        style={GlobalStyles.input}
+                        keyboardType="numeric"
                         value={numCuotas}
                         onChangeText={setNumCuotas}
                         editable={!manualPayment}

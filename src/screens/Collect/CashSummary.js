@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import CashSummaryStyles from '../../styles/Collect/CashSummaryStyles';
 import PaymentStyles from '../../styles/Collect/PaymentsStyles';
+import Header from '../../components/Header';
 
 const CashSummary = ({ navigation }) => {
     const [visitedExpanded, setVisitedExpanded] = useState(false);
@@ -29,6 +30,7 @@ const CashSummary = ({ navigation }) => {
 
     return (
         <ScrollView style={CashSummaryStyles.container}>
+            <Header />
             <View style={PaymentStyles.headerWithLabel}>
                 <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
                     <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
@@ -150,7 +152,7 @@ const CashSummary = ({ navigation }) => {
                 </View>
             </View>
 
-            <TouchableOpacity style={CashSummaryStyles.closeButton}>
+            <TouchableOpacity style={CashSummaryStyles.closeButton} onPress={() => navigation.navigate('CashClosing')}>
                 <Text style={CashSummaryStyles.closeButtonText}>Cerrar caja</Text>
             </TouchableOpacity>
         </ScrollView>

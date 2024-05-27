@@ -6,6 +6,7 @@ import SalesStyles from '../../styles/sales/SalesStyles';
 import { Picker } from '@react-native-picker/picker';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import { useSales } from './SalesContext';
+import Header from '../../components/Header';
 
 const NewSale = ({ navigation }) => {
     const [venta, setVenta] = useState('');
@@ -38,6 +39,7 @@ const NewSale = ({ navigation }) => {
 
     return (
         <PaperProvider>
+            <Header />
             <ScrollView style={SalesStyles.container}>
             <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Sales')}>
                     <Text style={GlobalStyles.backButtonText}> Volver</Text>

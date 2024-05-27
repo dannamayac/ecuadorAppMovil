@@ -1,12 +1,14 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native';
 import { LineChartGreen, LineChartRed, LineChartYellow, LineChartAquamarine } from '../../components/LineChart';
 import ManagementButton from '../../components/ManagementButton';
 import HomeStyles from '../../styles/Home/HomeStyles';
+import Header from '../../components/Header';
 
 const Home = ({ navigation }) => {
   return (
     <ScrollView style={HomeStyles.container}>
+      <Header />
       <ManagementButton 
         title="Ingresos" 
         summary="39,786 USD" 

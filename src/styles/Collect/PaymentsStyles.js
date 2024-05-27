@@ -4,7 +4,6 @@ const PaymentStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        padding: 20,
     },
     sectionContainer: {
         marginBottom: 20,
