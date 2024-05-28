@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { View, Keyboard, FlatList, Text } from 'react-native';
 import IncomeForm from '../../components/IncomeForms/IncomeForm';
 import IncomeList from '../../components/IncomeForms/IncomeList';
 import IncomeStyles from '../../styles/income/IncomeStyles';
 import Header from '../../components/Header';
+import { REACT_APP_API_BASE_URL, REACT_APP_INCOMES_LIST_ENDPOINT } from '@env';
+
 
 const Income = ({ navigation }) => {
   const [incomeType, setIncomeType] = useState("");
@@ -13,6 +15,33 @@ const Income = ({ navigation }) => {
   const [image, setImage] = useState(null);
   const [incomes, setIncomes] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
+
+  useEffect(() => {
+    fetchIncomes();
+  }, []);
+
+  const fetchIncomes = async () => {
+    try {
+      console.log('Fetching incomes...');
+      const response = await fetch(`${REACT_APP_API_BASE_URL}${REACT_APP_INCOMES_LIST_ENDPOINT}`);
+      console.log('Response received:', response);
+      const result = await response.json();
+      console.log('Result:', result);
+      if (result.status === 200) {
+        console.log('Setting incomes:', result.Ingresos);
+        setIncomes(result.Ingresos);
+      } else {
+        console.log('Error: status not 200');
+        Alert.alert('Error', 'Error al cargar la lista de ingresos');
+      }
+    } catch (error) {
+      console.log('Error fetching incomes:', error);
+      Alert.alert('Error', 'Ha ocurrido un error al cargar la lista de ingresos');
+    } finally {
+      console.log('Fetch incomes finally block, setting loading to false');
+      setLoading(false);
+    }
+  };
 
   const handleSaveIncome = () => {
     const newIncome = {
