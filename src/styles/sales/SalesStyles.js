@@ -80,7 +80,7 @@ const SalesStyles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         width: '100%',
-        borderColor: 'black',
+        borderColor: colors.lightBlue,
         overflow: 'hidden',
         marginBottom: 5,
     },
@@ -130,6 +130,31 @@ const SalesStyles = StyleSheet.create({
     menuItemText: {
         color: colors.bluePrimary,
         fontSize: 16,
+    },
+    searchInput: {
+        flex: 1,
+        padding: 5,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 10,
+        marginRight: 10,
+        marginBottom: 5,
+    },
+    filterPickerContainer: {
+        borderRadius: 10,
+        borderWidth: 1,
+        width: '100%',
+        backgroundColor: colors.input,
+        borderColor: colors.input,
+        overflow: 'hidden',
+        marginBottom: 5,
+        alignItems: 'center',
+    },
+    picker: {
+        alignItems: 'center',
+        height: 40,
+        width: '100%',
+        backgroundColor: colors.input,
     },
 });
 

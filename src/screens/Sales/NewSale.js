@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { ScrollView, View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
 import SalesStyles from '../../styles/sales/SalesStyles';
 import { Picker } from '@react-native-picker/picker';
@@ -22,6 +21,9 @@ const NewSale = ({ navigation }) => {
     const [contractAmount, setContractAmount] = useState('');
     const [months, setMonths] = useState('');
     const [totalToPay, setTotalToPay] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedUnit, setSelectedUnit] = useState('');
+    const [selectedContract, setSelectedContract] = useState('');
 
     const { addSale } = useSales();
 
@@ -41,11 +43,39 @@ const NewSale = ({ navigation }) => {
         <PaperProvider>
             <Header />
             <ScrollView style={SalesStyles.container}>
-            <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Sales')}>
-                    <Text style={GlobalStyles.backButtonText}> Volver</Text>
+                <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Sales')}>
+                    <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
                 </TouchableOpacity>
                 <View style={SalesStyles.salesHeader}>
                     <Text style={GlobalStyles.title}>Nueva venta</Text>
+                </View>
+
+                <TextInput
+                    style={SalesStyles.searchInput}
+                    placeholder="Buscar"
+                    value={searchQuery}
+                    onChangeText={setSearchQuery}
+                />
+                <View style={SalesStyles.filterPickerContainer}>
+                    <Picker
+                        selectedValue={selectedUnit}
+                        onValueChange={setSelectedUnit}
+                        style={SalesStyles.picker}
+                    >
+                        <Picker.Item label="Todas las unidades (16)" value="all" />
+                        <Picker.Item label="Unidad 1" value="unit1" />
+                        <Picker.Item label="Unidad 2" value="unit2" />
+                    </Picker>
+                </View>
+                <View style={SalesStyles.filterPickerContainer}>
+                    <Picker
+                        selectedValue={selectedContract}
+                        onValueChange={setSelectedContract}
+                        style={SalesStyles.picker}
+                    >
+                        <Picker.Item label="Venta con contrato" value="nuevo" />
+                        <Picker.Item label="Nuevo" value="nuevo" />
+                    </Picker>
                 </View>
                 <Text style={GlobalStyles.header}>Venta con contrato</Text>
                 <View style={SalesStyles.whitePickerContainer}>
@@ -84,7 +114,7 @@ const NewSale = ({ navigation }) => {
                         onValueChange={setDocumento}
                         style={GlobalStyles.whitePicker}
                     >
-                        <Picker.Item label="Contrato de prestamo" value="prestamo" />
+                        <Picker.Item label="Contrato de préstamo" value="prestamo" />
                     </Picker>
                 </View>
                 <Text style={GlobalStyles.header}>Monto emitido</Text>
@@ -100,9 +130,8 @@ const NewSale = ({ navigation }) => {
                 <Text style={GlobalStyles.header}>Cuotas</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Cuotas"
                         value={cuotas}
-                        onChangeText={text => setCuotas(text)}
+                        onChangeText={setCuotas}
                         keyboardType="numeric"
                         style={SalesStyles.outlinedInput}
                     />
@@ -110,9 +139,8 @@ const NewSale = ({ navigation }) => {
                 <Text style={GlobalStyles.header}>Interés/Mes</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Interés/Mes"
                         value={interes}
-                        onChangeText={text => setInteres(text)}
+                        onChangeText={setInteres}
                         keyboardType="numeric"
                         style={SalesStyles.outlinedInput}
                     />
@@ -120,9 +148,8 @@ const NewSale = ({ navigation }) => {
                 <Text style={GlobalStyles.header}>Costo Administración</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Cost. Admin"
                         value={costAdmin}
-                        onChangeText={text => setCostAdmin(text)}
+                        onChangeText={setCostAdmin}
                         keyboardType="numeric"
                         style={SalesStyles.outlinedInput}
                     />
@@ -130,9 +157,8 @@ const NewSale = ({ navigation }) => {
                 <Text style={GlobalStyles.header}>Costo cierre</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Cost. Cierre"
                         value={costCierre}
-                        onChangeText={text => setCostCierre(text)}
+                        onChangeText={setCostCierre}
                         keyboardType="numeric"
                         style={SalesStyles.outlinedInput}
                     />
@@ -150,7 +176,6 @@ const NewSale = ({ navigation }) => {
                 <Text style={GlobalStyles.header}>Monto contrato</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="$0"
                         value={contractAmount}
                         onChangeText={setContractAmount}
                         keyboardType="numeric"
@@ -160,7 +185,6 @@ const NewSale = ({ navigation }) => {
                 <Text style={GlobalStyles.header}>Meses</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="0"
                         value={months}
                         onChangeText={setMonths}
                         keyboardType="numeric"
@@ -170,7 +194,6 @@ const NewSale = ({ navigation }) => {
                 <Text style={GlobalStyles.header}>Total a pagar</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="$0"
                         value={totalToPay}
                         onChangeText={setTotalToPay}
                         keyboardType="numeric"
@@ -180,7 +203,7 @@ const NewSale = ({ navigation }) => {
                 <TouchableOpacity
                     style={GlobalStyles.greenButton}
                     onPress={handleNext}>
-                    <Text style={GlobalStyles.buttonText}>Siguiente</Text> 
+                    <Text style={GlobalStyles.buttonText}>Siguiente</Text>
                 </TouchableOpacity>
             </ScrollView>
         </PaperProvider>
