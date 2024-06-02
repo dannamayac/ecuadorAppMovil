@@ -6,6 +6,14 @@ const RecordHistoryStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
+    container2: {
+        paddingHorizontal: 10,
+    },
+    subTitleContainer: {
+        borderBottomWidth: 1.4,
+        borderColor: 'gray',
+        paddingBottom: 8,
+    },
     card: {
         backgroundColor: '#f9f9f9',
         margin: 10,
@@ -35,10 +43,21 @@ const RecordHistoryStyles = StyleSheet.create({
     },
     value: {
         fontSize: 16,
+        fontWeight: 'bold',
         color: '#333',
+    },
+    valueText: {
+        fontSize: 15,
+        color: '#333',
+        marginBottom: 5,
     },
     paymentMethod: {
         fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    paymentMethodText: {
+        fontSize: 15,
         color: '#333',
     },
     statusContainer: {
@@ -50,7 +69,7 @@ const RecordHistoryStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
-        padding: 10,
+        padding: 6,
         width: '40%',
     },
     buttonText: {

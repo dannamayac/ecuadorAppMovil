@@ -9,6 +9,7 @@ import Header from '../../components/Header';
 const Ticket = ({ navigation }) => {
     const [image, setImage] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
+    const [confirmationModalVisible, setConfirmationModalVisible] = useState(false);
 
     const pickImage = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -26,6 +27,7 @@ const Ticket = ({ navigation }) => {
 
         if (!result.canceled) {
             setImage(result.uri);
+            setModalVisible(false);
         }
     };
 
@@ -44,30 +46,41 @@ const Ticket = ({ navigation }) => {
 
         if (!result.canceled) {
             setImage(result.uri);
+            setModalVisible(false);
         }
+    };
+
+    const handleSave = () => {
+        setConfirmationModalVisible(true);
+    };
+
+    const handleContinue = () => {
+        setConfirmationModalVisible(false);
+        navigation.navigate('Sales');
     };
 
     return (
         <PaperProvider>
             <View style={TicketStyles.container}>
-            <Header />
+                <Header />
+                <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Sales')}>
+                    <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+                </TouchableOpacity>
                 <Text style={TicketStyles.title}>A continuación, proceda a cargar una foto del registro de la venta</Text>
                 <View style={TicketStyles.imageContainer}>
                     {image ? (
                         <Image source={{ uri: image }} style={TicketStyles.image} />
                     ) : (
-                        <TouchableOpacity onPress={() => setModalVisible(true)}>
-                            <View style={TicketStyles.imageButtonOverlay}>
-                                <Text style={TicketStyles.imageButtonText}>Agregar foto</Text>
-                            </View>
+                        <TouchableOpacity onPress={() => setModalVisible(true)} style={TicketStyles.imageButtonOverlay}>
+                            <Text style={TicketStyles.imageButtonText}>Agregar foto</Text>
                         </TouchableOpacity>
                     )}
                 </View>
                 <TouchableOpacity style={GlobalStyles.redButton} onPress={() => navigation.goBack()}>
                     <Text style={GlobalStyles.buttonText}>Cancelar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={GlobalStyles.greenButton} onPress={takePhoto}>
-                    <Text style={GlobalStyles.buttonText}>Tomar foto</Text>
+                <TouchableOpacity style={GlobalStyles.greenButton} onPress={image ? handleSave : takePhoto}>
+                    <Text style={GlobalStyles.buttonText}>{image ? 'Guardar' : 'Tomar foto'}</Text>
                 </TouchableOpacity>
             </View>
             <Modal
@@ -86,6 +99,21 @@ const Ticket = ({ navigation }) => {
                         </TouchableOpacity>
                         <TouchableOpacity style={TicketStyles.modalButton} onPress={() => setModalVisible(false)}>
                             <Text style={TicketStyles.modalButtonText}>Cancelar</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={confirmationModalVisible}
+                onRequestClose={() => setConfirmationModalVisible(false)}
+            >
+                <View style={TicketStyles.modalOverlay}>
+                    <View style={TicketStyles.modalContainer}>
+                        <Text style={{ marginBottom: 15 }}>La foto se ha guardado con éxito en la información de la venta</Text>
+                        <TouchableOpacity style={[GlobalStyles.greenButton, { marginTop: 10 }]} onPress={handleContinue}>
+                            <Text style={GlobalStyles.buttonText}>Continuar</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

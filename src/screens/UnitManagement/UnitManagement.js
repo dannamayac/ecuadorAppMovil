@@ -21,7 +21,7 @@ const UnitManagement = ({ navigation }) => {
             <Text style={SalesStyles.saleItemText}>{item.unit}</Text>
             <Text style={SalesStyles.saleItemText}>{item.income}</Text>
             <Text style={SalesStyles.saleItemText}>{item.sale}</Text>
-            <TouchableOpacity style={SalesStyles.viewButton}>
+            <TouchableOpacity style={SalesStyles.viewButton} onPress={() => navigation.navigate('CashInBox')}>
                 <Text style={SalesStyles.viewButtonText}>Ver</Text>
             </TouchableOpacity>
         </View>

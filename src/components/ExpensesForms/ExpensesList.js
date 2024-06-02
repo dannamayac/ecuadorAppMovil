@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, Image } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import IncomeStyles from '../../styles/income/IncomeStyles';
 
 const ExpensesList = ({ expenses = [], setSelectedItem }) => {
@@ -35,7 +35,7 @@ const ExpensesList = ({ expenses = [], setSelectedItem }) => {
     <View key={item.id.toString()} style={IncomeStyles.incomeItem}>
       <Text>Retiro de caja - ${item.value}</Text>
       <TouchableOpacity onPress={() => openMenu(item)}>
-        <FontAwesome name="ellipsis-v" size={20} />
+        <MaterialCommunityIcons name="dots-horizontal" size={25} color="#1b2f8e" />
       </TouchableOpacity>
     </View>
   );

@@ -4,9 +4,11 @@ import { Checkbox } from 'react-native-paper';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import EditPaymentStyles from '../../styles/Collect/EditPaymentStyles';
 import Header from '../../components/Header';
+import RecordHistoryStyles from '../../styles/Collect/RecordHistoryStyles';
+import CollectStyles from '../../styles/Collect/CollectStyles';
+import PaymentStyles from '../../styles/Collect/PaymentsStyles';
 
-const EditPayment = ({ route, navigation }) => {
-    const { item } = route.params;
+const EditPayment = ({ navigation }) => {
     const [paymentImmediate, setPaymentImmediate] = useState(true);
     const [paymentCash, setPaymentCash] = useState(true);
     const [delayPayment, setDelayPayment] = useState(false);
@@ -22,10 +24,13 @@ const EditPayment = ({ route, navigation }) => {
     return (
         <ScrollView style={EditPaymentStyles.container}>
             <Header />
-            <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.goBack()}>
+            <View style={RecordHistoryStyles.container2}>
+            <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('PaymentHistory')}>
                 <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
             </TouchableOpacity>
-            <Text style={EditPaymentStyles.title}>Historial de cobros</Text>
+            <View style={RecordHistoryStyles.subTitleContainer}>
+                <Text style={CollectStyles.subTitle}>Historial de cobros</Text>
+            </View>
 
             <View style={EditPaymentStyles.checkboxContainer}>
                 <Checkbox
@@ -53,16 +58,29 @@ const EditPayment = ({ route, navigation }) => {
                 <Text style={EditPaymentStyles.checkboxLabel}>Transferencia B.</Text>
             </View>
 
-            <View style={EditPaymentStyles.infoContainer}>
-                <Text style={EditPaymentStyles.clientInfo}>{item.clientID}</Text>
-                <Text style={EditPaymentStyles.clientName}>{item.clientName}</Text>
-                <Text style={EditPaymentStyles.status}>{item.status}</Text>
+            <View style={PaymentStyles.section}>
+                <View style={PaymentStyles.unitTitleContainer}>
+                    <Text style={CollectStyles.subTitle}>Unidad no disponible</Text>
+                    <View style={PaymentStyles.paidLabel}>
+                        <Text style={PaymentStyles.paidLabelText}>Pagó</Text>
+                    </View>
+                </View>
+                <Text style={GlobalStyles.title}>Título no disponible</Text>
             </View>
 
-            <View style={EditPaymentStyles.detailsContainer}>
-                <Text style={EditPaymentStyles.detailsText}>Vr Cuota: {item.value}</Text>
-                <Text style={EditPaymentStyles.detailsText}>Pendiente: $10,00 - 3/10</Text>
-                <Text style={EditPaymentStyles.detailsText}>Pago: $40,00</Text>
+            <View style={CollectStyles.infoRow}>
+                <View style={CollectStyles.infoColumn}>
+                    <Text style={CollectStyles.infoLabel}>Vr Cuota</Text>
+                    <Text style={CollectStyles.infoValue}>$00.00</Text>
+                </View>
+                <View style={CollectStyles.infoColumn}>
+                    <Text style={CollectStyles.infoLabel}>Pendiente</Text>
+                    <Text style={CollectStyles.infoValue}>$00.00</Text>
+                </View>
+                <View style={CollectStyles.infoColumn}>
+                    <Text style={CollectStyles.infoLabel}>Pago</Text>
+                    <Text style={CollectStyles.infoValue}>$00.00</Text>
+                </View>
             </View>
 
             <TextInput
@@ -98,6 +116,7 @@ const EditPayment = ({ route, navigation }) => {
             <TouchableOpacity style={GlobalStyles.redButton} onPress={() => navigation.goBack()}>
                 <Text style={GlobalStyles.buttonText}>Cancelar edición</Text>
             </TouchableOpacity>
+            </View>
         </ScrollView>
     );
 };

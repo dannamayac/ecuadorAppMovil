@@ -3,9 +3,11 @@ import { View, Text, TouchableOpacity, FlatList, Modal } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PaymentHistoryStyles from '../../styles/Collect/PaymentHistoryStyles';
 import Header from '../../components/Header';
+import RecordHistoryStyles from '../../styles/Collect/RecordHistoryStyles';
+import { GlobalStyles } from '../../styles/GlobalStyles';
+import CollectStyles from '../../styles/Collect/CollectStyles';
 
-const PaymentHistory = ({ route, navigation }) => {
-    const { item } = route.params;
+const PaymentHistory = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
 
@@ -28,27 +30,44 @@ const PaymentHistory = ({ route, navigation }) => {
 
     const renderItem = ({ item }) => (
         <View style={PaymentHistoryStyles.card}>
-            <Text style={PaymentHistoryStyles.cardTitle}>Ingreso de caja</Text>
+            <View style={PaymentHistoryStyles.cardHeader}>
+                <Text style={PaymentHistoryStyles.cardTitle}>Ingreso de caja</Text>
+                <TouchableOpacity style={PaymentHistoryStyles.cardMenu} onPress={() => openModal(item)}>
+                    <MaterialCommunityIcons name="dots-horizontal" size={33} color="#1b2f8e" />
+                </TouchableOpacity>
+            </View>
             <Text style={PaymentHistoryStyles.cardAmount}>{item.amount}</Text>
-            <Text style={PaymentHistoryStyles.cardMethod}>{item.method}</Text>
-            <TouchableOpacity style={PaymentHistoryStyles.cardMenu} onPress={() => openModal(item)}>
-                <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
-            </TouchableOpacity>
+            <Text style={PaymentHistoryStyles.cardTitle}>Método de pago</Text>
+            <Text style={PaymentHistoryStyles.cardAmount}>{item.method}</Text>
+            <View style={PaymentHistoryStyles.statusContainer}>
+                <TouchableOpacity
+                    style={[
+                        PaymentHistoryStyles.statusButton,
+                        { backgroundColor: item.status === 'Pagó' ? '#1bb546' : '#ffcc00' }
+                    ]}
+                >
+                    <Text style={PaymentHistoryStyles.buttonText}>{item.status}</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 
     const handleUpdate = () => {
         closeModal();
-        navigation.navigate('EditPayment', { item: selectedItem });
+        navigation.navigate('EditPayment');
     };
 
     return (
         <View style={PaymentHistoryStyles.container}>
             <Header />
-            <TouchableOpacity style={PaymentHistoryStyles.backButton} onPress={() => navigation.goBack()}>
-                <Text style={PaymentHistoryStyles.backButtonText}>{"<   Volver"}</Text>
-            </TouchableOpacity>
-            <Text style={PaymentHistoryStyles.title}>Historial de cobros</Text>
+            <View style={RecordHistoryStyles.container2}>
+                <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('RecordHistory')}>
+                    <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+                </TouchableOpacity>
+                <View style={[RecordHistoryStyles.subTitleContainer, { marginBottom: 10 }]}>
+                    <Text style={CollectStyles.subTitle}>Historial de cobros</Text>
+                </View>
+            </View>
             <FlatList
                 data={data}
                 renderItem={renderItem}

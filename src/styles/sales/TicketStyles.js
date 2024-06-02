@@ -4,10 +4,8 @@ import { colors } from './../GlobalStyles';
 const TicketStyles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#fff',
-        padding: 20,
+        paddingHorizontal: 10,
     },
     title: {
         fontSize: 18,

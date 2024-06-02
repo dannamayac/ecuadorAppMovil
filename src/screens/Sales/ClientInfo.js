@@ -75,7 +75,10 @@ const ClientInfo = ({ navigation, route }) => {
                 </View>
                 {fromViewButton && sale && (
                     <>
-                        <View style={SalesStyles.statusContainer}>
+                        <View style={[
+                            SalesStyles.statusContainer, 
+                            saleStatus === 'En espera' && { backgroundColor: '#fffa9e' }
+                        ]}>
                             <Text style={SalesStyles.statusText}>{saleStatus}</Text>
                         </View>
                         <Text style={SalesStyles.message}>
@@ -90,7 +93,8 @@ const ClientInfo = ({ navigation, route }) => {
                         onValueChange={setVenta}
                         style={GlobalStyles.whitePicker}
                     >
-                        <Picker.Item label="Nuevo" value="nuevo" />
+                        <Picker.Item label="Sí" value="yes" />
+                        <Picker.Item label="No" value="no" />
                     </Picker>
                 </View>
                 <Text style={GlobalStyles.header}>Dirección de la venta</Text>
@@ -105,16 +109,17 @@ const ClientInfo = ({ navigation, route }) => {
                 <Text style={GlobalStyles.header}>ID Cliente apodo</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Escriba aquí el ID del cliente"
+                        style={SalesStyles.outlinedInput}
+                        placeholder="Escriba aquí el ID del cliente"
                         value={idClient}
                         onChangeText={setIdClient}
-                        style={SalesStyles.outlinedInput}
+                        
                     />
                 </View>
                 <Text style={GlobalStyles.header}>Cliente</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Escriba aquí..."
+                        placeholder="Escriba aquí..."
                         value={client}
                         onChangeText={setClient}
                         style={SalesStyles.outlinedInput}
@@ -123,7 +128,7 @@ const ClientInfo = ({ navigation, route }) => {
                 <Text style={GlobalStyles.header}>Fecha y hora de solicitud</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Escribe el fecha y hora de solicitud"
+                        placeholder="Escribe el fecha y hora de solicitud"
                         value={date}
                         onChangeText={setDate}
                         style={SalesStyles.outlinedInput}
@@ -132,7 +137,7 @@ const ClientInfo = ({ navigation, route }) => {
                 <Text style={GlobalStyles.header}>Valor sin interés</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Escribe el valor sin interés"
+                        placeholder="Escribe el valor sin interés"
                         value={costWithOutTaxes}
                         onChangeText={setCostWithOutTaxes}
                         style={SalesStyles.outlinedInput}
@@ -141,7 +146,7 @@ const ClientInfo = ({ navigation, route }) => {
                 <Text style={GlobalStyles.header}>Cuotas pactadas</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Cuotas pactadas"
+                        placeholder="Cuotas pactadas"
                         value={contractAmount}
                         onChangeText={setContractAmount}
                         keyboardType="numeric"
@@ -151,7 +156,7 @@ const ClientInfo = ({ navigation, route }) => {
                 <Text style={GlobalStyles.header}>Tasa interés</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Tasa de interés"
+                        placeholder="Tasa de interés"
                         value={taxes}
                         onChangeText={setTaxes}
                         style={SalesStyles.outlinedInput}
@@ -160,7 +165,7 @@ const ClientInfo = ({ navigation, route }) => {
                 <Text style={GlobalStyles.header}>Frecuencia de pago</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Frecuencia de pago"
+                        placeholder="Frecuencia de pago"
                         value={frequencyToPay}
                         onChangeText={setFrequencyToPay}
                         style={SalesStyles.outlinedInput}
@@ -169,7 +174,7 @@ const ClientInfo = ({ navigation, route }) => {
                 <Text style={GlobalStyles.header}>Tipo de venta</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Tipo de venta"
+                        placeholder="Tipo de venta"
                         value={typeOfSell}
                         onChangeText={setTypeOfSell}
                         style={SalesStyles.outlinedInput}
@@ -178,7 +183,7 @@ const ClientInfo = ({ navigation, route }) => {
                 <Text style={GlobalStyles.header}>Estado</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Estado"
+                        placeholder="Estado"
                         value={state}
                         onChangeText={setState}
                         style={SalesStyles.outlinedInput}
@@ -187,7 +192,7 @@ const ClientInfo = ({ navigation, route }) => {
                 <Text style={GlobalStyles.header}>Mora anterior</Text>
                 <View style={SalesStyles.whitePickerContainer}>
                     <TextInput
-                        label="Mora anterior"
+                        placeholder="Mora anterior"
                         value={previousDebt}
                         onChangeText={setPreviousDebt}
                         style={SalesStyles.outlinedInput}

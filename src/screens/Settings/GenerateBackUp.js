@@ -4,11 +4,13 @@ import SalesStyles from '../../styles/sales/SalesStyles';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import { LineChartGreen } from '../../components/LineChart';
 import ManagementButton from '../../components/ManagementButton';
+import Header from '../../components/Header';
 
 const GenerateBackUp = ({ navigation }) => {
 
     return (
         <ScrollView style={SalesStyles.container}>
+            <Header />
             <View style={SalesStyles.salesHeader}>
                 <Text style={GlobalStyles.title}>Generar backup</Text>
             </View>

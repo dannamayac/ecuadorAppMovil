@@ -4,19 +4,21 @@ import { colors } from './../GlobalStyles';
 const SalesStyles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        paddingHorizontal: 10,
     },
     headerRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 10,
+        marginTop: 15,
+        marginHorizontal: 10,
     },
     salesHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        marginHorizontal: 10,
         marginBottom: 10,
         borderBottomWidth: 1,
         borderColor: '#ccc',
@@ -35,7 +37,7 @@ const SalesStyles = StyleSheet.create({
     tableHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 10,
+        marginHorizontal: 10,
         paddingBottom: 5,
         borderBottomWidth: 1.5,
         borderColor: 'gray',
@@ -55,7 +57,6 @@ const SalesStyles = StyleSheet.create({
         padding: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
-        marginLeft: -15,
     },
     saleItemText: {
         fontSize: 13,
@@ -88,6 +89,7 @@ const SalesStyles = StyleSheet.create({
         height: 50,
         width: '100%',
         backgroundColor: 'white',
+        marginLeft: 10,
     },
     statusContainer: {
         flexDirection: 'row',
@@ -106,7 +108,8 @@ const SalesStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 10,
+        paddingHorizontal: 10,
+        marginBottom: 10,
     },
     searchInput: {
         flex: 1,
@@ -119,6 +122,7 @@ const SalesStyles = StyleSheet.create({
     menuContent: {
         backgroundColor: '#ffffff',
         borderRadius: 10,
+        marginTop: 90,
     },
     menuItemText1: {
         color: colors.bluePrimary,
@@ -130,15 +134,6 @@ const SalesStyles = StyleSheet.create({
     menuItemText: {
         color: colors.bluePrimary,
         fontSize: 16,
-    },
-    searchInput: {
-        flex: 1,
-        padding: 5,
-        borderColor: '#ccc',
-        borderWidth: 1,
-        borderRadius: 10,
-        marginRight: 10,
-        marginBottom: 5,
     },
     filterPickerContainer: {
         borderRadius: 10,
@@ -155,6 +150,26 @@ const SalesStyles = StyleSheet.create({
         height: 40,
         width: '100%',
         backgroundColor: colors.input,
+    },
+    summaryContainer: {
+        padding: 10,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        marginBottom: 20,
+    },
+    summaryRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 10,
+    },
+    summaryLabel: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    summaryValue: {
+        fontSize: 16,
+        color: '#666',
     },
 });
 

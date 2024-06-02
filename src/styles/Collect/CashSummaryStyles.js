@@ -45,13 +45,13 @@ const CashSummaryStyles = StyleSheet.create({
         borderRadius: 10,
     },
     visitedSection: {
-        backgroundColor: '#e6e6fa',  // Light lavender
+        backgroundColor: '#e6e6fa',
     },
     paidSection: {
-        backgroundColor: '#e6fae6',  // Light green
+        backgroundColor: '#e6fae6',
     },
     notPaidSection: {
-        backgroundColor: '#fae6e6',  // Light red
+        backgroundColor: '#fae6e6',
     },
     sectionHeader: {
         flexDirection: 'row',

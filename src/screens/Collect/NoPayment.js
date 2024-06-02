@@ -5,9 +5,10 @@ import { GlobalStyles } from '../../styles/GlobalStyles';
 import PaymentStyles from '../../styles/Collect/PaymentsStyles';
 import Header from '../../components/Header';
 import { useCobro } from './CobroContext';
+import CollectStyles from '../../styles/Collect/CollectStyles';
 
 const NoPayment = ({ route, navigation }) => {
-    const { title, quotaValue, amountPending, lastPaymentAmount } = route.params || {};
+    const { unit, title, quotaValue, amountPending, lastPaymentAmount } = route.params || {};
     const { handleUpdateCobro } = useCobro();
     const [description, setDescription] = useState('');
     const [reason, setReason] = useState('');
@@ -20,45 +21,59 @@ const NoPayment = ({ route, navigation }) => {
     return (
         <ScrollView style={PaymentStyles.container}>
             <Header />
-            <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
-                <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
-            </TouchableOpacity>
-            <View style={PaymentStyles.sectionContainer}>
-                <View style={PaymentStyles.headerWithLabel}>
-                    <Text style={GlobalStyles.title}>{title}</Text>
-                    <Text style={[PaymentStyles.statusText, PaymentStyles.noPaymentLabel]}>No pagó</Text>
+            <View style={PaymentStyles.container2}>
+                <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
+                    <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+                </TouchableOpacity>
+                <View style={PaymentStyles.sectionContainer}>
+                    <View style={PaymentStyles.section}>
+                        <View style={PaymentStyles.unitTitleContainer}>
+                            <Text style={CollectStyles.subTitle}>{unit ? unit : 'Unidad no disponible'}</Text>
+                            <Text style={[PaymentStyles.statusText, PaymentStyles.noPaymentLabel]}>No pagó</Text>
+                        </View>
+                        <Text style={GlobalStyles.title}>{title ? title : 'Título no disponible'}</Text>
+                    </View>
+
+                    <View style={CollectStyles.infoRow}>
+                        <View style={CollectStyles.infoColumn}>
+                            <Text style={CollectStyles.infoLabel}>Vr Cuota</Text>
+                            <Text style={CollectStyles.infoValue}>{quotaValue}</Text>
+                        </View>
+                        <View style={CollectStyles.infoColumn}>
+                            <Text style={CollectStyles.infoLabel}>Pendiente</Text>
+                            <Text style={CollectStyles.infoValue}>{amountPending}</Text>
+                        </View>
+                        <View style={CollectStyles.infoColumn}>
+                            <Text style={CollectStyles.infoLabel}>Pago</Text>
+                            <Text style={CollectStyles.infoValue}>{lastPaymentAmount}</Text>
+                        </View>
+                    </View>
+
+                    <View style={PaymentStyles.inputContainer}>
+                        <Text >Motivo de no pago</Text>
+                        <Picker
+                            selectedValue={reason}
+                            onValueChange={(itemValue) => setReason(itemValue)}
+                            style={GlobalStyles.bigPicker}
+                        >
+                            <Picker.Item label="Falta de dinero" value="falta_dinero" />
+                            <Picker.Item label="Otro motivo" value="otro_motivo" />
+                        </Picker>
+                    </View>
+
+                    <TextInput
+                        style={GlobalStyles.bigInput}
+                        onChangeText={setDescription}
+                        value={description}
+                        placeholder="Agregue algún comentario sobre el pago..."
+                        multiline
+                    />
                 </View>
 
-                <View style={PaymentStyles.section}>
-                    <Text style={PaymentStyles.sectionText}>Vr Cuota: {quotaValue}</Text>
-                    <Text style={PaymentStyles.sectionText}>Pendiente: {amountPending}</Text>
-                    <Text style={PaymentStyles.sectionText}>Pago: {lastPaymentAmount}</Text>
-                </View>
-
-                <View style={PaymentStyles.inputContainer}>
-                    <Text>Motivo de no pago</Text>
-                    <Picker
-                        selectedValue={reason}
-                        onValueChange={(itemValue) => setReason(itemValue)}
-                        style={GlobalStyles.bigPicker}
-                    >
-                        <Picker.Item label="Falta de dinero" value="falta_dinero" />
-                        <Picker.Item label="Otro motivo" value="otro_motivo" />
-                    </Picker>
-                </View>
-
-                <TextInput
-                    style={GlobalStyles.bigInput}
-                    onChangeText={setDescription}
-                    value={description}
-                    placeholder="Agregue algún comentario sobre el pago..."
-                    multiline
-                />
+                <TouchableOpacity style={GlobalStyles.greenButton} onPress={handleConfirm}>
+                    <Text style={GlobalStyles.buttonText}>Confirmar</Text>
+                </TouchableOpacity>
             </View>
-
-            <TouchableOpacity style={GlobalStyles.greenButton} onPress={handleConfirm}>
-                <Text style={GlobalStyles.buttonText}>Confirmar</Text>
-            </TouchableOpacity>
         </ScrollView>
     );
 };

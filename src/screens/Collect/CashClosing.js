@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Modal, TextInput } from 'react-native';
 import CashClosingStyles from '../../styles/Collect/CashClosingStyles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Header from '../../components/Header';
 import { GlobalStyles } from '../../styles/GlobalStyles';
+import PaymentStyles from '../../styles/Collect/PaymentsStyles';
+import RecordHistoryStyles from '../../styles/Collect/RecordHistoryStyles';
+import CollectStyles from '../../styles/Collect/CollectStyles';
+import CashSummaryStyles from '../../styles/Collect/CashSummaryStyles';
 
 const CashClosing = ({ navigation, route }) => {
     const { closed } = route.params || {};
@@ -12,6 +16,7 @@ const CashClosing = ({ navigation, route }) => {
     const [notPaidExpanded, setNotPaidExpanded] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [shareModalVisible, setShareModalVisible] = useState(false);
+    const [value, setValue] = useState('');
 
     useEffect(() => {
         if (closed) {
@@ -54,175 +59,206 @@ const CashClosing = ({ navigation, route }) => {
 
     const handleShareOption = (option) => {
         setShareModalVisible(false);
-        // Implementar la lógica para cada opción de compartir
         console.log(`Compartir como ${option}`);
     };
 
     return (
         <ScrollView style={CashClosingStyles.container}>
             <Header />
-            <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
-                <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
-            </TouchableOpacity>
-            <View style={CashClosingStyles.header}>
-                <Text style={CashClosingStyles.title}>Resumen de caja</Text>
-                <Text style={CashClosingStyles.date}>Jue/13/Jul/23</Text>
-                {closed && <Text style={[CashClosingStyles.statusText, CashClosingStyles.statusLabel]}>Cerrada</Text>}
-            </View>
-
-            <View style={CashClosingStyles.summary}>
-                <View style={CashClosingStyles.summaryRow}>
-                    <Text style={CashClosingStyles.summaryLabel}>Caja actual</Text>
-                    <Text style={CashClosingStyles.summaryValue}>$00.00</Text>
+            <View style={PaymentStyles.container2}>
+                <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('CashSummary')}>
+                    <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+                </TouchableOpacity>
+                <View style={CashClosingStyles.header}>
+                    <View style={[RecordHistoryStyles.subTitleContainer, { flexDirection: 'row', justifyContent: 'space-between' }]}>
+                        <Text style={CollectStyles.subTitle}>Resumen de caja</Text>
+                        <Text style={CashClosingStyles.date}>Jue/13/Jul/23</Text>
+                    </View>
+                    {closed && <Text style={[CashClosingStyles.statusText, CashClosingStyles.statusLabel]}>Cerrada</Text>}
                 </View>
-                <View style={CashClosingStyles.summaryRow}>
-                    <Text style={CashClosingStyles.summaryLabel}>Caja inicial</Text>
-                    <Text style={CashClosingStyles.summaryValue}>$00.00</Text>
+
+                <View style={CashClosingStyles.summary}>
+                    <View style={CashClosingStyles.summaryRow}>
+                        <Text style={CashClosingStyles.summaryLabel}>Caja actual</Text>
+                        <Text style={CashClosingStyles.summaryValue}>$00.00</Text>
+                    </View>
+                    <View style={CashClosingStyles.summaryRow}>
+                        <Text style={CashClosingStyles.summaryLabel}>Caja inicial</Text>
+                        <Text style={CashClosingStyles.summaryValue}>$00.00</Text>
+                    </View>
                 </View>
-            </View>
 
-            <View style={CashClosingStyles.section}>
-                <Text style={CashClosingStyles.sectionTitle}>Ingresos</Text>
-                <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
-            </View>
-            <View style={CashClosingStyles.section}>
-                <Text style={CashClosingStyles.sectionTitle}>Gastos</Text>
-                <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
-            </View>
-            <View style={CashClosingStyles.section}>
-                <Text style={CashClosingStyles.sectionTitle}>Recaudos</Text>
-                <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
-            </View>
-            <View style={CashClosingStyles.section}>
-                <Text style={CashClosingStyles.sectionTitle}>Retiros</Text>
-                <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
-            </View>
-            <View style={CashClosingStyles.section}>
-                <Text style={CashClosingStyles.sectionTitle}>Recaudos extra</Text>
-                <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
-            </View>
-            <View style={CashClosingStyles.section}>
-                <Text style={CashClosingStyles.sectionTitle}>Ventas nuevas</Text>
-                <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
-            </View>
-            <View style={CashClosingStyles.section}>
-                <Text style={CashClosingStyles.sectionTitle}>Recaudos totales</Text>
-                <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
-            </View>
-
-            <View style={CashClosingStyles.recaudoSection}>
-                <Text style={CashClosingStyles.recaudoTitle}>Recaudo</Text>
-                <Text style={CashClosingStyles.recaudoValue}>209%</Text>
-            </View>
-
-            <View style={CashClosingStyles.section}>
-                <Text style={CashClosingStyles.sectionTitle}>Clientes visitados</Text>
-                <Text style={CashClosingStyles.sectionValue}>2/2</Text>
-            </View>
-
-            <View style={CashClosingStyles.clientsSection}>
-                <Text style={CashClosingStyles.clientsTitle}>Clientes pagaron</Text>
-                <Text style={CashClosingStyles.clientsValue}>6/10</Text>
-                <View style={CashClosingStyles.clientsDetails}>
-                    <Text style={CashClosingStyles.detailText}>Pagos completos</Text>
-                    <Text style={CashClosingStyles.detailValue}>3/6</Text>
+                <View style={CashClosingStyles.sectionContainer}>
+                    <View style={CashClosingStyles.section1}>
+                        <Text style={CashClosingStyles.sectionTitle}>Ingresos</Text>
+                        <Text style={CashClosingStyles.sectionInfoText}>Valor</Text>
+                        <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
+                    </View>
+                    <View style={CashClosingStyles.section2}>
+                        <Text style={CashClosingStyles.sectionTitle}>Gastos</Text>
+                        <Text style={CashClosingStyles.sectionInfoText}>Valor</Text>
+                        <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
+                    </View>
+                    <View style={CashClosingStyles.section1}>
+                        <Text style={CashClosingStyles.sectionTitle}>Recaudos</Text>
+                        <Text style={CashClosingStyles.sectionInfoText}>Valor</Text>
+                        <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
+                    </View>
+                    <View style={CashClosingStyles.section2}>
+                        <Text style={CashClosingStyles.sectionTitle}>Retiros</Text>
+                        <Text style={CashClosingStyles.sectionInfoText}>Valor</Text>
+                        <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
+                    </View>
+                    <View style={CashClosingStyles.section1}>
+                        <Text style={CashClosingStyles.sectionTitle}>Recaudos extra</Text>
+                        <Text style={CashClosingStyles.sectionInfoText}>Valor a recaudar</Text>
+                        <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
+                    </View>
+                    <View style={CashClosingStyles.section2}>
+                        <Text style={CashClosingStyles.sectionTitle}>Ventas nuevas</Text>
+                        <Text style={CashClosingStyles.sectionInfoText}>Valor</Text>
+                        <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
+                    </View>
+                    <View style={CashClosingStyles.section3}>
+                        <Text style={CashClosingStyles.sectionTitle}>Recaudos totales</Text>
+                        <Text style={CashClosingStyles.sectionInfoText}>Valor a recaudar</Text>
+                        <Text style={CashClosingStyles.sectionValue}>39,786 USD</Text>
+                    </View>
+                    <View style={CashClosingStyles.section2}>
+                        <Text style={CashClosingStyles.sectionTitle}></Text>
+                        <Text style={CashClosingStyles.sectionValue}></Text>
+                    </View>
                 </View>
-                <View style={CashClosingStyles.clientsDetails}>
-                    <Text style={CashClosingStyles.detailText}>Pagos incompletos</Text>
-                    <Text style={CashClosingStyles.detailValue}>1/6</Text>
+
+                <View style={CashClosingStyles.recaudoSection}>
+                    <Text style={CashClosingStyles.recaudoTitle}>Recaudo</Text>
+                    <Text style={CashClosingStyles.recaudoValue}>209%</Text>
                 </View>
-                <View style={CashClosingStyles.clientsDetails}>
-                    <Text style={CashClosingStyles.detailText}>Pagos más de una cuota</Text>
-                    <Text style={CashClosingStyles.detailValue}>2/6</Text>
+
+                <View style={[CashSummaryStyles.section, CashSummaryStyles.visitedSection]}>
+                    <TouchableOpacity onPress={() => setVisitedExpanded(!visitedExpanded)} style={CashSummaryStyles.sectionHeader}>
+                        <Text style={CashSummaryStyles.visitedTitle}>Clientes Visitados</Text>
+                        <Text style={CashSummaryStyles.sectionValue}>10/10</Text>
+                        <MaterialCommunityIcons name={visitedExpanded ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
+                    </TouchableOpacity>
+                    {visitedExpanded && visitedClients.map(client => (
+                        <Text key={client.id} style={CashSummaryStyles.clientName}>{client.name}</Text>
+                    ))}
                 </View>
-            </View>
 
-            <View style={CashClosingStyles.clientsSection}>
-                <Text style={CashClosingStyles.clientsTitle}>Clientes no pagaron</Text>
-                <Text style={CashClosingStyles.clientsValue}>4/10</Text>
-            </View>
-
-            <View style={CashClosingStyles.row}>
-                <View style={CashClosingStyles.box}>
-                    <Text style={CashClosingStyles.boxTitle}>Pre ventas por aprobar</Text>
-                    <Text style={CashClosingStyles.boxValue}>0</Text>
+                <View style={[CashSummaryStyles.section, CashSummaryStyles.paidSection]}>
+                    <TouchableOpacity onPress={() => setPaidExpanded(!paidExpanded)} style={CashSummaryStyles.sectionHeader}>
+                        <Text style={CashSummaryStyles.paymentTitle}>Clientes pagaron</Text>
+                        <Text style={CashSummaryStyles.paymentValue}>6/10</Text>
+                        <MaterialCommunityIcons name={paidExpanded ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
+                    </TouchableOpacity>
+                    {paidExpanded && paidClients.map(client => (
+                        <View key={client.id}>
+                            <Text style={CashSummaryStyles.clientName}>{client.name}</Text>
+                            <Text style={CashSummaryStyles.detailText}>Pagos completos: {client.completePayments}/6</Text>
+                            <Text style={CashSummaryStyles.detailText}>Pagos incompletos: {client.incompletePayments}/6</Text>
+                            <Text style={CashSummaryStyles.detailText}>Pagos más de una cuota: {client.installmentPayments}/6</Text>
+                        </View>
+                    ))}
                 </View>
-                <View style={CashClosingStyles.box}>
-                    <Text style={CashClosingStyles.boxTitle}>Pre gastos por aprobar</Text>
-                    <Text style={CashClosingStyles.boxValue}>0</Text>
+
+                <View style={[CashSummaryStyles.section, CashSummaryStyles.notPaidSection]}>
+                    <TouchableOpacity onPress={() => setNotPaidExpanded(!notPaidExpanded)} style={CashSummaryStyles.sectionHeader}>
+                        <Text style={CashSummaryStyles.noPaymentTitle}>Clientes no pagaron</Text>
+                        <Text style={CashSummaryStyles.noPaymentValue}>4/10</Text>
+                        <MaterialCommunityIcons name={notPaidExpanded ? 'chevron-up' : 'chevron-down'} size={24} color="black" />
+                    </TouchableOpacity>
+                    {notPaidExpanded && notPaidClients.map(client => (
+                        <Text key={client.id} style={CashSummaryStyles.clientName}>{client.name}</Text>
+                    ))}
                 </View>
-            </View>
 
-            <View style={CashClosingStyles.valueInput}>
-                <Text style={CashClosingStyles.valueLabel}>Valor</Text>
-                <Text style={CashClosingStyles.valueText}>0</Text>
-            </View>
+                <View style={CashClosingStyles.row}>
+                    <View style={CashClosingStyles.box}>
+                        <Text style={CashClosingStyles.boxTitle}>Pre ventas por aprobar</Text>
+                        <Text style={CashClosingStyles.boxValue}>0</Text>
+                    </View>
+                    <View style={CashClosingStyles.box}>
+                        <Text style={CashClosingStyles.boxTitle}>Pre gastos por aprobar</Text>
+                        <Text style={CashClosingStyles.boxValue}>0</Text>
+                    </View>
+                </View>
 
-            <TouchableOpacity style={CashClosingStyles.closeButton} onPress={closed ? shareCashRegister : closeCashRegister}>
-                <Text style={CashClosingStyles.closeButtonText}>{closed ? 'Compartir' : 'Cerrar caja'}</Text>
-            </TouchableOpacity>
+                <Text style={GlobalStyles.header}>Valor</Text>
+                <TextInput
+                    style={GlobalStyles.smallInput}
+                    onChangeText={setValue}
+                    value={value}
+                    placeholder="Valor"
+                    keyboardType="numeric"
+                />
 
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    setModalVisible(!modalVisible);
-                }}
-            >
-                <View style={CashClosingStyles.modalContainer}>
-                    <View style={CashClosingStyles.modalView}>
-                        <Text style={CashClosingStyles.modalText}>¿Está seguro que desea cerrar la caja?</Text>
-                        <View style={CashClosingStyles.buttonContainer}>
+                <TouchableOpacity style={CashClosingStyles.closeButton} onPress={closed ? shareCashRegister : closeCashRegister}>
+                    <Text style={CashClosingStyles.closeButtonText}>{closed ? 'Compartir' : 'Cerrar caja'}</Text>
+                </TouchableOpacity>
+
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        setModalVisible(!modalVisible);
+                    }}
+                >
+                    <View style={CashClosingStyles.modalContainer}>
+                        <View style={CashClosingStyles.modalView}>
+                            <Text style={CashClosingStyles.modalText}>¿Está seguro que desea cerrar la caja?</Text>
+                            <View style={CashClosingStyles.buttonContainer}>
+                                <TouchableOpacity
+                                    style={[CashClosingStyles.button, CashClosingStyles.buttonNo]}
+                                    onPress={cancelClose}
+                                >
+                                    <Text style={CashClosingStyles.textStyle}>No</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[CashClosingStyles.button, CashClosingStyles.buttonYes]}
+                                    onPress={() => navigation.navigate('PhotoAuthentication')}
+                                >
+                                    <Text style={CashClosingStyles.textStyle}>Si</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={shareModalVisible}
+                    onRequestClose={closeShareModal}
+                >
+                    <View style={CashClosingStyles.shareModalContainer}>
+                        <View style={CashClosingStyles.shareModalView}>
                             <TouchableOpacity
-                                style={[CashClosingStyles.button, CashClosingStyles.buttonNo]}
-                                onPress={cancelClose}
+                                style={CashClosingStyles.shareOption}
+                                onPress={() => handleShareOption('image')}
                             >
-                                <Text style={CashClosingStyles.textStyle}>No</Text>
+                                <MaterialCommunityIcons name="image" size={32} color="blue" />
+                                <Text style={CashClosingStyles.shareOptionText}>Imagen</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                style={[CashClosingStyles.button, CashClosingStyles.buttonYes]}
-                                onPress={() => navigation.navigate('PhotoAuthentication')}
+                                style={CashClosingStyles.shareOption}
+                                onPress={() => handleShareOption('file-download-outline')}
                             >
-                                <Text style={CashClosingStyles.textStyle}>Si</Text>
+                                <MaterialCommunityIcons name="file-download-outline" size={32} color="red" />
+                                <Text style={CashClosingStyles.shareOptionText}>PDF</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={CashClosingStyles.shareOption}
+                                onPress={() => handleShareOption('more')}
+                            >
+                                <MaterialCommunityIcons name="dots-horizontal" size={32} color="gray" />
+                                <Text style={CashClosingStyles.shareOptionText}>Más</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                </View>
-            </Modal>
-
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={shareModalVisible}
-                onRequestClose={closeShareModal}
-            >
-                <View style={CashClosingStyles.shareModalContainer}>
-                    <View style={CashClosingStyles.shareModalView}>
-                        <TouchableOpacity
-                            style={CashClosingStyles.shareOption}
-                            onPress={() => handleShareOption('image')}
-                        >
-                            <MaterialCommunityIcons name="image" size={32} color="blue" />
-                            <Text style={CashClosingStyles.shareOptionText}>Imagen</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={CashClosingStyles.shareOption}
-                            onPress={() => handleShareOption('file-download-outline')}
-                        >
-                            <MaterialCommunityIcons name="file-download-outline" size={32} color="red" />
-                            <Text style={CashClosingStyles.shareOptionText}>PDF</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={CashClosingStyles.shareOption}
-                            onPress={() => handleShareOption('more')}
-                        >
-                            <MaterialCommunityIcons name="dots-horizontal" size={32} color="gray" />
-                            <Text style={CashClosingStyles.shareOptionText}>Más</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
+                </Modal>
+            </View>
         </ScrollView>
     );
 };

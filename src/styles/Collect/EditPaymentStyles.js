@@ -15,6 +15,9 @@ const EditPaymentStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 5,
+        borderBottomWidth: 1.4,
+        borderColor: '#ccc',
+        paddingBottom: 8,
     },
     checkboxLabel: {
         marginRight: 20,

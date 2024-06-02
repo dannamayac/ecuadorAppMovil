@@ -37,6 +37,7 @@ import CashClosing from '../screens/Collect/CashClosing';
 import PhotoAuthentication from '../screens/Collect/PhotoAuthentication';
 import PaymentHistory from '../screens/Collect/PaymentHistory';
 import EditPayment from '../screens/Collect/EditPayment';
+import CashInBox from '../screens/UnitManagement/CashInBox';
 
 
 const Stack = createNativeStackNavigator();
@@ -82,7 +83,8 @@ function DrawerNavigator() {
       <Drawer.Screen name="CashClosing" component={CashClosing} />
       <Drawer.Screen name="PhotoAuthentication" component={PhotoAuthentication} />
       {/* Vistas de Recorrido */}
-      <Drawer.Screen name="UnitManagement" component={UnitManagement} />
+      <Drawer.Screen name="UnitManagement" component={UnitManagement} /> 
+      <Drawer.Screen name="CashInBox" component={CashInBox} />
     </Drawer.Navigator>
   );
 }

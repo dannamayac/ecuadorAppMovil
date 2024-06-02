@@ -6,6 +6,7 @@ export const CobroProvider = ({ children }) => {
     const [data, setData] = useState([
         {
             id: 1,
+            unit: '23452',
             title: 'Pedro Panadería',
             quotaValue: '$50.00',
             amountPending: '$10.00 - 3/10',
@@ -16,6 +17,7 @@ export const CobroProvider = ({ children }) => {
         },
         {
             id: 2,
+            unit: '23453',
             title: 'Laura Peluquería',
             quotaValue: '$10.00',
             amountPending: '$70.00 - 2.5/10',

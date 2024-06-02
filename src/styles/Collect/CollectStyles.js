@@ -1,4 +1,4 @@
-// src/styles/Collect/CollectStyles.js
+// CollectStyles.js
 import { StyleSheet } from 'react-native';
 
 const CollectStyles = StyleSheet.create({
@@ -25,14 +25,71 @@ const CollectStyles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+    header2: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottomWidth: 1.4,
+        borderColor: '#ccc',
+        paddingBottom: 8,
+    },
+    unitNumber: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#333',
+    },
     title: {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#333',
     },
-    subtext: {
+    subTitle: {
+        fontSize: 16,
+        fontWeight: '500',
+        color: '#333',
+    },
+    cobroHour: {
+        color: '#666',
+    },
+    cobroHourContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    cobroHourText: {
+        fontSize: 16,
+        color: '#FFD700',
+        fontWeight: 'bold',
+        marginLeft: 5,
+    },
+    infoRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 10,
+        borderBottomWidth: 1.4,
+        borderColor: '#ccc',
+        paddingBottom: 8,
+    },
+    infoColumn: {
+        alignItems: 'center',
+    },
+    infoLabel: {
         fontSize: 14,
         color: '#666',
+    },
+    infoValue: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    infoContainer: {
+        marginTop: 10,
+        borderBottomWidth: 1.4,
+        borderColor: '#ccc',
+        paddingBottom: 8,
+    },
+    infoText: {
+        fontSize: 16,
+        color: '#333',
     },
     statusContainer: {
         flexDirection: 'row',

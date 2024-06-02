@@ -122,6 +122,7 @@ export const GlobalStyles = StyleSheet.create({
   },
   backButton: {
     marginBottom: 20,
+    marginTop: 15,
     backgroundColor: colors.input,
     width: 90,
     borderRadius: 15,

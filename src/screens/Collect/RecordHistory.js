@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import RecordHistoryStyles from '../../styles/Collect/RecordHistoryStyles';
 import Header from '../../components/Header';
+import CollectStyles from '../../styles/Collect/CollectStyles';
 
 const RecordHistory = ({ navigation }) => {
     const initialData = [
@@ -40,20 +41,22 @@ const RecordHistory = ({ navigation }) => {
             <View style={RecordHistoryStyles.header}>
                 <Text style={RecordHistoryStyles.clientID}>{item.clientID} - {item.clientName}</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('CollectionDetails')}>
-                    <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
+                    <MaterialCommunityIcons name="dots-horizontal" size={33} color="#1b2f8e" />
                 </TouchableOpacity>
             </View>
             <View style={RecordHistoryStyles.infoContainer}>
-                <Text style={RecordHistoryStyles.value}>Valor: {item.value}</Text>
-                <Text style={RecordHistoryStyles.paymentMethod}>Método de pago: {item.paymentMethod}</Text>
+                <Text style={RecordHistoryStyles.value}>Valor</Text>
+                <Text style={RecordHistoryStyles.valueText}>{item.value}</Text>
+                <Text style={RecordHistoryStyles.paymentMethod}>Método de pago</Text>
+                <Text style={RecordHistoryStyles.paymentMethodText}>{item.paymentMethod}</Text>
             </View>
             <View style={RecordHistoryStyles.statusContainer}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={[
-                        RecordHistoryStyles.statusButton, 
+                        RecordHistoryStyles.statusButton,
                         { backgroundColor: item.transactionType === 'Desembolso' ? '#1b2f8e' : item.transactionType === 'Recaudo' ? '#1bb546' : '#cc1515' }
                     ]}
-                    onPress={() => navigation.navigate('PaymentHistory', { item })}
+                    onPress={() => navigation.navigate('PaymentHistory')}
                 >
                     <Text style={RecordHistoryStyles.buttonText}>{item.transactionType}</Text>
                 </TouchableOpacity>
@@ -64,10 +67,14 @@ const RecordHistory = ({ navigation }) => {
     return (
         <View style={RecordHistoryStyles.container}>
             <Header />
-            <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
-                <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
-            </TouchableOpacity>
-            <Text style={RecordHistoryStyles.title}>Historial de registros (ventas/Recaudos)</Text>
+            <View style={RecordHistoryStyles.container2}>
+                <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
+                    <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+                </TouchableOpacity>
+                <View style={RecordHistoryStyles.subTitleContainer}>
+                    <Text style={CollectStyles.subTitle}>Historial de registros (ventas/Recaudos)</Text>
+                </View>
+            </View>
             <ScrollView>
                 {data.map(renderCards)}
             </ScrollView>

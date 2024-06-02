@@ -1,32 +1,34 @@
 // Settings.js
 import React from 'react';
 import { ScrollView } from 'react-native';
-import ManagementButton from '../../components/ManagementButton';
+import Header from '../../components/Header';
+import SettingsButton from '../../components/SettingsButton';
 
 const Settings = ({ navigation }) => {
   return (
     <ScrollView style={{ flex: 1 }}>
-      <ManagementButton 
+      <Header />
+      <SettingsButton 
         title="Descargas de unidad" 
         onPress={() => navigation.navigate('Download')}
       />
-      <ManagementButton 
+      <SettingsButton 
         title="Sincronizar aplicación" 
         onPress={() => navigation.navigate('SyncUp')} 
       />
-      <ManagementButton 
+      <SettingsButton 
         title="Generar nuevas llaves" 
         onPress={() => navigation.navigate('GenerateNewKeys')} 
        />
-      <ManagementButton 
+      <SettingsButton 
         title="Generar backup" 
         onPress={() => navigation.navigate('GenerateBackUp')} 
       />
-      <ManagementButton 
+      <SettingsButton 
         title="Reiniciar datos" 
         onPress={() => navigation.navigate('Restart')} 
       />
-      <ManagementButton 
+      <SettingsButton 
         title="Acerca de/Ayuda" 
         onPress={() => navigation.navigate('AboutHelp')} 
       />

@@ -39,6 +39,21 @@ const NewSale = ({ navigation }) => {
         navigation.navigate('ClientInfo', { sale: newSale });
     };
 
+    const calculateValues = () => {
+        // Aquí puedes implementar la lógica para calcular los valores de cuota, pago, vence, etc.
+        return {
+            cuota: monto,
+            pago: 'Text',
+            vence: 'Text',
+            capital: monto,
+            intereses: interes,
+            iva: 'Text',
+            costAdmin: costAdmin,
+        };
+    };
+
+    const values = calculateValues();
+
     return (
         <PaperProvider>
             <Header />
@@ -84,7 +99,8 @@ const NewSale = ({ navigation }) => {
                         onValueChange={setVenta}
                         style={GlobalStyles.whitePicker}
                     >
-                        <Picker.Item label="Nuevo" value="nuevo" />
+                        <Picker.Item label="Sí" value="yes" />
+                        <Picker.Item label="No" value="no" />
                     </Picker>
                 </View>
                 <Text style={GlobalStyles.header}>Modo</Text>
@@ -199,6 +215,36 @@ const NewSale = ({ navigation }) => {
                         keyboardType="numeric"
                         style={SalesStyles.outlinedInput}
                     />
+                </View>
+                <View style={SalesStyles.summaryContainer}>
+                    <View style={SalesStyles.summaryRow}>
+                        <Text style={SalesStyles.summaryLabel}>Cuota</Text>
+                        <Text style={SalesStyles.summaryValue}>{values.cuota}</Text>
+                    </View>
+                    <View style={SalesStyles.summaryRow}>
+                        <Text style={SalesStyles.summaryLabel}>Pago</Text>
+                        <Text style={SalesStyles.summaryValue}>{values.pago}</Text>
+                    </View>
+                    <View style={SalesStyles.summaryRow}>
+                        <Text style={SalesStyles.summaryLabel}>Vence</Text>
+                        <Text style={SalesStyles.summaryValue}>{values.vence}</Text>
+                    </View>
+                    <View style={SalesStyles.summaryRow}>
+                        <Text style={SalesStyles.summaryLabel}>Capital</Text>
+                        <Text style={SalesStyles.summaryValue}>{values.capital}</Text>
+                    </View>
+                    <View style={SalesStyles.summaryRow}>
+                        <Text style={SalesStyles.summaryLabel}>Intereses</Text>
+                        <Text style={SalesStyles.summaryValue}>{values.intereses}</Text>
+                    </View>
+                    <View style={SalesStyles.summaryRow}>
+                        <Text style={SalesStyles.summaryLabel}>IVA</Text>
+                        <Text style={SalesStyles.summaryValue}>{values.iva}</Text>
+                    </View>
+                    <View style={SalesStyles.summaryRow}>
+                        <Text style={SalesStyles.summaryLabel}>Cost. Admin</Text>
+                        <Text style={SalesStyles.summaryValue}>{values.costAdmin}</Text>
+                    </View>
                 </View>
                 <TouchableOpacity
                     style={GlobalStyles.greenButton}

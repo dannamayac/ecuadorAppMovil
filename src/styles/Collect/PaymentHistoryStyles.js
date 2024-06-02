@@ -13,11 +13,6 @@ const PaymentHistoryStyles = StyleSheet.create({
         fontSize: 16,
         color: colors.blue,
     },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginVertical: 20,
-    },
     card: {
         backgroundColor: '#f9f9f9',
         borderRadius: 10,
@@ -30,24 +25,40 @@ const PaymentHistoryStyles = StyleSheet.create({
         shadowRadius: 5,
         elevation: 5,
     },
+    cardHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
     cardTitle: {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#333',
     },
     cardAmount: {
-        fontSize: 16,
+        fontSize: 15,
         color: '#333',
         marginVertical: 5,
     },
-    cardMethod: {
-        fontSize: 14,
-        color: '#666',
-    },
     cardMenu: {
         position: 'absolute',
-        top: 10,
-        right: 10,
+        right: 5,
+    },
+    statusContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: 10,
+    },
+    statusButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        padding: 6,
+        minWidth: 70,
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
     },
     modalContainer: {
         flex: 1,
