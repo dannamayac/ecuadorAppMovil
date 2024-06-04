@@ -27,7 +27,7 @@ const Header = () => {
     return (
         <View style={HeaderStyles.header}>
             <TouchableOpacity style={HeaderStyles.menuButton} onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-                <MaterialCommunityIcons name="menu" size={30} color="black" />
+                <MaterialCommunityIcons name="menu" size={25} color="#1b2f8e" />
             </TouchableOpacity>
             <View style={HeaderStyles.headerUser}>
                 <TouchableOpacity style={HeaderStyles.notificationButton} onPress={toggleNotificationsDropdown}>

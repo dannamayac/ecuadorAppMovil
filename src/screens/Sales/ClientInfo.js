@@ -68,7 +68,7 @@ const ClientInfo = ({ navigation, route }) => {
             <Header />
             <ScrollView style={SalesStyles.container}>
                 <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Sales')}>
-                    <Text style={GlobalStyles.backButtonText}> Volver</Text>
+                    <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
                 </TouchableOpacity>
                 <View style={SalesStyles.salesHeader}>
                     <Text style={GlobalStyles.title}>Info del cliente</Text>

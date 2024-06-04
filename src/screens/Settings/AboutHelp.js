@@ -9,6 +9,9 @@ const AboutHelp = ({ navigation }) => {
     return (
         <ScrollView style={SalesStyles.container}>
             <Header />
+            <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Settings')}>
+                <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+            </TouchableOpacity>
             <View style={SalesStyles.salesHeader}>
                 <Text style={GlobalStyles.title}>Sobre de/Ayuda</Text>
             </View>

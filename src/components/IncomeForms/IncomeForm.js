@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import IncomeStyles from '../../styles/income/IncomeStyles';
+import { REACT_APP_API_BASE_URL, REACT_APP_CREATE_INCOME_ENDPOINT } from '@env';
 
 const IncomeForm = ({
   navigation,
@@ -46,25 +47,56 @@ const IncomeForm = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (validateForm()) {
-      handleSaveIncome();
+      setIsLoading(true);
+      try {
+        const response = await fetch(`${REACT_APP_API_BASE_URL}${REACT_APP_CREATE_INCOME_ENDPOINT}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type: incomeType,
+            description,
+            comment,
+            value,
+            photo: image,
+          }),
+        });
+  
+        const result = await response.json();
+        if (result.status === 200) {
+          Alert.alert('Éxito', result.message);
+          clearForm();
+        } else {
+          Alert.alert('Error', result.message || 'Error al guardar el ingreso');
+        }
+      } catch (error) {
+        Alert.alert('Error', 'Ha ocurrido un error al guardar el ingreso');
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
   const pickImage = async () => {
     setIsLoading(true);
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setImage(result.uri);
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+        base64: true,
+      });
+  
+      if (!result.cancelled) {
+        setImage(`data:image/jpeg;base64,${result.base64}`);
+      }
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const handlePickerChange = (itemValue) => {
