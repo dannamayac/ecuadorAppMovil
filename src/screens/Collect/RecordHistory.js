@@ -5,6 +5,7 @@ import { GlobalStyles } from '../../styles/GlobalStyles';
 import RecordHistoryStyles from '../../styles/Collect/RecordHistoryStyles';
 import Header from '../../components/Header';
 import CollectStyles from '../../styles/Collect/CollectStyles';
+import AlertButton from '../../components/AlertButton';
 
 const RecordHistory = ({ navigation }) => {
     const initialData = [
@@ -78,6 +79,7 @@ const RecordHistory = ({ navigation }) => {
             <ScrollView>
                 {data.map(renderCards)}
             </ScrollView>
+            <AlertButton />
         </View>
     );
 };

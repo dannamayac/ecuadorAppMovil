@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, ScrollView, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, TextInput, Modal } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import CollectStyles from '../../styles/Collect/CollectStyles';
 import Header from '../../components/Header';
 import CollectCard from '../../components/CollectCards/CollectCard';
 import { useCobro } from './CobroContext';
+import AlertButton from '../../components/AlertButton';
 
 const Collect = ({ navigation }) => {
     const { data } = useCobro();
@@ -70,13 +71,8 @@ const Collect = ({ navigation }) => {
             <TouchableOpacity style={[GlobalStyles.blueButton, CollectStyles.fixedBottomButton]} onPress={() => navigation.navigate('CashSummary')}>
                 <Text style={GlobalStyles.buttonText}>Resumen</Text>
             </TouchableOpacity>
-            <Modal
-                visible={menuVisible}
-                transparent={true}
-                animationType="slide"
-                onRequestClose={() => setMenuVisible(false)}
-            >
-                <TouchableOpacity style={CollectStyles.modalOverlay} onPress={() => setMenuVisible(false)}>
+            {menuVisible && (
+                <TouchableOpacity style={CollectStyles.fullScreenOverlay} onPress={() => setMenuVisible(false)}>
                     <View style={CollectStyles.filterMenuContainer}>
                         <View style={CollectStyles.filterMenu}>
                             <Text style={CollectStyles.filterTitle}>Estados de pago</Text>
@@ -126,7 +122,7 @@ const Collect = ({ navigation }) => {
                         </View>
                     </View>
                 </TouchableOpacity>
-            </Modal>
+            )}
             <Modal
                 visible={modalVisible}
                 transparent={true}
@@ -191,6 +187,7 @@ const Collect = ({ navigation }) => {
                     </View>
                 </View>
             </Modal>
+            <AlertButton />
         </View>
     );
 };

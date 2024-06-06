@@ -1,4 +1,3 @@
-// CollectStyles.js
 import { StyleSheet } from 'react-native';
 
 const CollectStyles = StyleSheet.create({
@@ -189,13 +188,20 @@ const CollectStyles = StyleSheet.create({
     iconButton: {
         padding: 10,
     },
+    filterMenuContainer: {
+        position: 'absolute',
+        top: 120,
+        right: 10,
+        zIndex: 10,
+        borderRadius: 10,
+        padding: 10,
+    },
     filterMenu: {
         backgroundColor: '#fff',
         borderRadius: 10,
         padding: 10,
-        margin: 10,
-        marginLeft: 100,
-        elevation: 5,
+        marginTop: 10,
+        elevation: 3,
     },
     filterTitle: {
         fontWeight: 'bold',
@@ -245,7 +251,14 @@ const CollectStyles = StyleSheet.create({
         bottom: 10,
         left: '2.5%',
         width: '95%',
-    }
+    },
+    fullScreenOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+    },
 });
 
 export default CollectStyles;

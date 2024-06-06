@@ -1,15 +1,28 @@
 // Settings.js
-import React from 'react';
-import { ScrollView, TouchableOpacity, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, TouchableOpacity, Text, View, Modal } from 'react-native';
 import Header from '../../components/Header';
 import SettingsButton from '../../components/SettingsButton';
 import { GlobalStyles } from '../../styles/GlobalStyles';
+import SettingsStyles from '../../styles/Settings/SettingsStyles';
+import PaymentStyles from '../../styles/Collect/PaymentsStyles';
+import AlertButton from '../../components/AlertButton';
 
 const Settings = ({ navigation }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <View style={PaymentStyles.container}>
       <Header />
-      <View style={{ paddingHorizontal: 10 }}>
+      <ScrollView style={PaymentStyles.container2}>
         <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Home')}>
           <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
         </TouchableOpacity>
@@ -31,14 +44,40 @@ const Settings = ({ navigation }) => {
         />
         <SettingsButton
           title="Reiniciar datos"
-          onPress={() => navigation.navigate('Restart')}
+          onPress={handleOpenModal}
+          textStyle={SettingsStyles.redText}
+          actionText="Reiniciar     "
         />
         <SettingsButton
           title="Acerca de/Ayuda"
           onPress={() => navigation.navigate('AboutHelp')}
         />
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={handleCloseModal}
+      >
+        <View style={SettingsStyles.modalOverlay}>
+          <View style={SettingsStyles.modalContainer}>
+            <Text style={SettingsStyles.modalIcon}>❗</Text>
+            <Text style={SettingsStyles.modalText}>¿Está seguro que desea reiniciar los datos de la aplicación?</Text>
+            <TouchableOpacity
+              style={SettingsStyles.redButton}
+              onPress={() => {
+                handleCloseModal();
+                // Add your reset data logic here
+              }}
+            >
+              <Text style={GlobalStyles.buttonText}>Reiniciar datos</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      <AlertButton />
+    </View>
   );
 };
 

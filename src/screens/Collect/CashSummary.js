@@ -5,6 +5,7 @@ import { GlobalStyles } from '../../styles/GlobalStyles';
 import CashSummaryStyles from '../../styles/Collect/CashSummaryStyles';
 import PaymentStyles from '../../styles/Collect/PaymentsStyles';
 import Header from '../../components/Header';
+import AlertButton from '../../components/AlertButton';
 
 const CashSummary = ({ navigation }) => {
     const [visitedExpanded, setVisitedExpanded] = useState(false);
@@ -29,9 +30,9 @@ const CashSummary = ({ navigation }) => {
     };
 
     return (
-        <ScrollView style={CashSummaryStyles.container}>
+        <View style={PaymentStyles.container}>
             <Header />
-            <View style={PaymentStyles.container2}>
+            <ScrollView style={PaymentStyles.container2}>
                 <View style={PaymentStyles.headerWithLabel}>
                     <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
                         <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
@@ -155,8 +156,9 @@ const CashSummary = ({ navigation }) => {
                 <TouchableOpacity style={CashSummaryStyles.closeButton} onPress={() => navigation.navigate('CashClosing')}>
                     <Text style={CashSummaryStyles.closeButtonText}>Cerrar caja</Text>
                 </TouchableOpacity>
-            </View>
-        </ScrollView>
+                </ScrollView>
+            <AlertButton />
+        </View>
     );
 };
 

@@ -1,3 +1,4 @@
+// components/Ticket.js
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, Modal } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
@@ -5,6 +6,7 @@ import { PaperProvider } from 'react-native-paper';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import TicketStyles from '../../styles/sales/TicketStyles';
 import Header from '../../components/Header';
+import AlertButton from '../../components/AlertButton';
 
 const Ticket = ({ navigation }) => {
     const [image, setImage] = useState(null);
@@ -26,7 +28,7 @@ const Ticket = ({ navigation }) => {
         });
 
         if (!result.canceled) {
-            setImage(result.uri);
+            setImage(result.assets[0].uri);
             setModalVisible(false);
         }
     };
@@ -45,7 +47,7 @@ const Ticket = ({ navigation }) => {
         });
 
         if (!result.canceled) {
-            setImage(result.uri);
+            setImage(result.assets[0].uri);
             setModalVisible(false);
         }
     };
@@ -79,8 +81,8 @@ const Ticket = ({ navigation }) => {
                 <TouchableOpacity style={GlobalStyles.redButton} onPress={() => navigation.goBack()}>
                     <Text style={GlobalStyles.buttonText}>Cancelar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={GlobalStyles.greenButton} onPress={image ? handleSave : takePhoto}>
-                    <Text style={GlobalStyles.buttonText}>{image ? 'Guardar' : 'Tomar foto'}</Text>
+                <TouchableOpacity style={GlobalStyles.greenButton} onPress={image ? handleSave : () => setModalVisible(true)}>
+                    <Text style={GlobalStyles.buttonText}>{image ? 'Guardar' : 'Tomar o seleccionar foto'}</Text>
                 </TouchableOpacity>
             </View>
             <Modal
@@ -118,6 +120,7 @@ const Ticket = ({ navigation }) => {
                     </View>
                 </View>
             </Modal>
+            <AlertButton />
         </PaperProvider>
     );
 };

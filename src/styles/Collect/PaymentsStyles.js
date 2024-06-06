@@ -6,10 +6,10 @@ const PaymentStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-    container2:{
+    container2: {
         paddingHorizontal: 10,
     },
-    paymentMethods:{
+    paymentMethods: {
         borderBottomWidth: 1.4,
         borderColor: '#ccc',
         paddingBottom: 8,
@@ -23,13 +23,13 @@ const PaymentStyles = StyleSheet.create({
         alignItems: 'center',
         marginRight: 10,
     },
-    header:{
+    header: {
         borderBottomWidth: 1.4,
         borderColor: '#ccc',
         paddingBottom: 10,
         paddingTop: 10,
     },
-    headerText:{
+    headerText: {
         fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
@@ -57,22 +57,22 @@ const PaymentStyles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 20,
     },
-    paidLabel:{
+    paidLabel: {
         backgroundColor: colors.green,
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 5,
     },
-    paidLabelYellow:{
+    paidLabelYellow: {
         backgroundColor: colors.yellow,
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 5,
         width: '30%',
         marginTop: 5,
-        marginBottom:5 ,
+        marginBottom: 5,
     },
-    paidLabelText:{
+    paidLabelText: {
         fontSize: 16,
         color: 'white',
         fontWeight: '500',
@@ -92,7 +92,7 @@ const PaymentStyles = StyleSheet.create({
         fontSize: 16,
         color: '#666',
     },
-    manualPaymentText:{
+    manualPaymentText: {
         flexWrap: 'wrap',
     },
     inputContainer: {
@@ -113,13 +113,38 @@ const PaymentStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         justifyContent: 'center',
-        width: '100%'
+        width: '100%',
     },
     overlayVisible: {
         pointerEvents: 'none',
     },
     disabledSection: {
         opacity: 0.3,
+    },
+    imageContainer: {
+        height: 100,
+        width: '100%',
+        borderRadius: 10,
+        backgroundColor: colors.input,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    image: {
+        height: '100%',
+        width: '100%',
+        borderRadius: 10,
+    },
+    imageButtonOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        borderRadius: 10,
     },
 });
 

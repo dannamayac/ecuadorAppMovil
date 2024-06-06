@@ -4,18 +4,22 @@ import { GlobalStyles } from '../../styles/GlobalStyles';
 import PaymentStyles from '../../styles/Collect/PaymentsStyles';
 import InfoClientCollectStyles from '../../styles/Collect/InfoClientCollectStyles';
 import Header from '../../components/Header';
+import AlertButton from '../../components/AlertButton';
 
 const InfoClientCollect = ({ route, navigation }) => {
     const { title, quotaValue, amountPending, lastPaymentAmount } = route.params || {};
 
     return (
-        <ScrollView style={PaymentStyles.container}>
+        <View style={PaymentStyles.container}>
             <Header />
-            <View style={PaymentStyles.sectionContainer}>
+            <ScrollView style={PaymentStyles.container2}>
+                <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
+                    <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+                </TouchableOpacity>
                 <View style={InfoClientCollectStyles.headerContainer}>
                     <Text style={GlobalStyles.title}>{title ? title : 'Título no disponible'}</Text>
-                    <TouchableOpacity 
-                        style={InfoClientCollectStyles.medalContainer} 
+                    <TouchableOpacity
+                        style={InfoClientCollectStyles.medalContainer}
                         onPress={() => navigation.navigate('ClientLevelHistory', { title })}
                     >
                         <Image
@@ -38,11 +42,12 @@ const InfoClientCollect = ({ route, navigation }) => {
                     <Text style={GlobalStyles.title}>Dirección principal de cobro</Text>
                     <Text style={GlobalStyles.normalFont}>Cra 4 #28-08 / Chapinero, Bogotá</Text>
                 </View>
-            </View>
-            <TouchableOpacity style={GlobalStyles.blueButton} onPress={() => navigation.navigate('Collect')}>
-                <Text style={GlobalStyles.buttonText}>Volver</Text>
-            </TouchableOpacity>
-        </ScrollView>
+                <TouchableOpacity style={GlobalStyles.blueButton} onPress={() => navigation.navigate('Collect')}>
+                    <Text style={GlobalStyles.buttonText}>Volver</Text>
+                </TouchableOpacity>
+                </ScrollView>
+            <AlertButton />
+        </View>
     );
 };
 

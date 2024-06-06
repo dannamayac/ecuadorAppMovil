@@ -5,6 +5,7 @@ import { GlobalStyles } from '../../styles/GlobalStyles';
 import PaymentStyles from '../../styles/Collect/PaymentsStyles';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Header from '../../components/Header';
+import AlertButton from '../../components/AlertButton';
 
 const Receipt = ({ route, navigation }) => {
     const { title, quotaValue, amountPending, lastPaymentAmount, valorAPagar: initialValorAPagar, numCuotas: initialNumCuotas, description: initialDescription } = route.params || {};
@@ -15,7 +16,6 @@ const Receipt = ({ route, navigation }) => {
 
     useEffect(() => {
         if (!manualPayment) {
-            // Calcular el valor a pagar basado en el número de cuotas
             const cuotas = parseInt(numCuotas, 10);
             const valorPorCuota = parseFloat(quotaValue.replace('$', '').replace(',', ''));
             const nuevoValorAPagar = cuotas * valorPorCuota;
@@ -24,9 +24,9 @@ const Receipt = ({ route, navigation }) => {
     }, [numCuotas, quotaValue, manualPayment]);
 
     return (
-        <ScrollView style={PaymentStyles.container}>
+        <View style={PaymentStyles.container}>
             <Header />
-            <View style={PaymentStyles.sectionContainer}>
+            <ScrollView style={PaymentStyles.container2}>
                 <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
                     <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
                 </TouchableOpacity>
@@ -74,7 +74,7 @@ const Receipt = ({ route, navigation }) => {
                     placeholder="Ingrese algún comentario sobre el pago..."
                     multiline
                 />
-            </View>
+            </ScrollView>
             <View style={PaymentStyles.optionsContainer}>
                 <TouchableOpacity style={PaymentStyles.optionButton}>
                     <FontAwesome5 name="image" size={24} color="blue" />
@@ -86,7 +86,8 @@ const Receipt = ({ route, navigation }) => {
                     <FontAwesome5 name="ellipsis-h" size={24} color="black" />
                 </TouchableOpacity>
             </View>
-        </ScrollView>
+            <AlertButton />
+        </View>
     );
 }
 

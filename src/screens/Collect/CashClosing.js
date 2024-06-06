@@ -8,6 +8,7 @@ import PaymentStyles from '../../styles/Collect/PaymentsStyles';
 import RecordHistoryStyles from '../../styles/Collect/RecordHistoryStyles';
 import CollectStyles from '../../styles/Collect/CollectStyles';
 import CashSummaryStyles from '../../styles/Collect/CashSummaryStyles';
+import AlertButton from '../../components/AlertButton';
 
 const CashClosing = ({ navigation, route }) => {
     const { closed } = route.params || {};
@@ -63,9 +64,9 @@ const CashClosing = ({ navigation, route }) => {
     };
 
     return (
-        <ScrollView style={CashClosingStyles.container}>
+        <View style={PaymentStyles.container}>
             <Header />
-            <View style={PaymentStyles.container2}>
+            <ScrollView style={PaymentStyles.container2}>
                 <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('CashSummary')}>
                     <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
                 </TouchableOpacity>
@@ -258,8 +259,9 @@ const CashClosing = ({ navigation, route }) => {
                         </View>
                     </View>
                 </Modal>
-            </View>
-        </ScrollView>
+                </ScrollView>
+            <AlertButton />
+        </View>
     );
 };
 

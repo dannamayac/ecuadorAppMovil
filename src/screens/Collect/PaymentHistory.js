@@ -6,6 +6,7 @@ import Header from '../../components/Header';
 import RecordHistoryStyles from '../../styles/Collect/RecordHistoryStyles';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import CollectStyles from '../../styles/Collect/CollectStyles';
+import AlertButton from '../../components/AlertButton';
 
 const PaymentHistory = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -91,6 +92,7 @@ const PaymentHistory = ({ navigation }) => {
                     </View>
                 </View>
             </Modal>
+            <AlertButton />
         </View>
     );
 };

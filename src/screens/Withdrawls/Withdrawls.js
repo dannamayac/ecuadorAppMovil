@@ -4,6 +4,7 @@ import WithDrawalsForm from '../../components/WithDrawlsForms/WithDrawlsForm';
 import WithDrawalsList from '../../components/WithDrawlsForms/WithDrawlsList';
 import IncomeStyles from '../../styles/income/IncomeStyles';
 import Header from '../../components/Header';
+import AlertButton from '../../components/AlertButton';
 
 const WithDrawals = ({ navigation }) => {
   const [withdrawalType, setWithdrawalType] = useState("");
@@ -91,6 +92,7 @@ const WithDrawals = ({ navigation }) => {
         keyExtractor={item => item.id.toString()}
         contentContainerStyle={{ paddingBottom: 20 }}
       />
+      <AlertButton />
     </View>
   );
 };

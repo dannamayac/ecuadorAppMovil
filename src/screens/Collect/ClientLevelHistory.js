@@ -4,6 +4,7 @@ import { GlobalStyles } from '../../styles/GlobalStyles';
 import PaymentStyles from '../../styles/Collect/PaymentsStyles';
 import InfoClientCollectStyles from '../../styles/Collect/InfoClientCollectStyles';
 import Header from '../../components/Header';
+import AlertButton from '../../components/AlertButton';  // Importa el componente
 
 const getColorForLevel = (level) => {
     switch (level) {
@@ -28,32 +29,38 @@ const ClientLevelHistory = ({ route, navigation }) => {
     ];
 
     return (
-        <ScrollView style={PaymentStyles.container}>
-        <Header />
-            <View style={PaymentStyles.sectionContainer}>
-                <View style={InfoClientCollectStyles.headerContainer}>
-                    <Text style={GlobalStyles.title}>{title ? title : 'Título no disponible'}</Text>
-                </View>
-                <View style={InfoClientCollectStyles.section}>
-                    <Text style={GlobalStyles.title}>Historial de niveles</Text>
-                </View>
-                {levels.map((level, index) => (
-                    <View key={index} style={InfoClientCollectStyles.levelHistoryContainer}>
-                        <View style={InfoClientCollectStyles.levelHistoryDetails}>
-                            <Text style={InfoClientCollectStyles.levelHistoryDate}>{level.dateRange}</Text>
-                            <Text style={InfoClientCollectStyles.levelHistoryText}>{level.duration}</Text>
-                        </View>
-                        <View style={[InfoClientCollectStyles.levelHistoryBadge, { backgroundColor: getColorForLevel(level.level) }]}>
-                            <Image source={level.icon} style={InfoClientCollectStyles.levelIcon} />
-                            <Text style={InfoClientCollectStyles.levelHistoryText}>{level.level}</Text>
-                        </View>
+        <View style={PaymentStyles.container}>
+            <Header />
+            <ScrollView style={PaymentStyles.container}>
+                <View style={PaymentStyles.container2}>
+                    <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('InfoClientCollect')}>
+                        <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+                    </TouchableOpacity>
+                    <View style={InfoClientCollectStyles.headerContainer}>
+                        <Text style={GlobalStyles.title}>{title ? title : 'Título no disponible'}</Text>
                     </View>
-                ))}
-            </View>
-            <TouchableOpacity style={GlobalStyles.blueButton} onPress={() => navigation.navigate('InfoClientCollect')}>
-                <Text style={GlobalStyles.buttonText}>Volver</Text>
-            </TouchableOpacity>
-        </ScrollView>
+                    <View style={InfoClientCollectStyles.section}>
+                        <Text style={GlobalStyles.title}>Historial de niveles</Text>
+                    </View>
+                    {levels.map((level, index) => (
+                        <View key={index} style={InfoClientCollectStyles.levelHistoryContainer}>
+                            <View style={InfoClientCollectStyles.levelHistoryDetails}>
+                                <Text style={InfoClientCollectStyles.levelHistoryDate}>{level.dateRange}</Text>
+                                <Text style={InfoClientCollectStyles.levelHistoryText}>{level.duration}</Text>
+                            </View>
+                            <View style={[InfoClientCollectStyles.levelHistoryBadge, { backgroundColor: getColorForLevel(level.level) }]}>
+                                <Image source={level.icon} style={InfoClientCollectStyles.levelIcon} />
+                                <Text style={InfoClientCollectStyles.levelHistoryText}>{level.level}</Text>
+                            </View>
+                        </View>
+                    ))}
+                    <TouchableOpacity style={GlobalStyles.blueButton} onPress={() => navigation.navigate('InfoClientCollect')}>
+                        <Text style={GlobalStyles.buttonText}>Volver</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+            <AlertButton />
+        </View>
     );
 };
 

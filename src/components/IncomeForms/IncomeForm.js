@@ -64,7 +64,7 @@ const IncomeForm = ({
             photo: image,
           }),
         });
-  
+
         const result = await response.json();
         if (result.status === 200) {
           Alert.alert('Éxito', result.message);
@@ -81,21 +81,15 @@ const IncomeForm = ({
   };
 
   const pickImage = async () => {
-    setIsLoading(true);
-    try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-        base64: true,
-      });
-  
-      if (!result.cancelled) {
-        setImage(`data:image/jpeg;base64,${result.base64}`);
-      }
-    } finally {
-      setIsLoading(false);
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
     }
   };
 

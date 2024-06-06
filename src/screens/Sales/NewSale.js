@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
 import SalesStyles from '../../styles/sales/SalesStyles';
@@ -6,6 +6,7 @@ import { Picker } from '@react-native-picker/picker';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import { useSales } from './SalesContext';
 import Header from '../../components/Header';
+import AlertButton from '../../components/AlertButton';
 
 const NewSale = ({ navigation }) => {
     const [venta, setVenta] = useState('');
@@ -27,6 +28,10 @@ const NewSale = ({ navigation }) => {
 
     const { addSale } = useSales();
 
+    useEffect(() => {
+        calculateValues();
+    }, [monto, cuotas, interes, costAdmin, frequencyToPay]);
+
     const handleNext = () => {
         const newSale = {
             id: String(new Date().getTime()),
@@ -40,15 +45,32 @@ const NewSale = ({ navigation }) => {
     };
 
     const calculateValues = () => {
-        // Aquí puedes implementar la lógica para calcular los valores de cuota, pago, vence, etc.
+        const montoNum = parseFloat(monto) || 0;
+        const cuotasNum = parseInt(cuotas) || 0;
+        const interesNum = parseFloat(interes) || 0;
+        const costAdminNum = parseFloat(costAdmin) || 0;
+        const IVA = 0.19;
+        
+        const pago = cuotasNum ? (montoNum / cuotasNum) + interesNum + costAdminNum : 0;
+        const iva = pago * IVA;
+        const totalPago = pago + iva;
+
+        const date = new Date();
+        const dueDate = new Date();
+        if (frequencyToPay === 'mensual') {
+            dueDate.setMonth(date.getMonth() + cuotasNum);
+        } else if (frequencyToPay === 'quincenal') {
+            dueDate.setDate(date.getDate() + (cuotasNum * 15));
+        }
+
         return {
-            cuota: monto,
-            pago: 'Text',
-            vence: 'Text',
-            capital: monto,
-            intereses: interes,
-            iva: 'Text',
-            costAdmin: costAdmin,
+            cuota: montoNum,
+            pago: totalPago.toFixed(2),
+            vence: dueDate.toISOString().split('T')[0],
+            capital: montoNum,
+            intereses: interesNum,
+            iva: iva.toFixed(2),
+            costAdmin: costAdminNum,
         };
     };
 
@@ -71,22 +93,22 @@ const NewSale = ({ navigation }) => {
                     value={searchQuery}
                     onChangeText={setSearchQuery}
                 />
-                <View style={SalesStyles.filterPickerContainer}>
+                <View style={[GlobalStyles.bigPickerContainer, {marginTop: 10, marginBottom: 5}]}>
                     <Picker
                         selectedValue={selectedUnit}
                         onValueChange={setSelectedUnit}
-                        style={SalesStyles.picker}
+                        style={GlobalStyles.bigPicker}
                     >
                         <Picker.Item label="Todas las unidades (16)" value="all" />
                         <Picker.Item label="Unidad 1" value="unit1" />
                         <Picker.Item label="Unidad 2" value="unit2" />
                     </Picker>
                 </View>
-                <View style={SalesStyles.filterPickerContainer}>
+                <View style={GlobalStyles.bigPickerContainer}>
                     <Picker
                         selectedValue={selectedContract}
                         onValueChange={setSelectedContract}
-                        style={SalesStyles.picker}
+                        style={GlobalStyles.bigPicker}
                     >
                         <Picker.Item label="Venta con contrato" value="nuevo" />
                         <Picker.Item label="Nuevo" value="nuevo" />
@@ -186,7 +208,8 @@ const NewSale = ({ navigation }) => {
                         onValueChange={setFrequencyToPay}
                         style={GlobalStyles.bigPicker}
                     >
-                        <Picker.Item label="Frecuencia de pago" value="mensual" />
+                        <Picker.Item label="Mensual" value="mensual" />
+                        <Picker.Item label="Quincenal" value="quincenal" />
                     </Picker>
                 </View>
                 <Text style={GlobalStyles.header}>Monto contrato</Text>
@@ -252,6 +275,7 @@ const NewSale = ({ navigation }) => {
                     <Text style={GlobalStyles.buttonText}>Siguiente</Text>
                 </TouchableOpacity>
             </ScrollView>
+            <AlertButton />
         </PaperProvider>
     );
 };

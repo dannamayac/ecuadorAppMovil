@@ -135,7 +135,14 @@ const SalesStyles = StyleSheet.create({
         color: colors.bluePrimary,
         fontSize: 16,
     },
-    filterPickerContainer: {
+    filterContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        marginBottom: 10,
+    },
+    customPickerContainer: {
         borderRadius: 10,
         borderWidth: 1,
         width: '100%',
@@ -145,11 +152,25 @@ const SalesStyles = StyleSheet.create({
         marginBottom: 5,
         alignItems: 'center',
     },
-    picker: {
-        alignItems: 'center',
-        height: 40,
-        width: '100%',
+    customPicker: {
+        height: 20,
+        width: 150,
         backgroundColor: colors.input,
+        borderRadius: 10,
+        borderColor: colors.lightBlue,
+        borderWidth: 1,
+        justifyContent: 'center',
+    },
+    pickerContainer: {
+        flex: 1,
+        width: '100%',
+        borderRadius: 10,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: colors.input,
+        marginHorizontal: 5,
+        marginTop: 15,
+        marginBottom: 15,
     },
     summaryContainer: {
         padding: 10,
@@ -170,6 +191,11 @@ const SalesStyles = StyleSheet.create({
     summaryValue: {
         fontSize: 16,
         color: '#666',
+    },
+    searchContainer: {
+        flexDirection: 'row',
+        paddingHorizontal: 10,
+        marginBottom: 10,
     },
 });
 

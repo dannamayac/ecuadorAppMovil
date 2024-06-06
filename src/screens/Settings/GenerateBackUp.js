@@ -5,12 +5,15 @@ import { GlobalStyles } from '../../styles/GlobalStyles';
 import { LineChartGreen } from '../../components/LineChart';
 import ManagementButton from '../../components/ManagementButton';
 import Header from '../../components/Header';
+import AlertButton from '../../components/AlertButton';
+import PaymentStyles from '../../styles/Collect/PaymentsStyles';
 
 const GenerateBackUp = ({ navigation }) => {
 
     return (
-        <ScrollView style={SalesStyles.container}>
+        <View style={PaymentStyles.container}>
             <Header />
+            <ScrollView style={PaymentStyles.container2}>
             <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Settings')}>
                 <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
             </TouchableOpacity>
@@ -25,7 +28,9 @@ const GenerateBackUp = ({ navigation }) => {
             <TouchableOpacity style={GlobalStyles.greenButton}>
                 <Text style={GlobalStyles.buttonText}>Generar backup</Text>
             </TouchableOpacity>
-        </ScrollView>
+            </ScrollView>
+            <AlertButton />
+        </View>
     );
 };
 
