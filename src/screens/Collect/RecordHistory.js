@@ -1,68 +1,87 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import RecordHistoryStyles from '../../styles/Collect/RecordHistoryStyles';
 import Header from '../../components/Header';
 import CollectStyles from '../../styles/Collect/CollectStyles';
+import { REACT_APP_API_BASE_URL, REACT_APP_MANAGEMENT_UNIT_ENDPOINT } from '@env';
 
 const RecordHistory = ({ navigation }) => {
-    const initialData = [
-        {
-            id: 1,
-            clientID: '#42465',
-            clientName: 'Pedro Panadería',
-            value: '$500,00',
-            paymentMethod: 'Efectivo',
-            transactionType: 'Desembolso'
-        },
-        {
-            id: 2,
-            clientID: '#42465',
-            clientName: 'Laura Peluquería',
-            value: '$15,00 - (1)',
-            paymentMethod: 'Efectivo',
-            transactionType: 'Recaudo'
-        },
-        {
-            id: 3,
-            clientID: '#42465',
-            clientName: 'Pedro Panadería',
-            value: '$0',
-            paymentMethod: 'Efectivo',
-            transactionType: 'No pagó'
-        },
-    ];
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const [data, setData] = useState(initialData);
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch(`${REACT_APP_API_BASE_URL}${REACT_APP_MANAGEMENT_UNIT_ENDPOINT}`);
+            const result = await response.json();
+            console.log('API Response:', result);
+            if (result && result["Gestion de Unidades"]) {
+                setData(result["Gestion de Unidades"]);
+            } else {
+                console.log('Data format incorrect:', result);
+                setData([]);
+                Alert.alert('Error', 'Formato de datos incorrecto');
+            }
+        } catch (err) {
+            setError(err);
+            Alert.alert('Error', 'Ha ocurrido un error al cargar los datos');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const renderCards = (item) => (
         <View key={item.id} style={RecordHistoryStyles.card} >
             <View style={RecordHistoryStyles.header}>
-                <Text style={RecordHistoryStyles.clientID}>{item.clientID} - {item.clientName}</Text>
+                <Text style={RecordHistoryStyles.clientID}>{item.unit} - {item.location}</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('CollectionDetails')}>
                     <MaterialCommunityIcons name="dots-horizontal" size={33} color="#1b2f8e" />
                 </TouchableOpacity>
             </View>
             <View style={RecordHistoryStyles.infoContainer}>
-                <Text style={RecordHistoryStyles.value}>Valor</Text>
-                <Text style={RecordHistoryStyles.valueText}>{item.value}</Text>
-                <Text style={RecordHistoryStyles.paymentMethod}>Método de pago</Text>
-                <Text style={RecordHistoryStyles.paymentMethodText}>{item.paymentMethod}</Text>
+                <Text style={RecordHistoryStyles.value}>Código</Text>
+                <Text style={RecordHistoryStyles.valueText}>{item.code}</Text>
+                <Text style={RecordHistoryStyles.paymentMethod}>Estado</Text>
+                <Text style={RecordHistoryStyles.paymentMethodText}>{item.id_state}</Text>
             </View>
             <View style={RecordHistoryStyles.statusContainer}>
                 <TouchableOpacity
                     style={[
                         RecordHistoryStyles.statusButton,
-                        { backgroundColor: item.transactionType === 'Desembolso' ? '#1b2f8e' : item.transactionType === 'Recaudo' ? '#1bb546' : '#cc1515' }
+                        { backgroundColor: item.id_state === 1 ? '#1b2f8e' : '#cc1515' }
                     ]}
                     onPress={() => navigation.navigate('PaymentHistory')}
                 >
-                    <Text style={RecordHistoryStyles.buttonText}>{item.transactionType}</Text>
+                    <Text style={RecordHistoryStyles.buttonText}>{item.id_state === 1 ? 'Activo' : 'Inactivo'}</Text>
                 </TouchableOpacity>
             </View>
         </View>
     );
+
+    if (loading) {
+        return (
+            <View style={RecordHistoryStyles.container}>
+                <Header />
+                <ActivityIndicator size="large" color="#0000ff" />
+                <Text>Cargando...</Text>
+            </View>
+        );
+    }
+
+    if (error) {
+        return (
+            <View style={RecordHistoryStyles.container}>
+                <Header />
+                <Text>Error al cargar los datos</Text>
+            </View>
+        );
+    }
 
     return (
         <View style={RecordHistoryStyles.container}>

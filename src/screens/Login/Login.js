@@ -10,6 +10,9 @@ const Login = ({ navigation }) => {
 
   const handleLoginPress = async () => {
     try {
+      console.log('API Base URL:', REACT_APP_API_BASE_URL);
+      console.log('Login Endpoint:', REACT_APP_LOGIN_ENDPOINT);
+      
       const response = await fetch(`${REACT_APP_API_BASE_URL}${REACT_APP_LOGIN_ENDPOINT}`, {
         method: 'POST',
         headers: {
@@ -22,6 +25,8 @@ const Login = ({ navigation }) => {
       });
 
       const result = await response.json();
+      console.log('Login Response:', result);
+      
       if (result.status === 200) {
         Alert.alert('Éxito', result.message);
         navigation.navigate('Authentication');
@@ -29,6 +34,7 @@ const Login = ({ navigation }) => {
         Alert.alert('Error', result.message);
       }
     } catch (error) {
+      console.log('Error during login:', error);
       Alert.alert('Error', 'Ha ocurrido un error al iniciar sesión');
     }
   };
