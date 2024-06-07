@@ -24,6 +24,7 @@ const IncomeForm = ({
   clearForm,
   updateIncome,
   handleDeleteIncome,
+  fetchIncomes, // Recibe fetchIncomes como prop
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -69,6 +70,7 @@ const IncomeForm = ({
         if (result.status === 200) {
           Alert.alert('Éxito', result.message);
           clearForm();
+          fetchIncomes(); // Llama a fetchIncomes después de guardar
         } else {
           Alert.alert('Error', result.message || 'Error al guardar el ingreso');
         }

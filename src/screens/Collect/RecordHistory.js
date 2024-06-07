@@ -6,6 +6,7 @@ import RecordHistoryStyles from '../../styles/Collect/RecordHistoryStyles';
 import Header from '../../components/Header';
 import CollectStyles from '../../styles/Collect/CollectStyles';
 import { REACT_APP_API_BASE_URL, REACT_APP_MANAGEMENT_UNIT_ENDPOINT } from '@env';
+import AlertButton from '../../components/AlertButton';
 
 const RecordHistory = ({ navigation }) => {
     const [data, setData] = useState([]);
