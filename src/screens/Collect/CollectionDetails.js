@@ -3,32 +3,43 @@ import { View, Text, TextInput, ScrollView, TouchableOpacity, Image } from 'reac
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import CollectionDetailsStyles from '../../styles/Collect/CollectionDetailsStyles';
 import Header from '../../components/Header';
+import AlertButton from '../../components/AlertButton';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import RecordHistoryStyles from '../../styles/Collect/RecordHistoryStyles';
+import CollectStyles from '../../styles/Collect/CollectStyles';
 
 const CollectionDetails = ({ navigation }) => {
     return (
-        <ScrollView style={CollectionDetailsStyles.container}>
+        <View style={{ flex: 1 }}>
             <Header />
-            <View style={CollectionDetailsStyles.header}>
-                <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('RecordHistory')}>
-                    <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
-                </TouchableOpacity>
-                <View style={CollectionDetailsStyles.userInfo}>
-                    <Image source={{ uri: 'https://example.com/user-profile.png' }} style={CollectionDetailsStyles.userImage} />
+            <ScrollView style={CollectionDetailsStyles.container}>
+                <View style={CollectionDetailsStyles.header}>
+                    <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('RecordHistory')}>
+                        <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
+                    </TouchableOpacity>
                 </View>
-            </View>
-            <Text style={GlobalStyles.title}>Detalles del recaudo</Text>
-            <View style={CollectionDetailsStyles.formContainer}>
-                <Text style={GlobalStyles.normalFont}>Unidad</Text>
-                <TextInput style={GlobalStyles.input} placeholder="Text" />
-                <Text style={GlobalStyles.normalFont}>ID Cliente Apodo</Text>
-                <TextInput style={GlobalStyles.input} placeholder="Text" />
-                <Text style={GlobalStyles.normalFont}>Cliente</Text>
-                <TextInput style={GlobalStyles.input} placeholder="Text" />
-                <Text style={GlobalStyles.normalFont}>Valor recaudado</Text>
-                <TextInput style={GlobalStyles.input} placeholder="Text" />
-            </View>
-            <Image source={{ uri: 'https://example.com/invoice.png' }} style={CollectionDetailsStyles.invoiceImage} />
-        </ScrollView>
+                <View style={RecordHistoryStyles.subTitleContainer}>
+                    <Text style={CollectStyles.subTitle}>Detalles del recaudo</Text>
+                </View>
+                <View style={[RecordHistoryStyles.subTitleContainer, { marginTop: 20 }]}>
+                    <Text style={GlobalStyles.normalFont}>Unidad</Text>
+                    <TextInput style={GlobalStyles.input} placeholder="Text" />
+                    <Text style={GlobalStyles.normalFont}>ID Cliente Apodo</Text>
+                    <TextInput style={GlobalStyles.input} placeholder="Text" />
+                    <Text style={GlobalStyles.normalFont}>Cliente</Text>
+                    <TextInput style={GlobalStyles.input} placeholder="Text" />
+                    <Text style={GlobalStyles.normalFont}>Valor recaudado</Text>
+                    <TextInput style={GlobalStyles.input} placeholder="Text" />
+                </View>
+                <View style={CollectionDetailsStyles.invoiceContainer}>
+                    <Image source={{ uri: 'https://example.com/invoice.png' }} style={CollectionDetailsStyles.invoiceImage} />
+                    <TouchableOpacity style={CollectionDetailsStyles.imageButtonOverlay}>
+                        <MaterialCommunityIcons name="camera" size={20} color="white" />
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+            <AlertButton />
+        </View>
     );
 };
 

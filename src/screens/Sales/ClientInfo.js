@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, TouchableOpacity, Modal } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import { PaperProvider } from 'react-native-paper';
+import { TextInput, Provider as PaperProvider } from 'react-native-paper';
 import SalesStyles from '../../styles/sales/SalesStyles';
 import { Picker } from '@react-native-picker/picker';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import Header from '../../components/Header';
+import AlertButton from '../../components/AlertButton';
 
 const ClientInfo = ({ navigation, route }) => {
     const { sale, fromViewButton } = route.params || {};
     const [venta, setVenta] = useState(sale ? sale.sale : '');
     const [address, setAddress] = useState('');
+    const [unit, setUnit] = useState('');
     const [idClient, setIdClient] = useState('');
     const [client, setClient] = useState(sale ? sale.customer : '');
-    const [date, setDate] = useState(sale ? sale.date : '');
+    const [date, setDate] = useState('');
     const [costWithOutTaxes, setCostWithOutTaxes] = useState('');
     const [contractAmount, setContractAmount] = useState('');
     const [taxes, setTaxes] = useState('');
@@ -29,6 +30,10 @@ const ClientInfo = ({ navigation, route }) => {
         if (sale) {
             setSaleStatus(sale.status);
         }
+        // Set the date to the current date and time
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}:${String(currentDate.getSeconds()).padStart(2, '0')}`;
+        setDate(formattedDate);
     }, [sale]);
 
     const handleContinue = () => {
@@ -87,115 +92,140 @@ const ClientInfo = ({ navigation, route }) => {
                     </>
                 )}
                 <Text style={GlobalStyles.header}>Venta con contrato?</Text>
-                <View style={SalesStyles.whitePickerContainer}>
+                <View style={GlobalStyles.bigPickerContainer}>
                     <Picker
                         selectedValue={venta}
                         onValueChange={setVenta}
-                        style={GlobalStyles.whitePicker}
+                        style={GlobalStyles.bigPicker}
                     >
                         <Picker.Item label="Sí" value="yes" />
                         <Picker.Item label="No" value="no" />
                     </Picker>
                 </View>
                 <Text style={GlobalStyles.header}>Dirección de la venta</Text>
-                <View style={SalesStyles.whitePickerContainer}>
+                <View style={GlobalStyles.bigPickerContainer}>
                     <TextInput
-                        style={SalesStyles.outlinedInput}
+                        style={GlobalStyles.bigPicker}
                         onChangeText={setAddress}
                         value={address}
                         placeholder="Escriba aquí la dirección"
+                        underlineColor="transparent"
+                    />
+                </View>
+                <Text style={GlobalStyles.header}>Unidad</Text>
+                <View style={GlobalStyles.bigPickerContainer}>
+                    <TextInput
+                        style={GlobalStyles.bigPicker}
+                        onChangeText={setUnit}
+                        value={unit}
+                        placeholder="Escriba aquí la dirección"
+                        underlineColor="transparent"
                     />
                 </View>
                 <Text style={GlobalStyles.header}>ID Cliente apodo</Text>
-                <View style={SalesStyles.whitePickerContainer}>
+                <View style={GlobalStyles.bigPickerContainer}>
                     <TextInput
-                        style={SalesStyles.outlinedInput}
+                        style={GlobalStyles.bigPicker}
                         placeholder="Escriba aquí el ID del cliente"
                         value={idClient}
                         onChangeText={setIdClient}
-                        
+                        underlineColor="transparent"
                     />
                 </View>
                 <Text style={GlobalStyles.header}>Cliente</Text>
-                <View style={SalesStyles.whitePickerContainer}>
+                <View style={GlobalStyles.bigPickerContainer}>
                     <TextInput
                         placeholder="Escriba aquí..."
                         value={client}
                         onChangeText={setClient}
-                        style={SalesStyles.outlinedInput}
+                        style={GlobalStyles.bigPicker}
+                        underlineColor="transparent"
                     />
                 </View>
                 <Text style={GlobalStyles.header}>Fecha y hora de solicitud</Text>
-                <View style={SalesStyles.whitePickerContainer}>
+                <View style={GlobalStyles.bigPickerContainer}>
                     <TextInput
-                        placeholder="Escribe el fecha y hora de solicitud"
                         value={date}
-                        onChangeText={setDate}
-                        style={SalesStyles.outlinedInput}
+                        style={GlobalStyles.bigPicker}
+                        editable={false}
+                        underlineColor="transparent"
                     />
                 </View>
                 <Text style={GlobalStyles.header}>Valor sin interés</Text>
-                <View style={SalesStyles.whitePickerContainer}>
+                <View style={GlobalStyles.bigPickerContainer}>
                     <TextInput
-                        placeholder="Escribe el valor sin interés"
+                        placeholder="Valor sin interés"
                         value={costWithOutTaxes}
+                        keyboardType="numeric"
                         onChangeText={setCostWithOutTaxes}
-                        style={SalesStyles.outlinedInput}
+                        style={GlobalStyles.bigPicker}
+                        underlineColor="transparent"
                     />
                 </View>
                 <Text style={GlobalStyles.header}>Cuotas pactadas</Text>
-                <View style={SalesStyles.whitePickerContainer}>
+                <View style={GlobalStyles.bigPickerContainer}>
                     <TextInput
                         placeholder="Cuotas pactadas"
                         value={contractAmount}
                         onChangeText={setContractAmount}
                         keyboardType="numeric"
-                        style={SalesStyles.outlinedInput}
+                        style={GlobalStyles.bigPicker}
+                        underlineColor="transparent"
                     />
                 </View>
                 <Text style={GlobalStyles.header}>Tasa interés</Text>
-                <View style={SalesStyles.whitePickerContainer}>
+                <View style={GlobalStyles.bigPickerContainer}>
                     <TextInput
                         placeholder="Tasa de interés"
+                        keyboardType="numeric"
                         value={taxes}
                         onChangeText={setTaxes}
-                        style={SalesStyles.outlinedInput}
+                        style={GlobalStyles.bigPicker}
+                        underlineColor="transparent"
                     />
                 </View>
                 <Text style={GlobalStyles.header}>Frecuencia de pago</Text>
-                <View style={SalesStyles.whitePickerContainer}>
+                <View style={GlobalStyles.bigPickerContainer}>
                     <TextInput
                         placeholder="Frecuencia de pago"
                         value={frequencyToPay}
                         onChangeText={setFrequencyToPay}
-                        style={SalesStyles.outlinedInput}
+                        style={GlobalStyles.bigPicker}
+                        underlineColor="transparent"
                     />
                 </View>
                 <Text style={GlobalStyles.header}>Tipo de venta</Text>
-                <View style={SalesStyles.whitePickerContainer}>
+                <View style={SalesStyles.bigPickerContainer}>
                     <TextInput
                         placeholder="Tipo de venta"
                         value={typeOfSell}
                         onChangeText={setTypeOfSell}
-                        style={SalesStyles.outlinedInput}
+                        style={GlobalStyles.bigPicker}
+                        underlineColor="transparent"
                     />
                 </View>
                 <Text style={GlobalStyles.header}>Estado</Text>
-                <View style={SalesStyles.whitePickerContainer}>
-                    <TextInput
+                <View style={GlobalStyles.bigPickerContainer}>
+                    <Picker
                         placeholder="Estado"
-                        value={state}
-                        onChangeText={setState}
-                        style={SalesStyles.outlinedInput}
-                    />
+                        selectedValue={state}
+                        onValueChange={setState}
+                        style={GlobalStyles.bigPicker}
+                    >
+                        <Picker.Item label="Aumentó" value="increase" />
+                        <Picker.Item label="Se Mantuvo" value="remained" />
+                        <Picker.Item label="Disminuyó" value="decreased" />
+                    </Picker>
                 </View>
                 <Text style={GlobalStyles.header}>Mora anterior</Text>
-                <View style={SalesStyles.whitePickerContainer}>
+                <View style={GlobalStyles.bigPickerContainer}>
                     <TextInput
                         placeholder="Mora anterior"
+                        keyboardType="numeric"
                         value={previousDebt}
                         onChangeText={setPreviousDebt}
-                        style={SalesStyles.outlinedInput}
+                        style={GlobalStyles.bigPicker}
+                        underlineColor="transparent"
                     />
                 </View>
                 {fromViewButton && (saleStatus === 'Rechazada' || saleStatus === 'Aprobada') ? (
@@ -248,6 +278,7 @@ const ClientInfo = ({ navigation, route }) => {
                     </View>
                 </View>
             </Modal>
+            <AlertButton />
         </PaperProvider>
     );
 };

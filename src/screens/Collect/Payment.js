@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, TextInput, ScrollView, Image, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Image, ActivityIndicator, TextInput } from 'react-native';
 import { RadioButton, Checkbox } from 'react-native-paper';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import PaymentStyles from '../../styles/Collect/PaymentsStyles';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome5 } from '@expo/vector-icons';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import Header from '../../components/Header';
 import { useCobro } from './CobroContext';
 import CollectStyles from '../../styles/Collect/CollectStyles';
+import AlertButton from '../../components/AlertButton';
 
 const Payment = ({ route, navigation }) => {
     const { unit, title, quotaValue, amountPending, lastPaymentAmount } = route.params || {};
@@ -16,13 +18,14 @@ const Payment = ({ route, navigation }) => {
     const [selectedPayment, setSelectedPayment] = useState('immediatePayment');
     const [selectedMethod, setSelectedMethod] = useState('cash');
     const [description, setDescription] = useState('');
-    const [hour, setHour] = useState('');
+    const [hour, setHour] = useState(new Date());
     const [manualPayment, setManualPayment] = useState(false);
     const [selectedAccount, setSelectedAccount] = useState('');
     const [image, setImage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [numCuotas, setNumCuotas] = useState('1');
     const [valorAPagar, setValorAPagar] = useState(quotaValue);
+    const [showTimePicker, setShowTimePicker] = useState(false);
 
     useEffect(() => {
         if (!manualPayment) {
@@ -36,7 +39,7 @@ const Payment = ({ route, navigation }) => {
     const handleConfirm = () => {
         if (selectedPayment === 'postponeVisit') {
             if (hour) {
-                handleUpdateCobro(title, hour);
+                handleUpdateCobro(title, hour.toLocaleTimeString());
             }
             navigation.navigate('Collect');
         } else {
@@ -54,14 +57,38 @@ const Payment = ({ route, navigation }) => {
         });
 
         if (!result.canceled) {
-            setImage(result.uri);
+            setImage(result.assets[0].uri); // Adjusted for latest Expo ImagePicker result structure
         }
     };
 
+    const takePhoto = async () => {
+        const { status } = await ImagePicker.requestCameraPermissionsAsync();
+        if (status !== 'granted') {
+            alert('Se requieren permisos para acceder a la cámara.');
+            return;
+        }
+
+        const result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            setImage(result.assets[0].uri); // Adjusted for latest Expo ImagePicker result structure
+        }
+    };
+
+    const onTimeChange = (event, selectedDate) => {
+        const currentDate = selectedDate || hour;
+        setShowTimePicker(false);
+        setHour(currentDate);
+    };
+
     return (
-        <ScrollView style={PaymentStyles.container}>
+        <View style={PaymentStyles.container}>
             <Header />
-            <View style={PaymentStyles.container2}>
+            <ScrollView style={PaymentStyles.container2}>
                 <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
                     <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
                 </TouchableOpacity>
@@ -88,12 +115,17 @@ const Payment = ({ route, navigation }) => {
                                 <Text style={PaymentStyles.paidLabelText}>En cobro</Text>
                             </View>
                         </View>
-                        <TextInput
-                            style={GlobalStyles.input}
-                            placeholder="15:30:00"
-                            value={hour}
-                            onChangeText={setHour}
-                        />
+                        <TouchableOpacity onPress={() => setShowTimePicker(true)} style={GlobalStyles.input}>
+                            <Text>{hour.toLocaleTimeString()}</Text>
+                        </TouchableOpacity>
+                        {showTimePicker && (
+                            <DateTimePicker
+                                value={hour}
+                                mode="time"
+                                display="default"
+                                onChange={onTimeChange}
+                            />
+                        )}
                     </View>
                 )}
 
@@ -132,8 +164,9 @@ const Payment = ({ route, navigation }) => {
                                 </Picker>
                                 <Text>Adjuntar foto comprobante de pago</Text>
                                 <TouchableOpacity style={PaymentStyles.imageContainer} onPress={pickImage}>
-                                    <Image source={{ uri: image }} style={PaymentStyles.image} />
-                                    {!image && (
+                                    {image ? (
+                                        <Image source={{ uri: image }} style={PaymentStyles.image} />
+                                    ) : (
                                         <View style={PaymentStyles.imageButtonOverlay}>
                                             <FontAwesome5 name="camera" size={20} color="white" />
                                         </View>
@@ -218,8 +251,9 @@ const Payment = ({ route, navigation }) => {
                 <TouchableOpacity style={GlobalStyles.greenButton} onPress={handleConfirm}>
                     <Text style={GlobalStyles.buttonText}>{selectedPayment === 'postponeVisit' ? 'Guardar' : 'Confirmar'}</Text>
                 </TouchableOpacity>
-            </View>
-        </ScrollView>
+                </ScrollView>
+            <AlertButton />
+        </View>
     );
 }
 

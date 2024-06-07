@@ -1,49 +1,38 @@
+// CollectionDetailsStyles.js
 import { StyleSheet } from 'react-native';
 
 const CollectionDetailsStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        padding: 10,
+        paddingHorizontal: 10,
     },
     header: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 20,
-    },
-    backButton: {
-        marginBottom: 20,
-    },
-    backButtonText: {
-        color: '#007BFF',
-        fontSize: 16,
-    },
-    userInfo: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    userImage: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        marginRight: 10,
-    },
-    userName: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    userHandle: {
-        fontSize: 14,
-        color: '#666',
+        marginBottom: 10,
     },
     formContainer: {
-        marginBottom: 20,
+        marginVertical: 20,
+    },
+    invoiceContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,
+        position: 'relative',
     },
     invoiceImage: {
         width: '100%',
-        height: 300,
+        height: 100,
         resizeMode: 'contain',
+    },
+    imageButtonOverlay: {
+        position: 'absolute',
+        bottom: 10,
+        right: '45%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        borderRadius: 50,
+        padding: 10,
     },
 });
 

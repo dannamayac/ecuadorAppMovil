@@ -20,7 +20,6 @@ import DownloadData from '../screens/Settings/DownloadData';
 import SyncUpApp from '../screens/Settings/SyncUpApp';
 import GenerateNewKeys from '../screens/Settings/GenerateNewKeys';
 import GenerateBackUp from '../screens/Settings/GenerateBackUp';
-import RestartData from '../screens/Settings/RestartData';
 import AboutHelp from '../screens/Settings/AboutHelp';
 import Collect from '../screens/Collect/Collect';
 import Payment from '../screens/Collect/Payment';
@@ -56,7 +55,6 @@ function DrawerNavigator() {
       <Drawer.Screen name="SyncUp" component={SyncUpApp} />
       <Drawer.Screen name="GenerateNewKeys" component={GenerateNewKeys} />
       <Drawer.Screen name="GenerateBackUp" component={GenerateBackUp} />
-      <Drawer.Screen name="Restart" component={RestartData} />
       <Drawer.Screen name="AboutHelp" component={AboutHelp} />
       {/* Vistas de home */}
       <Drawer.Screen name="Income" component={Income} />
@@ -91,7 +89,7 @@ function DrawerNavigator() {
 
 export default function AppNavigation() {
   return (
-    <SalesProvider>
+<SalesProvider>
       <CobroProvider>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>

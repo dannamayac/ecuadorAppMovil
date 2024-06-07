@@ -4,6 +4,7 @@ import ExpensesForm from '../../components/ExpensesForms/ExpensesForm';
 import ExpensesList from '../../components/ExpensesForms/ExpensesList';
 import IncomeStyles from '../../styles/income/IncomeStyles';
 import Header from '../../components/Header';
+import AlertButton from '../../components/AlertButton';
 
 const Expenses = ({ navigation }) => {
   const [expenseType, setExpenseType] = useState("");
@@ -91,6 +92,7 @@ const Expenses = ({ navigation }) => {
         keyExtractor={item => item.id.toString()}
         contentContainerStyle={{ paddingBottom: 20 }}
       />
+      <AlertButton />
     </View>
   );
 };

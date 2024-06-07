@@ -97,6 +97,7 @@ const RecordHistory = ({ navigation }) => {
             <ScrollView>
                 {data.map(renderCards)}
             </ScrollView>
+            <AlertButton />
         </View>
     );
 };

@@ -5,6 +5,7 @@ import IncomeList from '../../components/IncomeForms/IncomeList';
 import IncomeStyles from '../../styles/income/IncomeStyles';
 import Header from '../../components/Header';
 import { REACT_APP_API_BASE_URL, REACT_APP_INCOMES_LIST_ENDPOINT } from '@env';
+import AlertButton from '../../components/AlertButton';
 
 
 const Income = ({ navigation }) => {
@@ -120,6 +121,7 @@ const Income = ({ navigation }) => {
         keyExtractor={item => item.id.toString()}
         contentContainerStyle={{ paddingBottom: 20 }}
       />
+      <AlertButton />
     </View>
   );
 };

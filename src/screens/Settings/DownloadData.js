@@ -1,15 +1,17 @@
 import React from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
-import SalesStyles from '../../styles/sales/SalesStyles';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import Header from '../../components/Header';
 import SettingsStyles from '../../styles/Settings/SettingsStyles';
+import PaymentStyles from '../../styles/Collect/PaymentsStyles';
+import AlertButton from '../../components/AlertButton';
 
 const DownloadData = ({ navigation }) => {
 
     return (
-        <ScrollView style={SalesStyles.container}>
+        <View style={PaymentStyles.container}>
             <Header />
+            <ScrollView style={PaymentStyles.container2}>
             <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Settings')}>
                 <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
             </TouchableOpacity>
@@ -19,7 +21,9 @@ const DownloadData = ({ navigation }) => {
             <TouchableOpacity style={GlobalStyles.blueButton}>
                 <Text style={GlobalStyles.buttonText}>Descargar Excel</Text>
             </TouchableOpacity>
-        </ScrollView>
+            </ScrollView>
+            <AlertButton />
+        </View>
     );
 };
 

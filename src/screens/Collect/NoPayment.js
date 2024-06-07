@@ -6,6 +6,7 @@ import PaymentStyles from '../../styles/Collect/PaymentsStyles';
 import Header from '../../components/Header';
 import { useCobro } from './CobroContext';
 import CollectStyles from '../../styles/Collect/CollectStyles';
+import AlertButton from '../../components/AlertButton';
 
 const NoPayment = ({ route, navigation }) => {
     const { unit, title, quotaValue, amountPending, lastPaymentAmount } = route.params || {};
@@ -19,9 +20,9 @@ const NoPayment = ({ route, navigation }) => {
     };
 
     return (
-        <ScrollView style={PaymentStyles.container}>
+        <View style={PaymentStyles.container}>
             <Header />
-            <View style={PaymentStyles.container2}>
+            <ScrollView style={PaymentStyles.container2}>
                 <TouchableOpacity style={GlobalStyles.backButton} onPress={() => navigation.navigate('Collect')}>
                     <Text style={GlobalStyles.backButtonText}>{"<   Volver"}</Text>
                 </TouchableOpacity>
@@ -73,8 +74,9 @@ const NoPayment = ({ route, navigation }) => {
                 <TouchableOpacity style={GlobalStyles.greenButton} onPress={handleConfirm}>
                     <Text style={GlobalStyles.buttonText}>Confirmar</Text>
                 </TouchableOpacity>
-            </View>
-        </ScrollView>
+            </ScrollView>
+            <AlertButton />
+        </View>
     );
 };
 
