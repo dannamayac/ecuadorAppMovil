@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 import IncomeStyles from '../../styles/income/IncomeStyles';
+import { REACT_APP_API_BASE_URL, REACT_APP_EXPENSE_CREATE_ENDPOINT } from '@env';
 
 const ExpensesForm = ({
   navigation,
@@ -23,6 +24,7 @@ const ExpensesForm = ({
   clearForm,
   updateTransaction,
   handleDeleteTransaction,
+  fetchExpenses, // Recibe fetchExpenses como prop
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -61,9 +63,37 @@ const ExpensesForm = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (validateForm()) {
-      handleSaveTransaction();
+      setIsLoading(true);
+      try {
+        const response = await fetch(`${REACT_APP_API_BASE_URL}${REACT_APP_EXPENSE_CREATE_ENDPOINT}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type: transactionType,
+            description,
+            comment,
+            value,
+            photo: image,
+          }),
+        });
+
+        const result = await response.json();
+        if (result.status === 200) {
+          Alert.alert('Éxito', result.message);
+          clearForm();
+          fetchExpenses();
+        } else {
+          Alert.alert('Error', result.message || 'Error al guardar el egreso');
+        }
+      } catch (error) {
+        Alert.alert('Error', 'Ha ocurrido un error al guardar el egreso');
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -156,9 +186,6 @@ const ExpensesForm = ({
       </View>
       <TouchableOpacity style={GlobalStyles.blueButton} onPress={selectedItem ? updateTransaction : handleSubmit}>
         <Text style={GlobalStyles.buttonText}>{selectedItem ? 'Actualizar movimiento' : 'Guardar movimiento'}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={GlobalStyles.lightBlueButton} onPress={() => console.log('Actualizar Movimiento')}>
-        <Text style={GlobalStyles.buttonText}>Enviar a estudio</Text>
       </TouchableOpacity>
       {selectedItem && (
         <>
