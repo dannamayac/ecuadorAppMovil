@@ -119,7 +119,7 @@ const Income = ({ navigation }) => {
       const result = await response.json();
       if (response.status === 200) {
         Alert.alert('Éxito', 'Ingreso eliminado correctamente');
-        fetchIncomes();  // Actualiza la lista de ingresos después de eliminar uno existente
+        fetchIncomes();
       } else {
         Alert.alert('Error', 'No se pudo eliminar el ingreso');
       }

@@ -7,9 +7,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/adaptive-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#f4f4fb"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -24,9 +24,11 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#f4f4fb"
       },
       "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
         "CAMERA",
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE"
@@ -37,6 +39,17 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
+      "REACT_APP_API_BASE_URL": "http://54.161.176.21:8000/api",
+      "REACT_APP_LOGIN_ENDPOINT": "/User/login",
+      "REACT_APP_LOGOUT_ENDPOINT": "/User/logout",
+      "REACT_APP_INCOMES_LIST_ENDPOINT": "/Ingresos/listData",
+      "REACT_APP_CREATE_INCOME_ENDPOINT": "/Ingresos/createApp",
+      "REACT_APP_EXPENSE_LIST_ENDPOINT": "/Gastos/listData",
+      "REACT_APP_EXPENSE_CREATE_ENDPOINT": "/Gastos/createApp",
+      "REACT_APP_SALE_INFO_LIST_ENDPOINT": "/LimpiezaCobro/listData",
+      "REACT_APP_SALE_INFO_CREATE_ENDPOINT": "/LimpiezaCobro/create",
+      "REACT_APP_SALE_INFO_SEARCH_ENDPOINT": "/LimpiezaCobro/listDateOrName",
+      "REACT_APP_MANAGEMENT_UNIT_ENDPOINT": "/GestionUnidades/listData",
       "eas": {
         "projectId": "c38130d8-ac82-48ca-8579-a89e691b6119"
       }

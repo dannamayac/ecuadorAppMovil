@@ -13,7 +13,6 @@ const HeaderStyles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        marginTop: 30,
         zIndex: 10,
     },
     menuButton: {
