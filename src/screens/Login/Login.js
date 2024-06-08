@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import LoginStyles from '../../styles/LoginStyles';
 import { GlobalStyles } from '../../styles/GlobalStyles';
+import axios from 'axios';
 import { REACT_APP_API_BASE_URL, REACT_APP_LOGIN_ENDPOINT } from '@env';
 
 const Login = ({ navigation }) => {
@@ -10,24 +11,18 @@ const Login = ({ navigation }) => {
 
   const handleLoginPress = async () => {
     try {
-      console.log('API Base URL:', REACT_APP_API_BASE_URL);
-      console.log('Login Endpoint:', REACT_APP_LOGIN_ENDPOINT);
-      
-      const response = await fetch(`${REACT_APP_API_BASE_URL}${REACT_APP_LOGIN_ENDPOINT}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: username,
-          password: password,
-        }),
+      const apiUrl = `${REACT_APP_API_BASE_URL}${REACT_APP_LOGIN_ENDPOINT}`;
+      console.log('API URL:', apiUrl);
+
+      const response = await axios.post(apiUrl, {
+        email: username,
+        password: password,
       });
 
-      const result = await response.json();
+      const result = response.data;
       console.log('Login Response:', result);
-      
-      if (result.status === 200) {
+
+      if (response.status === 200) {
         Alert.alert('Éxito', result.message);
         navigation.navigate('Authentication');
       } else {
@@ -35,6 +30,18 @@ const Login = ({ navigation }) => {
       }
     } catch (error) {
       console.log('Error during login:', error);
+
+      if (error.response) {
+        console.error('Error data:', error.response.data);
+        console.error('Error status:', error.response.status);
+        console.error('Error headers:', error.response.headers);
+      } else if (error.request) {
+        console.error('No response:', error.request);
+      } else {
+        console.error('Error message:', error.message);
+      }
+      console.error('Error config:', error.config);
+
       Alert.alert('Error', 'Ha ocurrido un error al iniciar sesión');
     }
   };
