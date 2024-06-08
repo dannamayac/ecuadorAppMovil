@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import LoginStyles from '../../styles/LoginStyles';
 import { GlobalStyles } from '../../styles/GlobalStyles';
-// import axios from 'axios';
-// import { REACT_APP_API_BASE_URL, REACT_APP_LOGIN_ENDPOINT } from '@env';
+import axios from 'axios';
+import { REACT_APP_API_BASE_URL, REACT_APP_LOGIN_ENDPOINT } from '@env';
 
 const Login = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -11,28 +11,37 @@ const Login = ({ navigation }) => {
 
   const handleLoginPress = async () => {
     try {
-      // const apiUrl = `${REACT_APP_API_BASE_URL}${REACT_APP_LOGIN_ENDPOINT}`;
-      // console.log('API URL:', apiUrl);
+      const apiUrl = `${REACT_APP_API_BASE_URL}${REACT_APP_LOGIN_ENDPOINT}`;
+      console.log('API URL:', apiUrl);
 
-      // const response = await axios.post(apiUrl, {
-      //   email: username,
-      //   password: password,
-      // });
+      const response = await axios.post(apiUrl, {
+        email: username,
+        password: password,
+      });
 
-      // const result = response.data;
-      // console.log('Login Response:', result);
+      const result = response.data;
+      console.log('Login Response:', result);
 
-      // if (response.status === 200) {
-      //   Alert.alert('Éxito', result.message);
-      //   navigation.navigate('Authentication');
-      // } else {
-      //   Alert.alert('Error', result.message);
-      // }
-
-      // Comentar el consumo del endpoint y simplemente navegar a la siguiente pantalla
-      navigation.navigate('Authentication');
+      if (response.status === 200) {
+        Alert.alert('Éxito', result.message);
+        navigation.navigate('Authentication');
+      } else {
+        Alert.alert('Error', result.message);
+      }
     } catch (error) {
       console.log('Error during login:', error);
+
+      if (error.response) {
+        console.error('Error data:', error.response.data);
+        console.error('Error status:', error.response.status);
+        console.error('Error headers:', error.response.headers);
+      } else if (error.request) {
+        console.error('No response:', error.request);
+      } else {
+        console.error('Error message:', error.message);
+      }
+      console.error('Error config:', error.config);
+
       Alert.alert('Error', 'Ha ocurrido un error al iniciar sesión');
     }
   };
